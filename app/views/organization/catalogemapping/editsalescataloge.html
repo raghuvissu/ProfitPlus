@@ -1,0 +1,59 @@
+<div class="content-container" ng-controller="EditSalesCatalogeController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li><a href="#/catalogemapping">{{'label.catalogemapping' | translate}} </a></li>
+		<li class="active">{{'label.editsalescataloge' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h4>{{'label.heading.editsalescataloge' | translate}}</h4>
+			</div>
+			<hr>
+			<form name="editsalescataloge" novalidate="" class="form-horizontal" rc-submit="submit()">
+				<api-validate></api-validate>
+				<fieldset>
+				<div class="form-group">
+	            	<label class="control-label col-sm-2" for="name">{{ 'label.name' | translate }}<span class="required">*</span></label>
+		            	<div class="col-sm-3">
+		              	<input type="text" id="name" name="name" data-ng-model="formData.name" class="form-control" data-ng-maxlength="10">
+			                <span data-ng-show="editsalescataloge.name.$dirty && editsalescataloge.name.$invalid">
+								<small class="error" data-ng-show="editsalescataloge.name.$error.maxlength">Name is required at least 10 characters</small>
+						    </span>
+		            	</div>
+	           	</div>
+	           
+	           <div class="toolbar">
+            	<h4>{{'label.heading.SalesCatalogeMapping' | translate}}</h4>
+        	  </div><br><br>
+        	  
+        		<div class="form-group">
+					<div class="col-sm-3 col-md-3 col-md-offset-2">
+	                <label class="control-label col-sm-9">{{ 'label.availableplan' | translate }}</label>
+		                <select id="availableplans" ng-model="allowed" name="allowed" class="form-control multiselectmin" multiple >
+		               		<option data-ng-repeat="availablePlan in availablePlans" value="{{availablePlan.id}}">{{availablePlan.planDescription}}</option>
+		                </select>
+	                </div>
+	               		
+			        <div class="col-sm-1 col-md-1 paddedtop25px">
+		           		<button type="button" class="btn btn-primary" data-ng-click="restrict()"><i class="fa fa-angle-double-right"></i></button><br/>
+		           		<button type="button" class="btn btn-primary" data-ng-click="allow()"><i class="fa fa-angle-double-left"></i></button>
+			        </div>
+	               		
+	   		     	<div class="col-sm-3 col-md-3">
+	       			<label class="control-label col-sm-9">{{ 'label.selectedplan' | translate }}</label>
+		          		<select id="selectedplans" name="selectedplans" ng-model="restricted" name="restricted" class="form-control multiselectmin" multiple  >
+		              		<option data-ng-repeat="selectedPlan in selectedPlans" value="{{selectedPlan.id}}">{{selectedPlan.planDescription}}</option>
+		          		</select>
+	               	</div>
+				</div>
+				
+				<div class="col-md-offset-9 pull-right">
+							<a href="#/catalogemapping"><button type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+            	   			 <button id="save" type="submit" data-ng-disabled="editsalescataloge.$dirty && editsalescataloge.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button>
+						</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

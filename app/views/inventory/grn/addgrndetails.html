@@ -1,0 +1,74 @@
+<div class="content-container" ng-controller="AddGRNController">
+ 	<div>
+        <ul class="breadcrumb">
+          <li><a href="#/inventory" ng-click="selectedGRN()" select="getGRNdetails()">{{'link.admin.inventory' | translate}}</a></li>
+          <li class="active">{{'label.create.new.addgrn' | translate}}</li>
+        </ul>
+   	</div>
+   	 <div class="card">
+   	   <div class="content">
+   	     <div class="toolbar">
+   			<h4>Add GRN Details</h4>
+    	</div>
+   			<form name="addgrndetails" class="form-horizontal" ng-submit="submit()">
+   	  			<api-validate></api-validate>
+	    			<fieldset>
+	      				<div class="form-group">
+				            <label class="control-label col-sm-2" for="purchaseDate">{{'label.purchasedate' | translate }}&nbsp;<span class="required">*</span></label>
+				            <div class="col-sm-3">
+				                <input type="text" id="purchaseDate" class="form-control" datepicker-pop="dd MMMM yyyy" ng-model="formData.purchaseDate" is-open="opened" 
+				       				date-disabled="disabled(date, mode)" required late-Validate style="background-color:#FFFFFF;"  readonly/>
+				            </div>
+				  			<label class="control-label col-sm-2" for="purchaseNo">{{'label.purchaseno' | translate }}&nbsp;<span class="required">*</span></label>
+				   			<div class="col-sm-3">
+				     			<input type="text" id="purchaseNo" class="form-control" ng-model="formData.purchaseNo">
+				   			</div>
+		 				</div>
+						<div class="form-group">
+				   			<label class="control-label col-sm-2" for="supplierId">{{'label.supplier' | translate }}&nbsp;<span class="required">*</span></label>
+				   			<div class="col-sm-3">
+				   				<select id="supplierId" class="form-control" ng-model="formData.supplierId"  ng-options="supplierData.id as getBothSup(supplierData.supplierCode,supplierData.supplierDescription) for supplierData in supplierDatas" ng-change = "changeSupplierFun()" value="{{supplierData.id}}">
+				   						<option value="">{{'label.select.one' | translate}}</option>
+				   				</select>
+				   			</div>
+				   			<label class="control-label col-sm-2" for="officeId">{{'label.officeid' | translate }}&nbsp;<span class="required">*</span></label>
+				   			<div class="col-sm-3">
+				     			<!-- <select id="officeId" class="form-control" ng-model="formData.officeId"  ng-options="officeData.id as officeData.nameDecorated for officeData in officeDatas" value="{{officeData.id}}">
+				     					<option value="">{{'label.select.one' | translate}}</option>
+				     			</select> -->
+				   			 <input type="text"  
+				            		placeholder="Enter Office Code"
+				            		data-ng-model="formData.officeId" 
+				            		name="serialNumber" 
+				            		class="form-control"
+									uib-typeahead=" officeDatas.externalId as groupByOffice(officeDatas.externalId, officeDatas.name) for officeDatas in getData($viewValue)" 
+									autocomplete="off" data-typeahead-min-length="0">  
+				   			
+				     			<!-- <select id="officeId" class="form-control" ng-model="formData.officeId"  ng-options="officeData.id as officeData.nameDecorated for officeData in officeDatas" value="{{officeData.id}}">
+				     			</select> -->
+				   			</div>
+						</div>
+						<div class="form-group">
+				   			<label class="control-label col-sm-2" for="itemMasterId">{{'label.item' | translate }}&nbsp;<span class="required">*</span></label>
+				     			<div class="col-sm-3">
+				       				<select id="itemMasterId" class="form-control" ng-model="formData.itemMasterId"  ng-options="itemData.id as getBothItem(itemData.itemCode,itemData.itemDescription) for itemData in itemDatas" value="{{itemData.id}}">
+				       						<option value="">{{'label.select.one' | translate}}</option>
+				       				</select>
+				     			</div>
+				   			<label class="control-label col-sm-2" for="orderdQuantity">{{'label.orderedquantity' | translate }}&nbsp;<span class="required">*</span></label>
+				   			<div class="col-sm-3">
+				     			<input type="text" id="orderdQuantity" class="form-control" name="orderdQuantity" ng-model="formData.orderdQuantity" data-ng-pattern="/^[0-9]+$/"></br>
+				     			<span data-ng-show="addgrndetails.orderdQuantity.$dirty && addgrndetails.orderdQuantity.$invalid">
+				     				<small class="error" data-ng-show="addgrndetails.orderdQuantity.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+				     			</span>
+				   			</div>
+					  	</div>
+					   <div class="col-md-offset-9">
+							<a href="#/inventory" ><button id="cancel" type="reset" class="btn" ng-click="reset123()">{{'button.cancel'| translate}}</button></a>
+							<button id="submit"  type="submit" data-ng-disabled="addgrndetails.$dirty && addgrndetails.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button>
+					   </div>
+	    			</fieldset>
+   				</form>
+   			</div>
+   </div>
+</div>

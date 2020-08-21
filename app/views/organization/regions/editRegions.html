@@ -1,0 +1,86 @@
+<div class="content-container" ng-controller="editRegionController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li><a href="#/regions">{{'label.regions' | translate}}</a></li>
+		<li><a href="#/viewregions/{{formData.id}}">{{formData.regionCode}}</a></li>
+		<li class="active">{{'label.editRegion' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.editRegion' | translate}}</h4>
+    		</div>
+    		<br>
+    			<form name="editregionform" novalidate="" class="form-horizontal" rc-submit="submit()">
+    			    <api-validate></api-validate>
+    			    <fieldset>
+    			        <div class="form-group">
+    			               <label class="control-label col-sm-2" for="regionCode"> {{'label.region.regioncode' | translate }}<span class="required" >*</span></label>
+    			            <div class="col-sm-3">
+          			            <input type="text" id="regionCode" name="regionCode" class="form-control" data-ng-model="formData.regionCode" data-ng-maxlength="10"/>
+                            </div>
+                            <div class="col-sm-3">
+								<span data-ng-show="editregionform.regionCode.$dirty && editregionform.regionCode.$invalid">
+									<small class="error" data-ng-show="editregionform.regionCode.$error.maxlength">{{'error.regioncode.definition.length.validation'| translate}}</small>
+								</span>
+    			            </div>
+    			        </div>
+    			        <div class="form-group">
+    			            <label class="control-label col-sm-2" for="regionName"> {{'label.region.regionname' | translate }}<span class="required" >*</span> </label>
+    			            <div class="col-sm-3">
+    			                <input type="text" id="regionName" class="form-control" data-ng-model="formData.regionName">
+    			            </div>
+    			        </div>
+    			        <div class="form-group">
+    			            	<label class="control-label col-sm-2" for="countryId"> {{'label.region.country' | translate }}<span class="required" >*</span> </label>
+    			            <div class="col-sm-3">
+    			            	<select data-ng-model="formData.countryId" class="form-control" data-ng-change="countryDetails(formData.countryId)"
+									data-ng-options="country.id as country.countryName for country in countrydata"
+									data-value="{{country.id}}">
+									<!-- <option ng-repeat="country in countrydata" value="{{country.id}}">{{country.countryName}}</option>  -->
+								</select>
+    			              <!--  <select id="countryId" class="form-control" data-ng-model="formData.countryId" data-ng-change="countryDetails(formData.countryId)">
+									<option data-ng-repeat="country in countrydata" value="{{country.id}}">{{country.countryName}}</option>
+							   </select> -->
+    			            </div>
+    			        </div>
+    			        <div class="form-group">
+    			            <label class="control-label col-sm-6" style="margin-top:10px" for="All">{{'label.region.all' | translate }}</label>
+    			            <div class="col-sm-1">
+    			               <label class="checkbox">
+    			               <input type="checkbox" class="form-control" data-ng-model="checked">
+    			               </label>
+    			            </div>
+    			        </div>
+    			  		<div class="form-group">
+							<div class="col-sm-3 col-md-3 col-md-offset-1">
+								<label class="control-label col-sm-9">{{ 'label.region.availablestates' | translate }}</label>
+								<select multiple data-ng-model="allowed" data-ng-disabled="checked" class="form-control multiselectmin" multiple>
+									<option data-ng-repeat="availableService in availableServices" value="{{availableService.id}}">{{availableService.stateName}}</option>
+								</select>
+							</div>
+							<div class="col-sm-1 col-md-1 paddedtop25px">
+								<button type="button" class="btn btn-primary" data-ng-disabled="checked" data-ng-click="restrict()"><i
+										class="fa fa-angle-double-right"></i></button>
+								<br/>
+								<button type="button" class="btn btn-primary" data-ng-disabled="checked" data-ng-click="allow()"><i
+										class="fa fa-angle-double-left"></i></button>
+							</div>
+							<div class="col-sm-3 col-md-3">
+								<label class="control-label col-sm-9">{{ 'label.region.selectedstates' | translate }} <span 
+									class="required" >*</span></label>
+								<select id="states" multiple data-ng-model="restricted" data-ng-disabled="checked" class="form-control multiselectmin" multiple>
+									<option data-ng-repeat="selectedService in selectedServices" value="{{selectedService.id}}">{{selectedService.stateName}}</option>
+								</select>
+							</div>
+						</div>
+    			        <div class="col-md-offset-3 pull-right">
+							<a href="#/regions"><button id="cancel" type="reset" class="btn"> {{'button.cancel' | translate }} </button></a>
+							<button id="submit" type="submit" data-ng-disabled="editregionform.$dirty && editregionform.$invalid" class="btn btn-primary"> {{'button.save' | translate }} </button>
+						</div>
+    			    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>
+

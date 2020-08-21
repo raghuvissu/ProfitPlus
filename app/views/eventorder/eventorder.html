@@ -1,0 +1,61 @@
+<div class="content-container" ng-controller="EventOrderController">
+    <ul class="breadcrumb">
+		 <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.eventorder' | translate}}</li>
+	</ul>
+	<div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.eventorder' | translate}}</h4>
+    		</div>
+    		<br>
+    			<form class="form-horizontal" ng-submit="submit()">
+    				<api-validate></api-validate>
+					<fieldset>
+						<div class="form-group">
+                        	<label class="control-label col-sm-2">{{ 'label.eventdate' | translate }}</label>
+                        	<div class="col-sm-3">
+                            	<input type="text" datepicker-pop="dd MMMM yyyy" ng-model="start.date" is-open="opened2" min="minDate" max="'2020-06-22'" 
+                            		class="form-control" date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;"  readonly/>
+                        	</div>
+          				</div>
+						<div class="form-group" ng-show="requireDevice">
+							<label class="control-label col-sm-2">{{ 'label.deviceid' | translate }}</label>
+							<div class="col-sm-3">
+				                <select ng-model="formData.deviceId"  class="form-control"
+				                	ng-options="device.serialNumber as device.serialNumber for device in devices" value="{{device.serialNumber}}"></select>
+				            </div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">{{ 'label.events' | translate }}</label>
+							<div class="col-sm-3">
+				                <select ng-model="formData.eventId"  class="form-control"
+				                	ng-options="event.id as event.eventName for event in events" value="{{event.id}}"></select>
+				             </div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">{{ 'label.formattype' | translate }}</label>
+							<div class="col-sm-3">
+				                <select ng-model="formData.formatType" class="form-control"
+				                	ng-options="code.mCodeValue as code.mCodeValue for code in codes" value="{{code.mCodeValue}}"></select>
+				             </div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">{{ 'label.opttype' | translate }}</label>
+							<div class="col-sm-3">
+				                <select ng-model="formData.optType"   class="form-control"
+				                	ng-options="optType.value as optType.value for optType in optTypes" value="{{optType.value}}"></select>
+				             </div>
+						</div>
+						<div class="col-md-offset3-9">
+							<a href='#/viewclient/id/{{clientId}}' class="btn" ng-click="reset123()">Cancel</a>
+							<button type="submit" class="btn btn-primary">Save</button>
+						</div>
+				</fieldset>
+			</form>
+    	</div>
+    </div>
+</div>
+

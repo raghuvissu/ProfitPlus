@@ -1,0 +1,50 @@
+<div class="content-container" ng-controller="AddCodeController">
+    <ul class="breadcrumb">
+        <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+        <li><a href="#/codes">{{'label.anchor.managecodes' | translate}}</a></li>
+        <li class="active">{{'label.anchor.addcode' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.heading.addcode' | translate}}</h4>
+    		</div>
+    		<br/>
+    		<form name="addcodeform" novalidate="" class="form-horizontal" rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+    		        <div class="form-group">
+    		            <label class="control-label col-sm-2" for="codename">{{'label.input.codename' | translate}}<span
+    		                    class="required">*</span></label>
+    		
+    		            <div class="col-sm-3">
+    		                <input type="text" id="codename" name="codename" ng-model="formData.name" class="form-control" required late-Validate/>
+    		            </div>
+    		            <div class="col-sm-3">
+    		                <form-validate valattributeform="addcodeform" valattribute="codename"/>
+    		            </div>
+    		        </div>
+    		        <div class="form-group">
+	          			<label class="control-label col-sm-2" for="description">{{'label.input.description' | translate}}</label>
+				       <div class="col-sm-3">
+				          <textarea class="form-control" class="form-control" ng-model="formData.description"></textarea>
+				        </div>
+	    			</div>
+	    			<div class="form-group">
+			          	<label class="control-label col-sm-2" for="module">{{'label.input.module' | translate}}</label>
+				        <div class="col-sm-3">
+				          <select id="module" class="form-control" data-ng-model="formData.module"  data-ng-options="module for module in modules" >
+				          		  <option value="">{{'label.select.one' | translate}}</option>
+				          </select>
+				        </div>
+	    			</div>
+    		
+    		        <div class ="col-md-offset-4 pull-right">
+            			<a href="#/codes"><button id="cancel" class="btn">{{'button.cancel' | translate}}</button></a>
+            			<button id="submit" type="submit" class="btn btn-primary">{{'button.save' | translate}}</button>
+        			</div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

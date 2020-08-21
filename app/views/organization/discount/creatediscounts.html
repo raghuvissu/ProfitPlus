@@ -1,0 +1,118 @@
+<div class="content-container" ng-controller="CreateDiscountsController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a> 
+		</li>
+        <li>
+        	<a href="#/discounts">{{'label.managediscounts' | translate}}</a> 
+        </li>
+        <li class="active">{{'label.creatediscount' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h4>{{'label.heading.creatediscount' | translate}}</h4>
+			</div>
+			<br>
+				<form name="creatediscountsform" novalidate=""  class="form-horizontal" rc-submit="submit()">
+					<api-validate></api-validate>
+						<div class="error" data-ng-show="errorStatus || errorDetails">
+							<label data-ng-show="errorStatus">{{errorStatus}}</label>
+							<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+		    			</div>
+		    			<fieldset>
+		    				<div class="form-group">
+			    				<label class="control-label col-sm-2" for="discountCode">{{ 'label.discountCode' | translate }}<span class="required">*</span></label>
+	            				<div class="col-sm-3">
+		             				<input type="text" id="discountCode" name="discountCode" data-ng-model="formData.discountCode"  class="form-control"></br>
+		             			    <span data-ng-show="creatediscountsform.discountCode.$dirty && creatediscountsform.discountCode.$invalid">
+										<small class="error-row" >{{'error.code.definition.length.validation'| translate}}</small>
+							    	</span>
+	           				    </div>
+	           				    
+	           				    <label class="control-label col-sm-2" for="discountType">{{ 'label.discountType' | translate }}<span class="required">*</span></label>
+            					<div class="col-sm-3">
+             						<select id="discountType" class="form-control" data-ng-model="formData.discountType" data-ng-options="discounTypeData.mCodeValue as discounTypeData.mCodeValue for discounTypeData in discountTypeDatas">
+             							<option value="">{{'label.select.one' | translate}}</option>
+             						</select>
+            					</div>
+		    				</div>
+		    				
+		    				<div class="form-group">
+			    				<label class="control-label col-sm-2" for="discountDescription">{{ 'label.discountDescription' | translate }}<span class="required">*</span></label>
+	            				<div class="col-sm-3">
+	              					<input type="text" id="discountDescription" data-ng-model="formData.discountDescription" class="form-control">
+	           					</div>
+	           					
+	           					<label class="control-label col-sm-2" for="discountStatus">{{ 'label.status' | translate }}<span class="required">*</span></label>
+            					<div class="col-sm-3">
+	             					<select  id="discountStatus" data-ng-model="formData.discountStatus"  data-ng-options="discountStatus.value as discountStatus.value for discountStatus in statusDatas" class="form-control">
+	             						     <option value="">{{'label.select.one' | translate}}</option>
+	             					</select>
+            					</div>
+		    				</div>
+		    				
+		    				<div class="form-group">
+			    			    <label class="control-label col-sm-2">{{ 'label.startDate' | translate }}<span class="required">*</span></label>
+	                            <div class="col-sm-3">
+	                            	<input type="text" data-datepicker-pop="dd MMMM yyyy" data-ng-model="start.date" data-is-open="opened2" min="minDate" 
+	                            	       max="'2020-06-22'" data-date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;" class="form-control" readonly/>
+	                        	</div>
+		    				</div>
+		    				
+		    				<table class="table" style="border-top-style:none;">
+			    				<tr>
+		                			<!-- <td> -->
+		                			<div class="col-sm-3">
+		                 				<h4><label class="control-label">{{'label.discountdetails' | translate}}</label></h4>
+		                 			</div>
+			                		<!-- </td> -->
+		                			<!-- <td class="blockquoteresult"> -->
+			                    		<!-- <form> -->
+			                    		<div class="col-sm-3">
+				                      		<select class="form-control" data-ng-model="discountPricesFormData.categoryId" data-ng-options="clientCategoryData.id as clientCategoryData.mCodeValue for clientCategoryData in clientCategoryDatas" >
+				                      		        <option value="">{{'label.select.one' | translate}}</option>
+				                      		</select>&nbsp;&nbsp;
+				                      	</div>
+				                      	<div class="col-sm-3">	
+			                     			<input class="form-control" type="text" name="discountRate" data-ng-model="discountPricesFormData.discountRate" placeholder="Discount Rate">
+			                     		</div>
+			                     		<div class="col-sm-1">
+			                      			<a data-ng-click="addDiscountPrice()">&nbsp;<i class="fa fa-plus"></i></a>
+			                      		</div>
+			                      		<div class="col-sm-3">
+			                      		    <span data-ng-show="creatediscountsform.discountRate.$dirty && creatediscountsform.discountRate.$invalid">
+			              		  				<small class="error-row">{{'error.not.decimal.validation' | translate}}</small>
+			              		  			</span>
+			              		  		</div>
+			                    		<!-- </form> -->
+			                  			<table class="table" data-ng-show="discountPrices.length>0">
+				                   			<tr class="graybg">
+				                      			<th>{{'table.heading.customerCategory' | translate}}</th>
+				                      			<th>{{'label.discountrate' | translate}}</th>
+				                    		</tr>
+				                    		<tr data-ng-repeat="discountPrice in discountPrices" >
+				                     			<td>
+				                     				<select class="form-control" data-ng-model="discountPrice.categoryId" data-ng-options="clientCategoryData.id as clientCategoryData.mCodeValue for clientCategoryData in clientCategoryDatas" ></select>
+				                      			</td>
+				                      			<td> 
+				                      				<input class="form-control" type="text" data-ng-model="discountPrice.discountRate" placeholder="Price">
+				                      			</td>
+				                      			<td>
+				                      				<a data-ng-click="removeDiscountPrices($index)"><i class="fa fa-times"></i>
+				                      				</a>
+				                      		  	</td>
+				                    		</tr>
+			                  			</table>
+		                			<!-- </td> -->
+	              				</tr>
+		    				</table>
+		    				<div class="col-md-offset-10 pull-right">
+            					<a href="#/discounts"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+            					<button id="submit" type="submit" data-ng-disabled="creatediscountsform.$dirty && creatediscountsform.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button>
+          					</div>	
+		    			</fieldset>
+				</form>
+		</div>
+	</div>
+</div>

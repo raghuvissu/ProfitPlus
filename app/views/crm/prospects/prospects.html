@@ -1,0 +1,67 @@
+<div class="content-container" ng-controller="ProspectsController">
+	<ul class="breadcrumb">
+		<li class="active">{{'label.prospects' | translate}}&nbsp;&nbsp;{{employee.lastname}}</li>
+	</ul>
+		<div class="content ptrbl0">
+        	<div class="card mb15 pb20">
+				<div class="toolbar ptb15 mrl15 bb1 mb20">
+	            	<h4 class="ptrbl0">{{'label.prospects' | translate}}</h4>
+	        	</div>
+				<div class="row">
+                <div class="col-md-12">
+					<div class="col-md-6">
+						<form rc-submit="search(filterText)">
+							<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+						</form>
+					</div>
+					<div class="col-md-6">
+                    <div class="pull-right">
+						<a has-permission = CREATE_PROSPECT  href="#/createprospects" class="btn btn1"><i class="fa fa-plus"></i> {{ 'link.create.new.prospect' | translate }}</a>
+					</div>
+                    </div>
+                    </div>
+				</div>
+			</div>
+            </div>
+            <div class="card">
+			<table class="table">
+				<thead>
+					<tr class="graybg">
+	                <!-- <th>{{ 'table.heading.prospectId' | translate }}</th> -->
+		                <th>{{ 'table.heading.name' | translate }}</th>
+		                <th>{{ 'table.heading.emailId' | translate }}</th>
+		                <th>{{ 'table.heading.phonenumber' | translate }}</th>
+		                <th>{{ 'table.heading.address' | translate }}</th>           
+		                <th>{{ 'table.heading.status' | translate }}</th>
+		                <th>{{ 'table.action' | translate }}</th>
+	            	</tr>
+				</thead>
+				<tbody>
+					<tr class="pointer-main" data-ng-repeat="prospect in prospects.currentPageItems | filter:filterText">                      
+		                <!-- <td class="pointer" data-ng-click="routeTo(prospect.id)">{{prospect.id}}</td> -->
+		                <td class="pointer" data-ng-click="routeTo(prospect.id)">{{prospect.firstName}}&nbsp{{prospect.lastName}}</td>
+		                <td class="pointer" data-ng-click="routeTo(prospect.id)">{{prospect.email}}</td>         
+		                <td class="pointer" data-ng-click="routeTo(prospect.id)">{{prospect.mobileNumber}}</td>  
+		                <td class="pointer" data-ng-click="routeTo(prospect.id)">{{prospect.address}},{{prospect.streetArea}},{{prospect.cityDistrict}}</td>        
+		                <td class="pointer" data-ng-click="routeTo(prospect.id)">{{prospect.status}}</td> 
+		                <td>
+		                <a href="#/followprospects/{{prospect.id}}" data-ng-show="getVal(prospect.status)"
+		                   has-permission = FOLLOWUP_PROSPECT style='color:#000000' uib-popover="followup" data-popover-trigger="mouseenter" ><i class="fa fa-clock-o"></i></a> 
+						<a data-ng-click="convertProspect(prospect.id)" data-ng-show="getVal(prospect.status)"
+						   	has-permission = "CONVERT_PROSPECT && CREATE_CLIENT" style='color:#000000' uib-popover="convert to client" 
+						   	data-popover-trigger="mouseenter" ><i class="fa fa-user"></i></a> 
+						<a href="#/editprospects/{{prospect.id}}" data-ng-show="getVal(prospect.status)" 
+						   has-permission = UPDATE_PROSPECT style='color:#000000' uib-popover="Edit" data-popover-trigger="mouseenter" ><i class="fa fa-edit"></i></a> 
+						<a href="#/cancelprospects/{{prospect.id}}" data-ng-show="getVal(prospect.status)"
+						   has-permission = DELETE_PROSPECT style='color:#000000' uib-popover="cancel" data-popover-trigger="mouseenter" ><i class="fa fa-times"></i></a>
+		                </td>                     
+	                </tr>
+				</tbody>
+			</table>
+			<ul class="pager">
+        		<li class="previous"><a data-ng-click="prospects.previous()" href="" data-ng-disabled="!prospects.hasPrevious()">&larr; {{ 'label.prev' | translate }} </a></li>
+        		<li class="next" ><a data-ng-click="prospects.next()" href="" data-ng-disabled="!prospects.hasNext()"> {{ 'label.next' | translate }} &rarr;</a></li>
+	        </ul>
+		</div>
+	</div>
+</div>

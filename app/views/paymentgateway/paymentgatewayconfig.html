@@ -1,0 +1,106 @@
+<div class="content-container" ng-controller="PaymentGatewayConfigController">
+   <ul class="breadcrumb">
+		<!-- <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li> -->
+		<li><a href="#/paymentGateway">{{'label.managepaymentgateway' | translate}}</a></li>
+		<li class="active">{{'label.paymentgatewayconfig' | translate}}&nbsp;&nbsp;</li>
+	</ul>
+	<div class="card">
+        <div class="content">
+			 <div class="col-md-6">
+				<input data-ng-model="filterText2" type="text" class="form-control" placeholder="{{'label.filterbyname' | translate}}">
+			</div>
+			<table class="table">
+					<thead>
+				      <tr class="graybg">
+				          <th>{{'label.form.name' | translate}}</th>
+				          <th>{{'label.enabled' | translate}}</th>
+				          <th >{{'label.value' | translate}}</th>
+				          <th>{{'table.action' | translate}}</th>
+				          <th></th> 
+				      </tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="config in paymentConfigs  | filter:filterText2">
+				          <td>{{config.name}}</td>
+				          <td>{{config.enabled}}</td>
+				          <td style="word-break:break-all;">{{config.value}}</td>
+				    	  <td><button type="button" class="btn btn-success flag" data-ng-hide="config.enabled" 
+				    							data-ng-click="enablePaymentGateway(config.id)"><i class="fa fa-flag-o"></i></button>
+				        	  <button type="button" class="btn btn-danger flag" data-ng-show="config.enabled" 
+				        							data-ng-click="disablePaymentGateway(config.id)"><i class="fa fa-times"></i></button>
+				   			  <a data-ng-show="config.value" data-ng-click="editPaymentGateway(config.id,config.name,config.value)" 
+				   									data-uib-popover="Edit" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>
+				   		  <td><a  data-ng-click="viewPaymentGateway(config.id)" data-uib-popover="Help" data-popover-trigger="mouseenter">
+				   									<i class="fa fa-question"></i></a></td>         
+						</tr>
+					</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script type="text/ng-template" id="editgeneral.html">
+
+	   <div class="modal-header silver">
+          <h3 class="bolder">{{'label.pgconfig.edit' | translate}}</h3>
+        </div>
+	 	<form name="editGeneralForm" novalidate="" class="form-horizontal well" ng-submit="submit()">
+        <div class="modal-body">
+			 <api-validate></api-validate>
+ 		  <fieldset>
+           	<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.pgconfig.generalForm.value' | translate}}<span class="required">*</span> :</label>
+			 	<div class="col-sm-3">
+              		<input type="text" name="value" ng-model="formData.value" placeholder="enter value here" required late-Validate/><br>
+                    <span ng-show="editGeneralForm.value.$invalid">
+                    	<small class="error" ng-show="editGeneralForm.value.$error.req">
+                        	Required Field
+                    	</small>
+                   </span>
+            	</div>
+           	</div>
+		  </fieldset>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  <button id="submit" type="submit" class="btn btn-primary" ng-disabled="(!editGeneralForm.$valid)" >{{'label.confirm' | translate}}</button>
+        </div>
+	</form>
+	</script>
+	<script type="text/ng-template" id="editconfig.html">
+	   <div class="modal-header silver">
+          <h3 class="bolder">{{'label.pgconfig.editconfig' | translate}}</h3>
+       </div>
+       <div class="modal-body">
+		<api-validate></api-validate>
+			<table class="fullwidth">
+				<tr>
+					<th>key</th>
+					<th></th>
+					<th>Value</th>
+					<th></th>
+				</tr>
+				<tr>
+					<td colspan="4"><hr style="margin:10px 0"></td>
+				</tr>
+				<tr data-ng-show="keyValues.length == 0">
+					<td colspan="4" align="center" class="required">No Key Value Pairs</td>
+				</tr>
+				<tr data-ng-repeat="keyValue in keyValues">
+					<td><input type="text" class="configParam{{keyValue.key}}" name="url" class="form-control" ng-model="keyValue.key" placeholder="enter key here" input-disabled="{{keyValue.disable}}"/></td>
+					<td valign="top" style="padding-top:5px;"><strong>:</strong></td>
+            		<td><input  type="text" class="configParam{{keyValue.key}}" name="url" class="form-control" ng-model="keyValue.value" placeholder="enter value here" input-disabled="{{keyValue.disable}}"/></td>
+					<td  valign="top" style="padding-top:5px;">
+						<a data-ng-click="editConfigParams($index,keyValue.key)" data-ng-hide="!keyValue.disable"><i class="fa fa-edit fa fa-white"></i></a>
+						<a data-ng-click="deleteConfigParams($index)" ><i class="fa fa-remove fa fa-white"></i></a>
+						<a data-ng-click="createConfigParams()" ng-show="$last"><i class="fa fa-plus fa fa-white"></i></a>
+					</td>
+		  		</tr>
+			</table>
+            <div class="modal-footer">
+          		<button id="cancel" class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  		<button id="submit" type="submit" class="btn btn-primary" ng-click="submit()">{{'button.save' | translate}}</button>
+			</div>
+        </div>
+	</script>
+	
+</div>

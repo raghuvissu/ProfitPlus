@@ -1,0 +1,142 @@
+<div class="content-container" ng-controller="DiscountsController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li class="active">{{'label.managediscounts' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<uib-tabset tabset-name="discountTabset">
+				<uib-tab heading="{{'label.heading.discounts' | translate}}">
+					<div>
+						<div class="toolbar">
+							<div class="row">
+								<div class="col-md-6">
+									<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+								</div>
+							    <div class="col-md-6">
+							    	<a has-permission = CREATE_DISCOUNT  href="#/creatediscounts" class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{ 'link.create.new.discount' | translate }}</a>    
+							    </div>
+							</div>
+						</div>
+					</div>
+					<table class="table">
+						<thead>
+							<tr class="graybg">
+								<th>{{ 'table.heading.discountCode' | translate }}</th>
+								<th>{{ 'table.heading.discountDescription' | translate }}</th>
+								<th>{{ 'table.heading.discountType' | translate }}</th>
+								<th>{{ 'table.heading.discountRate' | translate }}</th>
+								<th>{{ 'table.heading.startDate' | translate }}</th>
+								<th>{{ 'table.heading.status' | translate }}</th>
+								<th>Actions</th>
+						    </tr>
+						</thead>
+						<tbody>
+							<tr class="pointer-main" data-ng-repeat="discount in discounts | filter:filterText">
+								<td class="pointer"
+									data-ng-click="routeToDiscounts(discount.id)">{{discount.discountCode}}</td>
+								<td class="pointer"
+									data-ng-click="routeToDiscounts(discount.id)">{{discount.discountDescription}}</td>
+								<td class="pointer"
+									data-ng-click="routeToDiscounts(discount.id)">{{discount.discountType}}</td>
+								<td class="pointer"
+									data-ng-click="routeToDiscounts(discount.id)">{{discount.discountRate}}</td>
+								<td class="pointer"
+									data-ng-click="routeToDiscounts(discount.id)">{{discount.discountStartDate|DateFormat}}</td>
+								<td class="pointer"
+									data-ng-click="routeToDiscounts(discount.id)">{{discount.discountStatus}}</td>
+								<td>
+									<a has-permission = UPDATE_DISCOUNT href="#/editdiscounts/{{discount.id}}" uib-popover="{{'label.editdiscounts' | translate}}" data-popover-trigger="mouseenter">
+				                       <i class="fa fa-edit"></i>
+				                    </a>&nbsp;
+				                    <!-- <a has-permission = DELETE_DISCOUNT data-ng-click="deleteDiscount(discount.id)" uib-popover="{{'label.heading.deletediscount' | translate}}" data-popover-trigger="mouseenter">
+				                       <i class="fa fa-times"></i>
+				                    </a> -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</uib-tab>
+				<uib-tab heading="{{'label.heading.promotioncode' | translate}}">
+					<div>
+						<div class="toolbar">
+							<div class="row">
+								<div class="col-md-6">
+									<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">								
+								</div>
+								<div class="col-md-6">
+									<a  has-permission = CREATE_PROMOTIONCODE href="#/createpromotion" class="btn primary_btn pull-right"><i class="fa fa-plus"></i>{{ 'link.create.new.promotioncode' | translate }}</a>
+								</div>
+							</div>
+						</div>
+				    </div>
+				    <table class="table">
+					    <thead>
+						    <tr class="graybg">
+								<th>{{ 'table.heading.PromotionCode' | translate }}</th>
+								<th>{{ 'table.heading.promotionDescription' | translate }}</th>
+								<th>{{ 'table.heading.DurationType' | translate }}</th>
+								<th>{{ 'table.heading.Duration' | translate }}</th>
+								<th>{{ 'table.heading.discountType' | translate }}</th>
+								<th>{{ 'table.heading.discountRate' | translate }}</th>
+								<th>Actions</th>
+							</tr>
+					    </thead>
+					    <tbody>
+						    <tr class="pointer-main" data-ng-repeat="promotiondadata in promotiondatas | filter:filterText">
+								<td class="pointer"
+									data-ng-click="routeToPromotion(promotiondadata.id)">{{promotiondadata.promotionCode}}</td>
+								<td class="pointer"
+									data-ng-click="routeToPromotion(promotiondadata.id)">{{promotiondadata.promotionDescription}}</td>
+								<td class="pointer"
+									data-ng-click="routeToPromotion(promotiondadata.id)">{{promotiondadata.durationType}}</td>
+								<td class="pointer"
+									data-ng-click="routeToPromotion(promotiondadata.id)">{{promotiondadata.duration}}</td>
+								<td class="pointer"
+									data-ng-click="routeToPromotion(promotiondadata.id)">{{promotiondadata.discountType}}</td>
+								<td class="pointer"
+									data-ng-click="routeToPromotion(promotiondadata.id)">{{promotiondadata.discountRate}}</td>
+								<td>
+								    <a has-permission =UPDATE_PROMOTIONCODE  href="#/editpromotioncode/{{promotiondadata.id}}" uib-popover="{{'label.editpromotioncode' | translate}}" data-popover-trigger="mouseenter">
+				                    	<i class="fa fa-edit"></i>
+				                    </a>&nbsp;
+				                    <a has-permission = DELETE_PROMOTIONCODE data-ng-click="deletePromotion(promotiondadata.id)" uib-popover="{{'dialog.promotion.code.title.message' | translate}}" data-popover-trigger="mouseenter">
+				                    	<i class="fa fa-times"></i>
+				                    </a>
+								</td>
+						    </tr>
+					    </tbody>
+				    </table>
+				</uib-tab>
+			</uib-tabset>
+		</div>
+    </div>
+    <script type="text/ng-template" id="deletePopupForDiscount.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">{{'label.heading.deletediscount' | translate}}</h3>
+        </div>
+
+        <div class="modal-body style="height:60px;">
+            <h4>Are you sure?</h4>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="deletepopupForPromotionCodes.html">
+   	<div class="modal-header silver">
+    	<h3 class="bolder">{{'dialog.promotion.code.title.message' | translate}}</h3>
+    </div>
+
+    <div class="modal-body" style="height:60px;">
+    	<h4>Are you sure?</h4>
+    </div>
+
+   	<div class="modal-footer">
+    	<button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+       	<button class="btn btn-primary" ng-click="approve(date.actDate)">{{'label.confirm' | translate}}</button>
+    </div>
+   </script> 
+</div>

@@ -1,0 +1,116 @@
+<div class="content-container" data-ng-controller="CreatePriceController">
+	<ul class="breadcrumb">
+	     <li><a href="#plans">{{'link.admin.plans' | translate}}</a> <span class="divider"></span></li>
+	     <li><a href="#/viewplan/{{planId}}">{{formData.planCode}}</a><span class="divider"></span></li>
+	     <li class="active">{{'label.creatprice' | translate}}</li>
+    </ul>
+	 <div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h4>{{'label.heading.createprice' | translate}}</h4>
+			</div>
+			<br> 
+				<form class="form-horizontal" name="createPlanPrice" novalidate=""  rc-submit="submit()">
+					<api-validate></api-validate>
+					<!-- <div class="error" data-ng-show="errorStatus || errorDetails">
+						<label data-ng-show="errorStatus">{{errorStatus}}</label>
+						<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+	    			</div> -->
+	    			<fieldset>	 			
+          			 <table class="table">
+                 			<tr>
+                    			<td>
+                    				<label for="planCode">{{ 'label.plan.plancode' | translate }}</label>
+                    				<input  class="input-small form-control" data-ng-model="formData.planCode" type="text" readonly>
+                    			</td>
+                    			<td>
+                    				<label for="chargevariant">{{ 'label.price.chargevariant' | translate }}</label>
+                    				<select class="input-small form-control" data-ng-model="formData.chargevariant" 
+                    				data-ng-options="chargevariant.id as chargevariant.value for chargevariant in chargevariants"></select>
+                    			</td>
+                   				<td>
+                   					<label for="servicecode">{{ 'label.plan.servicecode' | translate }}</label>
+                   					<select class="input-small form-control"  data-ng-model="formData.productId" 
+                   						data-ng-options="serviceData.id as serviceData.productDescription for serviceData in serviceDatas"></select>
+                   				</td>
+                   				<td>
+                   					<label for="discountCode">{{ 'label.price.discountcode' | translate }}</label>
+                   					<select class="input-small form-control"  data-ng-model="formData.discountId"  
+                   						data-ng-options="discountdatas.id as discountdatas.discountDescription for discountdatas in discountdatas"></select>
+                   				</td>
+                   				<td>
+                   					<label for="chargecode">{{ 'label.price.chargecode' | translate }}</label>
+                   					<select class="input-small form-control"  data-ng-model="formData.chargeCode"  
+                   						data-ng-options="chargeDatas.chargeCode as chargeDatas.chargeDescription for chargeDatas in chargeDatas"></select>
+                   				</td>
+                    			<td>
+                    				<label for="priceregion">{{ 'label.price.priceregion' | translate }}</label>
+                    				<select class="input-small form-control"  data-ng-model="formData.priceregion" 
+                    					data-ng-options="priceRegionData.id as priceRegionData.priceregionCode for priceRegionData in priceRegionDatas"></select>
+                    			</td>
+                    			<td data-ng-show="formData.isPrepaid == 'Y'">
+                    				<label for="duration">{{ 'label.plan.duration' | translate }}</label>
+                    				<select class="input-small form-control" data-ng-model="formData.duration" 
+                    					data-ng-options="subscriptiondata.Contractdata as subscriptiondata.Contractdata for subscriptiondata in subscriptiondata">
+                    				</select></td>
+                    			<td>
+                    				<label for="planCode">{{ 'label.currency' | translate }}</label>
+                    				<input  class="input-small form-control" data-ng-model="currencyCode" type="text" disabled>
+                    			</td>
+                    			<td> 
+                    				<label for="amount">{{ 'label.price.amount' | translate }}</label>
+                    				<input  id="price" class="input-small form-control" data-ng-model="formData.price" type="text"></td>
+                    			<td><!-- <a data-ng-click="editPrice()"><i class="icon-edit"></i></a>&nbsp; --> 
+	                      	    	<a data-ng-click="!(createPlanPrice.price.$error.pattern)&&addPriceData()" style="margin-left:25px;">
+	          							<i class="fa fa-plus" style="margin-top: 30px;"></i>
+	          						</a>&nbsp;
+	          					</td>
+                  			</tr>
+        				</table>
+            			
+            			<div data-ng-show="priceDatas.length>0">
+            			 <br/><br/>
+            				<legend>{{'label.existsprices' | translate}}</legend>
+            				<table class="table">
+            						 <tr class="graybg">
+		                      			<th>{{ 'label.plan.plancode' | translate }}</th>
+		                     			<th>{{ 'label.price.chargevariant' | translate }}</th>
+		                     			<th>{{ 'label.plan.servicecode' | translate }}</th>
+		                      			<th>{{ 'label.price.discountcode' | translate }}</th>
+		                      			<th>{{ 'label.price.chargecode' | translate }}</th>
+		                      			<th>{{ 'label.price.priceregion' | translate }}</th>
+		                      			<th data-ng-show="formData.isPrepaid == 'Y'">{{ 'label.plan.duration' | translate }}</th>
+		                      			<th>{{ 'label.currency' | translate }}</th>
+		                      			<th>{{ 'label.price.amount' | translate }}</th>
+		                      			<th>{{ 'table.heading.actions' | translate }}</th>
+		                   			 </tr>
+		                   			 <tr data-ng-repeat="existsprice in priceDatas track by $index">
+		                      			<td><input  class="input-small form-control" data-ng-model="existsprice.planCode" type="text" readonly></td>
+		                      			<td><select class="input-small form-control" data-ng-model="existsprice.chargevariant" 
+		                      				data-ng-options="chargevariant.id as chargevariant.value for chargevariant in chargevariants"></select></td>
+		                     			<td><select class="input-small form-control"  data-ng-model="existsprice.productId" 
+		                     				data-ng-options="serviceData.id as serviceData.productDescription for serviceData in serviceDatas"></select></td>
+		                     			<td><select class="input-small form-control"  data-ng-model="existsprice.discountId"  
+		                     				data-ng-options="discountdatas.id as discountdatas.discountDescription for discountdatas in discountdatas"></select></td>
+		                     			<td><select class="input-small form-control"  data-ng-model="existsprice.chargeCode"  
+		                     				data-ng-options="chargeDatas.chargeCode as chargeDatas.chargeDescription for chargeDatas in chargeDatas"></select></td>
+		                      			<td><select class="input-small form-control"  data-ng-model="existsprice.priceregion" 
+		                      				data-ng-options="priceRegionData.id as priceRegionData.priceregionCode for priceRegionData in priceRegionDatas"></select></td>
+		                      			<td data-ng-show="existsprice.isPrepaid == 'Y'"><select class="input-small form-control" 
+		                      				data-ng-model="existsprice.duration" data-ng-options="subscriptiondata.Contractdata as subscriptiondata.Contractdata for subscriptiondata in subscriptiondata"></select></td>
+		                      			<td><input  class="input-small form-control" data-ng-model="currencyCode" type="text" disabled></td>
+		                      			<td> <input  id="price" class="input-small form-control" data-ng-model="existsprice.price" type="text"></td>
+		                      			<td><!-- <a data-ng-click="editPrice()"><i class="icon-edit"></i></a>&nbsp; --> 
+		                        	    <a data-ng-click="removePriceData($index,existsprice.id)" data-popover="Delete Plan" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>&nbsp;</td>
+		                    		</tr>
+            				</table>
+            				<div class="col-md-offset-9 pull-right">
+		            			<a href="#/viewplan/{{planId}}"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+		            			<button id="save" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+		            		</div>
+          			  	</div>
+	    			</fieldset>
+				</form>
+		</div>
+	</div>
+</div>

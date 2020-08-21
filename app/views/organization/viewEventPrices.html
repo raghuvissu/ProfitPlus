@@ -1,0 +1,66 @@
+<div class="content-container" data-ng-controller="ViewEventPricesController">
+	<div class="paddedbottom10">
+		<ul class="breadcrumb">
+			<li><a href="#/mediadetailseventpricing">{{'label.mediadetailseventpricing' | translate}}</a></li>
+			<li><a href="#/viewEvent/{{eventId}}">{{'label.viewevent' | translate}}</a></li>
+			<li class="active">{{'label.viewprice' | translate}}</li>
+		</ul>
+	</div>
+	   <div class="card">
+        <div class="content">
+          <div class="toolbar">
+            <h3>&nbsp;&nbsp;&nbsp;{{'label.viewprice' | translate}}</h3>
+          </div>
+			<div class="row paddedleft">
+				<table class="table">
+         			<thead>
+			           <tr class="graybg">
+					        <th>{{'label.eventname' | translate }}</th>
+					        <th>{{'label.formattype' | translate }}</th>
+					        <th>{{'label.opttype' | translate }}</th>
+					        <th>{{'label.clienttype' | translate }}</th>
+					        <th>{{'label.discount' | translate }}</th>
+					        <th>{{'label.price' | translate }}</th>		       
+							<th>Actions</th>
+				      </tr>
+        			</thead>
+			        <tbody>
+			           
+			            <tr class="pointer-main" data-ng-repeat="pricedata in pricing | filter:filterText">
+							<td class="pointer" data-ng-click="routeTo(pricedata.id)">{{pricedata.eventName}}</td>
+							<td class="pointer" data-ng-click="routeTo(pricedata.id)">{{pricedata.formatType}}</td>				
+							<td class="pointer" data-ng-click="routeTo(pricedata.id)">{{pricedata.optType}}</td>
+							<td class="pointer" data-ng-click="routeTo(pricedata.id)">{{pricedata.clientType}}</td>
+							<td class="pointer" data-ng-click="routeTo(pricedata.id)">{{pricedata.discount}}</td>				
+							<td class="pointer" data-ng-click="routeTo(pricedata.id)">{{pricedata.price}}</td>
+							<td>
+								<a has-permission='UPDATE_EVENTPRICE' href="#/editEventPrice/{{pricedata.id}}" 
+									uib-popover="{{'label.editevent' | translate}}" 
+									data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;
+								<a has-permission='DELETE_EVENTPRICE' data-ng-click="deleteEventPrice(pricedata.id)" 
+									uib-popover="{{'label.deleteevent' | translate}}" 
+									data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>
+			                </td>
+						</tr>
+			                  
+			        </tbody>
+    </table>
+	</div>
+
+	<script type="text/ng-template" id="deletePopupForEventPrice.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">{{'label.heading.deletediscount' | translate}}</h3>
+        </div>
+
+        <div class="modal-body style="height:60px;">
+            <h4>Are you sure?</h4>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </div>
+ 	</script>
+ 	 	</div>
+ 	</div>
+ </div>

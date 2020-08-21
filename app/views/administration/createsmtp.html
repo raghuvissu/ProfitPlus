@@ -1,0 +1,72 @@
+<div class="content-container" ng-controller="CreateSmtpController">
+  <ul class="breadcrumb">
+      <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+      <li class="active">{{'label.configure.smtp' | translate}}</li>
+  </ul>
+  <div class="card">
+    <div class="content">
+      <div class="toolbar">
+   			<h4>{{'label.configure.smtp' | translate}}</h4>
+      </div>
+      <form name="createsmtp" class="form-horizontal" ng-submit="submit()">
+       <api-validate></api-validate>
+    	 <fieldset>
+    	   <div class="form-group">
+	 			<label class="control-label col-sm-2" for="userName">{{'label.code.name' | translate}}<span class="required">*</span></label>
+				<div class="col-sm-3">
+					 <input type="text" id="userName" class="form-control" ng-model="formData.userName" readonly>
+				</div>
+				<label class="control-label col-sm-2" for="starttls">Starttls<span class="required">*</span></label>
+				<div class="col-sm-3" ng-init="formData.starttls='true'">
+					<input type="radio" id="type" ng-model="formData.starttls" name="starttls" value="true" checked="checked">
+					&nbsp; {{'label.configure.smtp.true' | translate}} &nbsp;&nbsp;
+					<input type="radio" id="type" ng-model="formData.starttls" name="starttls" value="false">
+					&nbsp; {{'label.configure.smtp.false' | translate}}
+				</div>
+         	</div>
+         	
+         	<div class="form-group">
+				<label class="control-label col-sm-2" for="mailId">{{ 'label.emailId' | translate }}<span class="required">*</span></label>
+        		<div class="col-sm-3">
+          		 <input type="email" id="mailId" class="form-control" name="mailId" ng-model="formData.mailId">
+					<div ng-show="createsmtp.mailId.$dirty && createsmtp.mailId.$invalid">
+						<small class="error" ng-show="createsmtp.mailId.$error.email">{{ 'error.configure.smtp.invalid.email' | translate }}</small>
+					</div>
+				</div>
+		 		<label class="control-label col-sm-2" for="hostName">{{ 'label.hostName' | translate }}<span class="required">*</span></label>
+				 <div class="col-sm-3">
+					<input type="text" id="hostName" class="form-control" ng-model="formData.hostName">
+				 </div>
+     		</div>
+     		
+     		<div class="form-group">
+              <label class="control-label col-sm-2" for="password">{{ 'label.password' | translate }}<span class="required">*</span></label>
+               <div class="col-sm-3">
+              	<input type="password" id="password" class="form-control" ng-model="formData.password">
+              </div>
+              <label class="control-label col-sm-2" for="setContentString">{{'label.setcontentstring' | translate }}<span class="required">*</span></label>
+				<div class="col-sm-3">
+					<select data-ng-model="formData.setContentString" class="form-control">
+						<option value="text/html;charset=utf-8">text/html;charset=utf-8</option>
+						<option value="text/html;charset=utf-16">text/html;charset=utf-16</option>
+						<option value="text/html">text/html</option>
+					</select>
+				</div>
+            </div>
+            
+            <div class="form-group">
+           	<label class="control-label col-sm-2" for="port">{{ 'label.port' | translate }}</label>
+				<div class="col-sm-3">
+					<input type="text" id="port" class="form-control" ng-model="formData.port">
+				</div>
+			</div>
+			
+    	    <div class="col-md-offset-9">
+				<a href="#/global"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+		        <button  id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+            </div>
+    	 </fieldset>
+      </form>
+     </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="content-container" data-ng-controller="ViewEventPriceController">
+	<ul class="breadcrumb">
+		<li><a href="#/event">{{'label.event' | translate}}</a></li>
+		<li><a href="#/viewEvent/{{eventId}}">{{'label.viewevent' | translate}}</a></li>
+		<li><a href="#/viewEventPrices/{{pricedata.eventId}}">{{'label.viewprice' | translate}}</a></li>
+		<li class="active">{{pricedata.eventName}}</li>
+	</ul>
+		<div class="card">
+        	<div class="content">
+		       <div class="toolbar">
+					 <div class="pull-right">
+				      <div class="btn-group">
+				          <a has-permission='UPDATE_EVENTPRICE' href="#/editEventPrice/{{pricedata.id}}" class="btn btn-primary"><i 
+				          	class="fa fa-edit"></i> {{'button.edit' | translate}}</a>	        
+				          <a has-permission='DELETE_EVENTPRICE' data-ng-click="deleteEventPrice(eventId)" class="btn btn-primary"><i 
+				          	class="fa fa-trash-o"></i> {{'button.delete' | translate}}</a>		     
+				      </div>
+				    </div>
+				    </div>
+	    		
+	<div class="row paddedleft">
+	 <div class="col-md-6">
+	   <h3>&nbsp;&nbsp;&nbsp;{{'label.vieweventprice' | translate}}</h3>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<td>{{'label.eventid' | translate }}</td>
+				<td>{{pricedata.eventId}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.formattype' | translate }}</td>
+				<td>{{pricedata.formatType}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.opttype' | translate }}</td>
+				<td>{{pricedata.optType}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.clienttype' | translate }}</td>
+				<td>{{clientTypeValue}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.discount' | translate }}</td>
+				<td>{{pricedata.discount}}</td>
+			</tr>
+			<tr>
+				<td>{{'label.price' | translate }}</td>
+				<td>{{pricedata.price}}</td>
+			</tr>
+		</table>
+	</div>
+ </div>
+</div>
+<script type="text/ng-template" id="deletePopupForEventPrice.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">{{'label.heading.deletediscount' | translate}}</h3>
+        </div>
+
+        <div class="modal-body style="height:60px;">
+            <h4>Are you sure?</h4>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </div>
+ </script>
+  	</div>
+ </div>

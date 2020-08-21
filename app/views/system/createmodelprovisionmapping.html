@@ -1,0 +1,57 @@
+<div class="content-container" ng-controller="CreateModelProvisionmappingController">
+	<ul class="breadcrumb">
+		<li><a href="#/inventory" ng-click="reset123()">{{'link.admin.inventory' | translate}}</a></li>
+		<li class="active">{{'label.createitemmodel' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h4>{{'label.createitemmodel' | translate}}</h4>
+			</div>
+			<br>
+			<form name="createmodelprovisionmappingform" novalidate="" class="form-horizontal" rc-submit="submit()">
+				<api-validate></api-validate>
+				<fieldset>
+                   <div class="form-group">
+					     <label class="control-label col-sm-2" for="make">{{'label.make'| translate }}&nbsp;</label>
+						 <div class="col-sm-3">
+							 <input type="text" id="make" class="form-control" name="make" data-ng-model="formData.make" />
+					     </div>
+			         </div>	   
+			         <div class="form-group">
+					     <label class="control-label col-sm-2" for="itemType">{{'label.itemtype'| translate }}&nbsp;<span class="required">*</span></label>
+						 <div class="col-sm-3">
+							 <select id="itemType" class="form-control" data-ng-model="formData.itemType"  
+    			                	 data-ng-options="itemType for itemType in itemTypes">
+    			                	<option value="">{{'label.select.one' | translate}}</option>
+    			             </select>
+					     </div>
+			         </div>
+				     <div class="form-group">
+					     <label class="control-label col-sm-2" for="model">{{'label.model'| translate }}&nbsp;<span class="required">*</span></label>
+						 <div class="col-sm-3">
+							 <input type="text" id="model" class="form-control" name="model" data-ng-model="formData.model" />
+							 <!-- <span data-ng-show="createmodelprovisionmappingform.model.$invalid">
+								 <small class="error" data-ng-show="createmodelprovisionmappingform.model.$error.minlength && !createmodelprovisionmappingform.model.$error.req">Name is required at least 3 characters</small>
+				           	 </span> -->
+					     </div>
+			         </div>
+					<div class="form-group">
+					    <label class="control-label col-sm-2" for="provisionId">{{'label.provision'| translate }}&nbsp;<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id="provisionId" class="form-control" ng-model="formData.provisioningId" 
+								    ng-options="provisionData.id as provisionData.mCodeValue for provisionData in provisionDatas">
+									<option value="">{{'label.select.one' | translate}}</option>
+							</select> 
+					    </div>
+				    </div>
+			         
+			         <div class="col-md-offset-9">
+	            		<a href="#/inventory"><button id="cancel" type="reset" class="btn" ng-click="reset123()">{{'button.cancel'| translate}}</button></a>
+	            		<button id="submit" type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+	          		</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

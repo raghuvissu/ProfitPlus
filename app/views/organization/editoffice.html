@@ -1,0 +1,204 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li><a href="#/offices">{{'label.manageorganization' | translate}}</a></li>
+        <li class="active">{{'label.editorganization' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<form name="editofficeform" novalidate="" class="form-horizontal" 
+    			ng-controller="EditOfficeController"
+    		      rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+    		        <legend>{{'label.editorganization' | translate}}</legend>
+    		          <div class="form-group">
+    		          	 <label class="control-label col-sm-2">{{ 'label.businesstype' | translate }}</label>
+                  			<div class="col-sm-3">
+                    			<select data-ng-model="formData.businessType"  class="form-control"
+                    				data-ng-options="businessType.mCodeValue as businessType.mCodeValue for businessType in businessTypes"></select>
+                  			</div>
+                  		</div>
+    		           <div class="form-group">
+    		              <label class="control-label col-sm-2">{{ 'label.orgcode' | translate }}</label>
+    		
+    				        <div class="col-sm-3">
+    				            <input id="externalId" type="text" name="externalId" ng-model="formData.externalId" class="form-control"/>
+    				            <span data-ng-show="createofficeform.externalId.$dirty && createofficeform.externalId.$invalid" data-ng-minlength="3" data-ng-maxlength="15">
+    			                  	<small class="error" data-ng-show="createofficeform.externalId.$error.minlength">{{'org.code.require.atleast.3.characters'| translate}}</small>
+    			                  	<small class="error" data-ng-show="createofficeform.externalId.$error.maxlength">{{'org.code.should.not.exceed.15.characters'| translate}}</small>
+					            </span>
+    				        </div>
+    				      <label class="control-label col-sm-2" for="email">{{'label.email' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="email" class="form-control" data-ng-model="formData.email"/>
+					        </div>
+    		           </div>
+    		        
+    				    <div class="form-group">
+    				        <label class="control-label col-sm-2" for="name">{{ 'label.orgname' | translate }}<span
+    				                class="required">*</span></label>
+		   				        <div class="col-sm-3">
+		   				            <input id="name" type="text" name="name" ng-model="formData.name"
+		   				                   class="form-control" required late-Validate/>
+		   				            <form-validate valattributeform="editofficeform" valattribute="name"/>       
+		   				        </div>
+    				        <!-- <div class="col-sm-3">
+    				            <form-validate valattributeform="editofficeform" valattribute="name"/>
+    				        </div> -->
+    				        
+    				        <label class="control-label col-sm-2">{{'label.addressname' | translate}}<span class="required">*</span></label>
+			        		<div class="col-sm-3">
+					          	<input type="text" id="addressName" name="addressName" class="form-control" data-ng-model="formData.addressName" 
+					          		required data-late-Validate/>
+					          	<span  data-ng-show="editofficeform.address.$invalid">
+					             	<small class="error" data-ng-show="editofficeform.address.$error.req">
+					                  {{'label.required.field' | translate}}
+					              	</small>
+					          	</span>
+			        		</div>
+    				    </div>
+    				    
+    				    <div class="form-group">
+    				       <label class="control-label col-sm-2">{{ 'label.orgtype' | translate }}</label>
+	                  			<div class="col-sm-3">
+	                    			<select data-ng-model="formData.officeType"  class="form-control"
+	                    				data-ng-options="officeType.id as officeType.name for officeType in officeTypes"></select>
+	                  			</div>
+                  			<label class="control-label col-sm-2" for="city">{{'label.city/area' | translate}}<span class="required">*</span></label>
+					          <div class="col-sm-3">
+					          	  <input type="text" id="city" name="city" class="form-control" data-ng-model="formData.city" required data-ng-change="getStateAndCountry(formData.city)"/>  
+					          </div>
+					          <datalist id="citylist">
+				             	  <option  data-ng-repeat="city in cities" value="{{city}}">
+				       		  </datalist>
+   				    	</div>
+    				    
+    				    <div class="form-group">
+			                  <label class="control-label col-sm-2">{{ 'label.parentorg' | translate }}<span class="required">*</span></label>
+			                  <div class="col-sm-3">
+			                     <!-- <select data-ng-model="formData.officeType"  class="form-control"
+			                     	data-ng-options="officeType.id as officeType.name for officeType in officeTypes">
+			                     </select> -->
+			                     <select id="parentId" ng-model="formData.parentId" class="form-control"
+    		                            ng-options="office.id as office.name for office in offices"
+    		                            value="{{office.id}}"></select>
+			                  </div>
+			                 <label class="control-label col-sm-2" for="state">{{'label.state' | translate}}<span class="required">*</span></label>
+						        <div class="col-sm-3">
+						          <input type="text" id="state" class="form-control" data-ng-model="formData.state" disabled required/>
+						        </div>
+		                </div>
+		                
+    				    <div class="form-group">
+    				        <label class="control-label col-sm-2">{{ 'label.orgopenedon' | translate }}<span
+    				                class="required">*</span></label>
+    		
+    				        <div class="col-sm-3">
+    				            <input id="openingDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.date"
+    				                   is-open="opened" min="minDate" max="restrictDate" class="form-control"/>
+    				        </div>
+    				        <label class="control-label col-sm-2" for="country">{{'label.country' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="country" name="country" class="form-control" data-ng-model="formData.country" disabled required />
+					        </div>
+    				    </div>
+    				    
+    				    <div class="form-group">
+	                		<label class="control-label col-sm-2" for="contactPerson">{{ 'label.contactperson' | translate }}</label>
+	            			<div class="col-sm-3">
+	              				<input type="text" id="contactPerson" name="contactPerson" data-ng-model="formData.contactPerson" class="form-control">
+	            			</div>
+	            			
+	            			<label class="control-label col-sm-2" for="zip">{{ 'label.zip' | translate }}</label>
+	            			<div class="col-sm-3">
+	              		    	<input type="text" id="zip" name="zip" data-ng-model="formData.zip" class="form-control"/>
+	            			</div>
+	                	</div>
+    				    
+    				    <div class="form-group">
+				        	<label class="control-label col-sm-2" for="phone">{{'label.phonenumber' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="phone" data-ng-model="formData.phoneNumber" class="form-control" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" name="phoneNumber" maxlength="15" required  data-late-Validate/>
+					          	<div data-ng-show="editofficeform.phoneNumber.$dirty && editofficeform.phoneNumber.$invalid">
+					  				<small class="error" data-ng-show="editofficeform.phoneNumber.$error.pattern">{{'label.prospect.error.mobileno' | translate}}</small>
+								</div>
+					        </div>
+					        <label class="control-label col-sm-2" for="file">{{'label.client.select.logo' | translate}}</label>
+					        <div class="col-sm-3">
+					          <input type="file" data-ng-file-select="onFileSelect($files)">
+					        </div>
+		      			</div>
+    				    
+    				    <!-- <div class="form-group">
+                 			<label class="control-label col-sm-2">{{'label.addressname' | translate}}<span class="required">*</span></label>
+			        		<div class="col-sm-3">
+					          	<input type="text" id="addressName" name="addressName" class="form-control" data-ng-model="formData.addressName" 
+					          		required data-late-Validate/>
+					          	<span  data-ng-show="editofficeform.address.$invalid">
+					             	<small class="error" data-ng-show="editofficeform.address.$error.req">
+					                  {{'label.required.field' | translate}}
+					              	</small>
+					          	</span>
+			        		</div>
+              			</div> -->
+              			
+    				    <!-- <div class="form-group">
+	            			<label class="control-label col-sm-2" for="city">{{'label.city/area' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          	<input type="text" id="city" name="city" class="form-control" data-ng-model="formData.city" required data-ng-change="getStateAndCountry(formData.city)"/>  
+					        </div>
+					        <datalist id="citylist">
+				             	<option  data-ng-repeat="city in cities" value="{{city}}">
+				       		</datalist>
+	          			</div> -->
+	          			
+				      	<!-- <div class="form-group">
+				         	<label class="control-label col-sm-2" for="state">{{'label.state' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="state" class="form-control" data-ng-model="formData.state" disabled required/>
+					        </div>
+				      	</div> -->
+				      	
+					   <!-- <div class="form-group">
+					        <label class="control-label col-sm-2" for="country">{{'label.country' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="country" name="country" class="form-control" data-ng-model="formData.country" disabled required />
+					        </div>
+		      			</div> -->
+		      			
+		      			<!-- <div class="form-group">
+				        	<label class="control-label col-sm-2" for="phone">{{'label.phonenumber' | translate}}<span class="required">*</span></label>
+					        <div class="col-sm-3">
+					          <input type="text" id="phone" data-ng-model="formData.phoneNumber" class="form-control" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" name="phone" maxlength="15" required  data-late-Validate/>
+					          	<div data-ng-show="editofficeform.phoneNumber.$dirty && editofficeform.phoneNumber.$invalid">
+					  				<small class="error" data-ng-show="editofficeform.phoneNumber.$error.pattern">{{'label.prospect.error.mobileno' | translate}}</small>
+								</div>
+					        </div>
+					   	</div -->
+					   	
+					   	<!-- <div class="form-group">
+					        <label class="control-label col-sm-2" for="email">{{'label.email' | translate}}</label>
+					        <div class="col-sm-3">
+					          <input type="text" id="email" class="form-control" data-ng-model="formData.email"/>
+					        </div>
+			      		</div> -->
+			      		
+			      		<!-- <div class="form-group">
+					        <label class="control-label col-sm-2" for="file">{{'label.client.select.logo' | translate}}</label>
+					        <div class="col-sm-3">
+					          <input type="file" data-ng-file-select="onFileSelect($files)">
+					        </div>
+		      			</div> -->
+		      			
+    				    <div class="col-md-offset-9">
+    				        <a id="cancel" href="#/offices">
+    				            <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+    				        </a>
+    				        <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_OFFICE'>{{'label.button.save' | translate}}</button>
+    				    </div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

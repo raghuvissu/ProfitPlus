@@ -1,0 +1,186 @@
+<div class="content-container" ng-controller="ViewPartnerController">
+    <ul class="breadcrumb">
+        <li><a href="#/partner" data-ng-click="partnersTab()">{{'label.partner' | translate}}</a></li>
+        <li class="active">{{partner.partnerName}}</li>
+    </ul>
+
+    <div class="card">
+        <div class="content">
+        	<div class="toolbar">
+        		<h4>{{ 'label.balance.amount' | translate }}</h4>
+        		<div class="row primarydiv">
+        		  <div class="pull-right">
+        		    <div class="btn-group">
+	        		    <a href="#/officepayments/{{partner.id}}" class="btn btn_primary">
+	        		       <i class="fa fa-usd "></i>{{'label.officepayments' | translate}}</a>
+		                <a href="#/officeadjustments/{{partner.id}}" class="btn btn_primary">
+	                       <i class="fa fa-adjust"></i>{{'label.officeadjustments' | translate}}</a>
+        		        <a has-permission="UPDATE_PARTNER" href="#/editpartner/{{partner.id}}" class="btn btn_primary">
+        		        	<i class="fa fa-edit"></i>{{'label.editpartner' | translate}}</a>
+        		        <a has-permission="CREATE_PARTNERAGREEMENT" 
+	          			   href="#/createpartneragreement/{{partner.id}}/{{partner.officeId}}" class="btn btn_primary">
+	          			  <i class="fa fa-plus"></i>{{'label.createagreement' | translate}}</a>
+        		    </div>
+        		  </div>
+        		</div>
+        	</div>
+   			<div class="row">
+   				<div class="col-md-6">
+   			        <table class="table table-bordered table-striped">
+   			            <tr>
+							<td><strong>{{ 'label.loginname' | translate }}</strong></td>
+							<td>{{partner.loginName}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.parent office' | translate }}</strong></td>
+							<td>{{partner.parentName}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.partner.created.on' | translate }}</strong></td>
+							<td>{{partner.openingDate | DateFormat}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.iscollective' | translate }}</strong></td>
+							<td>{{partner.isCollective}}</td>
+						</tr>
+   			        </table>
+   				</div>
+   				<div class="col-md-6">
+   			        <table class="table table-bordered table-striped">
+   			            <tr>
+							<td><strong>{{'label.address' | translate}}</strong></td>
+							<td>{{partner.city}}<strong>,</strong>{{partner.state}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.country' | translate }}</strong></td>
+							<td>{{partner.country}}</td>
+						</tr>
+						<tr>
+							<td><strong>{{ 'label.email' | translate }}</strong></td>
+							<td>{{partner.email}}</td>
+						</tr>
+							<tr>
+							<td><strong>{{ 'label.phone' | translate }}</strong></td>
+							<td>{{partner.phoneNumber}}</td>
+						</tr>
+   			        </table>
+   				</div>
+   			</div>
+   			<uib-tabset  style="margin-bottom: 0px;">
+    			<uib-tab heading="Agreement Details" >
+     				<br>
+       				<div>
+       					<div class="col-md-9">
+                    		<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" 
+                    			placeholder="{{'label.input.filterbyname' | translate}}">
+                		</div>
+				        <table class="table">
+					          <thead>
+					            <tr class="graybg">
+									   <th>{{'label.agreementstatus' | translate}}</th>
+					                   <th>{{'label.contreffectdate' | translate}}</th>
+					                   <th>{{'label.contrenddate' | translate}}</th>
+					                   <th>Actions</th>
+					            </tr>
+					          </thead>
+					          <tbody>
+					             <tr data-ng-show="agreements.id">      
+					                <td>{{agreements.agreementStatus}}</td>
+					                <td>{{agreements.startDate | DateFormat}}</td>
+					                <td>{{agreements.endDate | DateFormat}}</td> 
+					                <td><a has-permission="UPDATE_PARTNERAGREEMENT" href="#/editpartneragreement/{{agreements.id}}/{{partner.id}}" 
+					                       uib-popover="Edit Agreement" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>                  
+					             </tr>
+					          </tbody>
+				        </table>
+        			</div>
+      			</uib-tab>
+    			<uib-tab  heading="Disbursements" select="getPartnerDisbursements()" active="PartnersDisbursementTab">
+     				<br>
+					<div>
+						<div class="col-md-9">
+                    		<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" 
+                    			placeholder="{{'label.input.filterbyname' | translate}}">
+                		</div>
+						<table class="table">
+							<thead>
+								<tr class="graybg">
+									<th>{{'label.id' | translate}}</th>
+									<th>{{'label.transactiondate' | translate}}</th>
+									<th>{{'label.source' | translate}}</th>
+									<th>{{'label.commissionamount' | translate}}</th>
+									<th>{{'label.commissiontype' | translate}}</th>
+									<th>{{'label.commissionrate' | translate}}</th>
+									<th>{{'label.commissionamount' | translate}}</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr  data-ng-repeat="patnerDisbursementData in patnerDisbursementData.currentPageItems | filter:filterText">
+									<td>{{patnerDisbursementData.id}}</td>
+									<td>{{patnerDisbursementData.transDate |DateFormat}}</td>
+									<td>{{patnerDisbursementData.source}}</td>
+									<td>{{patnerDisbursementData.netAmount}}</td>
+									<td>{{patnerDisbursementData.percentage}}</td>
+									<td>{{patnerDisbursementData.shareAmount}}</td>
+									<td>{{patnerDisbursementData.commissionAmount}}</td>
+									
+								</tr>
+							</tbody>
+						</table>
+						<ul class="pager">
+				   			<li class="previous"><a data-ng-click="patnerDisbursementData.previous()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasPrevious()">&larr; Prev</a></li>
+				   			<li class="next" ><a data-ng-click="patnerDisbursementData.next()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasNext()">Next &rarr;</a></li>
+						</ul>
+					</div>
+				</uib-tab>
+				<uib-tab heading="{{'label.heading.financialtransactions' | translate}}" select="getfinancialtransactions()">
+			
+			<table class="table">
+					<thead>
+						<tr class="graybg">
+							<th>{{ 'label.transactionId' | translate }}</th>
+							<th>{{ 'label.transactionType' | translate }}</th>
+							<th>{{ 'label.amount' | translate }}</th>
+							<th>{{ 'label.transDate' | translate }}</th>
+							<th>{{ 'label.transactionCategory' | translate }}</th>
+							<th>{{ 'label.actions' | translate }}</th>
+							
+						</tr>
+					</thead>
+					 <tbody>
+						 <tr  data-ng-repeat="officeFinanceTrans in officeFinanceTrans">
+							<td>{{officeFinanceTrans.transactionId}}</td>
+							<td>{{officeFinanceTrans.transactionType}}</td>
+							<td>{{officeFinanceTrans.amount}}</td>
+							<td>{{officeFinanceTrans.transDate}}</td>
+							<td>{{officeFinanceTrans.transactionCategory}}</td>
+							<td>{{officeFinanceTrans.actions}}</td>
+							<!-- <td><a has-permission = UPDATE_PLAN href="#/editplan/{{plan.id}}" uib-popover="Edit Plan" title="Edit Plan"
+                       data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;</td>> -->
+						</tr>
+					</tbody>
+					 
+						<!-- <tr class="pointer-main"
+							data-ng-repeat="partner in partners  | filter:filterText">
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.partnerName}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.parentName}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.currency}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">
+								{{partner.openingDate | DateFormat}}</td>
+							<td class="pointer"
+								data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.balanceAmount}}</td>
+							<td><a has-permission='UPDATE_PARTNER'
+								href="#/editpartner/{{partner.id}}" uib-popover="Edit Partner"
+								data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>
+						</tr> -->
+    		</uib-tabset>
+        </div>
+    </div>
+</div>      

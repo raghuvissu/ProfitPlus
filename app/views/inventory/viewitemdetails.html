@@ -1,0 +1,51 @@
+<div class="content-container" ng-controller="ViewItemDetailController">
+		<ul class="breadcrumb">
+	        <li><a href="#/inventory">{{'link.admin.inventory' | translate}}</a></li>
+	        <li class="active">{{itemDetailData.id}}&nbsp;&nbsp;</li>
+	    </ul>
+	    <div class="card">
+        	<div class="content">
+        	   <div class="toolbar">
+        	   </div>
+				<div class="row paddedleft">
+					<h3>&nbsp;&nbsp;&nbsp;{{itemDetailData.id}}</h3>
+					<table class="table table-bordered table-striped">
+						<tr>
+							<td width="20%">{{'table.officeName' | translate }}</td>
+							<td width="80%">{{itemDetailData.officeName}}</td>
+						</tr>
+						<tr>
+							<td>{{'label.itemdescription' | translate }}</td>
+							<td>{{itemDetailData.itemDescription}}</td>
+						</tr>
+						<tr>
+							<td>{{'table.serialNumber' | translate }}</td>
+							<td>{{itemDetailData.serialNumber}}</td>
+						</tr>
+						<tr>
+							<td>{{'label.grnid' | translate }}</td>
+							<td>{{itemDetailData.grnId}}</td>
+						</tr>
+						<tr>
+							<td>{{'table.supplier' | translate }}</td>
+							<td>{{itemDetailData.supplier}}</td>
+						</tr>
+						<tr>
+							<td>{{'label.quality' | translate }}</td>
+							<td>{{itemDetailData.quality}}</td>
+						</tr>
+						<tr>
+							<td>{{'label.status' | translate }}</td>
+							<td>{{itemDetailData.status}}</td>
+						</tr>
+						<tr>
+							<td>{{'label.warranty' | translate }}</td>
+							<td>{{itemDetailData.warranty}}</td>
+						</tr>
+						
+						</table>
+			</div>
+		</div>
+	</div>
+</div>
+          

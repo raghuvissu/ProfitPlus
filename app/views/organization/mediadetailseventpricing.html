@@ -1,0 +1,115 @@
+<div class="content-container" ng-controller="MediadetailsEventpricingController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li class="active">{{'label.mediadetailseventpricing' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+		<uib-tabset tabset-name="mediadetailseventpricingTabset">
+			<uib-tab heading="{{'label.heading.mediadetails' | translate}}">
+		     <div>
+		        <div class="toolbar">
+				     <div class="col-md-8">
+				     	<input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placehoder.mediadetails.searchbar' | translate}}"/>
+				     </div>
+	     			  <div class="pull-right"">
+				        	<a has-permission='CREATE_MEDIAASSET' href="#/createMedia" class="btn primary_btn"><i 
+				        	class="fa fa-plus"></i> {{ 'link.create.new.mediadetail' | translate }}</a>
+				        	<a has-permission='CREATE_MEDIAASSET' href="#/createAdvanceMedia" class="btn primary_btn"><i 
+				        	class="fa fa-plus"></i> {{ 'link.create.adv.mediadetail' | translate }}</a>
+				      </div> 
+	  			</div>
+		     </div>
+		      <table class="table">
+		        <thead>
+		            <tr class="graybg">
+		                <th>{{ 'table.mediadetails.title' | translate }}</th>
+		                <th>{{'table.mediadetails.categeory' | translate}}</th>
+		                <th>{{'table.mediadetails.contentprovider' | translate}}</th>
+		                <th>{{'table.mediadetails.share' | translate}}</th>
+		                <th>{{ 'table.mediadetails.status' | translate }}</th>
+		                <th>{{'table.actions'|translate}}</th> 
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr class="pointer-main" data-ng-repeat="mediaData in mediaDetailsData | filter:filterText">
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.mediaTitle}}</td>            
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.mediaCategory}}</td>        
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.contentProviderValue}}</td> 
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.cpShareValue}}</td>         
+		                <td class="pointer" data-ng-click="routeToMedia(mediaData.mediaId)">{{mediaData.status}}</td>
+		                <td>
+		               		 <a data-ng-click="createMediaLocations(mediaData.mediaId)" uib-popover="Add Location" data-popover-trigger="mouseenter" class="fa fa-map-marker"></a>&nbsp;
+		                	 <a data-ng-click="createMediaAttributes(mediaData.mediaId)" uib-popover="Add Attributes" data-popover-trigger="mouseenter" class="fa fa-tags"></a>&nbsp;
+		                	 <a href="#/createEventFromMedia/{{mediaData.mediaId}}/{{mediaData.mediaTitle}}/{{fromMedia}}" uib-popover="Add Event" data-popover-trigger="mouseenter"><i class="fa fa-plus"></i></a>
+		               		 <a href="#/editmedia/{{mediaData.mediaId}}" uib-popover="Edit Media" data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a>&nbsp;
+		                	<!--  <a data-ng-click="deletemedia(mediaData.mediaId)" uib-popover="Delete Media" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a> -->
+		                </td> 
+		            </tr>
+		        </tbody>
+     		</table>
+     		</uib-tab>
+		    <uib-tab heading="{{'label.heading.event' | translate}}">
+		   
+			    <div class="toolbar">
+		         <div class="row">
+		             <div class="col-md-8">
+		                <input data-ng-model="filterText" type="text" class="form-control" class="span marginbottom0px" 
+		                	placeholder="{{'placeholder.searchbar' | translate}}">
+	         		</div>
+		            <div class="col-md-4">
+	            		<a has-permission='CREATE_EVENT' && 
+						has-permission='READ_EVENT' href="#/createEvent" class="btn primary_btn pull-right"><i 
+							class="fa fa-plus"></i> {{'lable.createevent' | translate }}</a>
+					</div>
+					</div>
+				</div>
+			<div class="row-fluid">
+					<table class="table">
+						<thead>
+							<tr class="graybg">
+								<th>{{'label.eventname' | translate}}</th>
+								<th>{{'label.eventdescription' | translate}}</th>	
+								<th>{{'label.eventcategory' | translate}}</th>			
+								<th>{{'label.status' | translate}}</th>
+								<th>{{'label.actions' | translate}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="pointer-main" data-ng-repeat="event in events | filter:filterText">
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.eventName}}</td>
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.eventDescription}}</td>	
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.eventCategory}}</td>			
+								<td class="pointer" data-ng-click="routeToEvent(event.id)">{{event.status}}</td>
+								<td>
+									<a has-permission='UPDATE_EVENT' href="#/editEvent/{{event.id}}" uib-popover="{{'label.editevent' | translate}}" 
+										data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;
+									<a has-permission='DELETE_EVENT' data-ng-click="deleteEvent(event.id)" uib-popover="{{'label.deleteevent' | translate}}" 
+										data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a>
+				                	<a has-permission='CREATE_EVENTPRICE' && has-permission='READ_EVENTPRICE'
+				                		href="#/addEventPrice/{{event.id}}" uib-popover="{{'label.addprice' | translate}}" data-popover-trigger="mouseenter" class="fa fa-plus"></a> &nbsp;  
+				                	<a has-permission='READ_EVENTPRICE' href="#/viewEventPrices/{{event.id}}" uib-popover="{{'label.viewprice' | translate}}"
+				                		data-popover-trigger="mouseenter" class="fa fa-eye"></a>&nbsp; 
+				                </td>
+							</tr>
+							</tbody>
+						</table>
+		         	</uib-tab>
+		         </uib-tabset>
+			</div>
+		</div>
+<script type="text/ng-template" id="deletePopupForEvent.html">
+    	<div class="modal-header silver">
+        	<h3 class="bolder">{{'label.heading.deletediscount' | translate}}</h3>
+        </div>
+
+        <div class="modal-body style="height:60px;">
+            <h4 class="center">Are you sure?</h4>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+        </div>
+ </script>
+</div>

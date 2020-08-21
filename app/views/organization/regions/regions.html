@@ -1,0 +1,64 @@
+<div class="content-container" ng-controller="RegionController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+			<li class="active">{{'label.regions' | translate}}&nbsp;&nbsp;{{employee.lastname}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+	            <div class="row">
+         			<div class="col-md-8">
+         			<input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="Filter by name">
+            		<!-- <input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placehoder.searchbar' | translate}}"> -->
+         			</div>
+         			<div class="col-md-4">
+            			<a href="#/createregions" class="btn primary_btn pull-right" has-permission='CREATE_REGION'><i class="fa fa-plus"></i> {{ 'link.create.new.region' | translate }}</a>
+            			<!-- <a href="#/createservice" class="btn btn-primary pull-right" has-permission='CREATE_SERVICE'><i class="fa fa-plus "></i>{{'label.button.createservice' | translate }}</a> -->
+	     			</div>
+	     		</div>
+            </div>
+            <br/>
+            <table class="table">
+        		<thead>
+            		<tr class="graybg">
+                	<th>{{ 'table.heading.regionCode' | translate }}</th>
+					<th>{{ 'table.heading.regionName' | translate }}</th>
+					<th>{{'table.action' | translate}}</th>
+            		</tr>
+        		</thead>
+        		<tbody>
+            		<tr class="pointer-main" data-ng-repeat="region in regions | filter:filterText">
+					<td class="pointer" data-ng-click="routeTo(region.id)">{{region.regionCode}}</td>
+					<td class="pointer" data-ng-click="routeTo(region.id)">{{region.regionName}}</td>
+					<!-- <td><a has-permission='UPDATE_REGION' href="#/editRegions/{{region.id}}" 
+						style='color: #000000' ubi-popover="Edit" data-popover-trigger="mouseenter">
+						<i class="fa fa-edit"></i></a> 
+						<a has-permission='DELETE_REGION' data-ng-click="deleteRegion(region.id)" 
+						style='color: #000000' ubi-popover="Delete" data-popover-trigger="mouseenter">
+						<i class="fa fa-times"></i></a>
+					</td> -->
+					<td><a has-permission='UPDATE_REGION' data-ng-show="region.regionCode !='Default'" href="#/editRegions/{{region.id}}" 
+						style='color: #000000' uib-popover="Edit" data-popover-trigger="mouseenter">
+						<i class="fa fa-edit"></i></a> 
+						<!-- <a has-permission='DELETE_REGION' data-ng-show="region.regionCode !='Default'" data-ng-click="deleteRegion(region.id)" 
+						style='color: #000000' uib-popover="Delete" data-popover-trigger="mouseenter">
+						<i class="fa fa-times"></i></a> -->
+					</td>
+				</tr>
+        		</tbody>
+    		</table>
+        </div>
+    </div>
+    <script type="text/ng-template" id="deleteregion.html">
+        <div class="modal-header silver">
+			<h3 class="bolder">{{'dialog.region.message' | translate}}</h3>
+        </div>
+		<div class="modal-body style="height:60px;">
+            <h4 align="center">{{'label.confirm.msg' | translate}}</h4>
+        </div>
+        <div class="col-md-offset-8">
+            <button class="btn btn-warning" ng-click="cancel()">{{'label.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="regionDelete()">{{'label.confirm' | translate}}</button>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,96 @@
+<div class="content-container" ng-controller="OfficePaymentsController">
+	<ul class="breadcrumb">
+		<li><a href="#/partner" data-ng-click="partnersTab()">{{'label.partner' | translate}}</a></li>
+		<!-- <li><a href="#/viewpartner/{{partnerId}}/{{officeId}}">{{partnerName}}</a></li> -->
+		<li class="active">Make Payment</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h4>{{'label.heading.createpayments' | translate}}</h4>
+			</div>
+			<br> 
+			<form name="createpayments" novalidate=""  class="form-horizontal" rc-submit="submit()">
+				<api-validate></api-validate>
+				<fieldset>
+					<div class="form-group">
+	           	    <label class="control-label col-sm-2" for="paymentDate">{{ 'label.paymentdate' | translate }}</label>
+		                <div class="col-sm-3">
+			             	<input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="start.date" is-open="opened2" min="minDate" max="maxDate" 
+			             		   date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;"  readonly class="form-control"/>
+		           		</div>
+		           		
+		           		<div data-ng-show="paymentType == 'Cheque'">
+							<div class="form-group">
+			           	    	<label class="control-label col-sm-2" for="chequeNo">{{ 'label.chequeno' | translate }}<span class="required">*</span></label>
+				            	<div class="col-sm-3">
+				             		<input type="text" id="chequeNo" class="form-control" data-ng-model="formData.chequeNo">
+				           		</div>
+			         		</div>
+	         			</div>
+	         		</div>
+	         		<div class="form-group">
+            		<label class="control-label col-sm-2" for="paymentCode">{{ 'label.paymentType' | translate }}</label>
+	            	    <div class="col-sm-3">
+		             		<select id="paymentCode" data-ng-model="formData.paymentCode" class="form-control"
+		             				data-ng-options="data.id as data.mCodeValue for data in data" data-ng-change="paymentTypeData(formData.paymentCode)">
+		             		</select>
+	            		</div>
+	            		
+	            		<div data-ng-show="paymentType == 'Cheque'">
+		            		<div class="form-group">
+				            	<label class="control-label col-sm-2" for="chequeDate">{{ 'label.chequedate' | translate }}</label>
+				            	<div class="col-sm-3">
+				              		<input type="text" id="chequeDate" datepicker-pop="dd MMMM yyyy" class="form-control" is-open="opened2" min="minDate" max="maxDate" data-ng-model="start.date" data-datepicker-pop="dd MMMM yyyy" 
+				              		       date-disabled="disabled(date, mode)"  style="background-color:#FFFFFF;"  readonly class="form-control">  
+				            	</div>
+			          		</div>
+	          			</div>
+          		 	</div>
+          		 	<div class="form-group">
+	           			<label class="control-label col-sm-2" for="amountPaid">{{ 'label.amount' | translate }}</label>
+	            		<div class="col-sm-3">
+	             			<input type="text" id="amountPaid" data-ng-model="formData.amountPaid" class="form-control">
+	           			</div>
+	           			
+	           			<div data-ng-show="paymentType == 'Cheque'">
+		             		<div class="form-group">
+				           		<label class="control-label col-sm-2" for="bankName">{{ 'label.bankname' | translate }}<span class="required">*</span></label>
+				                <div class="col-sm-3">
+				             		<input type="text" id="bankName" class="form-control" data-ng-model="formData.bankName">
+				           		</div>
+			         		</div>
+	         			</div>
+	           			
+         			</div>
+         			<div class="form-group">
+           				<label class="control-label col-sm-2" for="receiptNo">{{ 'label.receiptno' | translate }}<span class="required">*</span></label>
+	            		<div class="col-sm-3">
+	             			<input type="text" id="receiptNo" name="receiptno" data-ng-model="formData.receiptNo" class="form-control">
+	             		</div>
+	             		
+	             		<div data-ng-show="paymentType == 'Cheque'">
+		           			<div class="form-group">
+				           		<label class="control-label col-sm-2" for="branchName">{{ 'label.branchname' | translate }}</label>
+				            	<div class="col-sm-3">
+				                	<input type="text" id="branchName" class="form-control" data-ng-model="formData.branchName">
+				           		</div>
+			         		</div>
+	         			</div>
+         		    </div>
+         		    <div class="form-group">
+						<label class="control-label col-sm-2">{{'label.notes' | translate}}</label>
+						<div class="col-sm-3">
+							<textarea data-ng-model="formData.remarks" class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="col-md-offset-9">
+   					<a href='#/partner' class="btn">{{'button.cancel'  | translate}}</a>
+ 					<button id="submit" type="submit" class="btn btn-primary" 
+ 							class="btn btn-primary" >{{'button.save'| translate}}</button>
+ 					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>

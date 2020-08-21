@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="./images/mlm.PNG"/>
+<title>{{ 'label.heading.obsxclient' | translate }}</title>
+<style>
+[data-ng-cloak] {
+ display: none !important;
+}
+</style>
+<link href="styles/styles.css" rel="stylesheet"/>
+<link href="styles/font-awesome.min.css" rel="stylesheet"/>
+<link href="styles/fonts.css" rel="stylesheet"/>
+<link href="styles/fonticons.css" rel="stylesheet"/>
+<link href="styles/mediaquery.css" rel="stylesheet"/>
+<link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+<body class="preview whitebg" id="top" data-spy="scroll" data-target=".subnav" data-offset="80"
+      data-ng-controller="MainController">
+
+<!--Loader -->
+<div id="loaderWrapper" data-ng-hide="domReady" style="position: absolute; height: 100%; width: 100%; top: 0;background-color:#fff;">
+  <div id="loader" style="margin: 175px auto"> 
+    <!-- <img src="./images/Trigital_logo.png" alt="MifosX" style="min-width: 50px;   width: 6%; margin: 0 auto"
+             class="img-responsive"> --> 
+    <img src="images/small-loader.gif" style="margin: 10px auto" class="img-responsive"> </div>
+</div>
+<div data-ng-hide="!domReady" data-ng-cloak> 
+  <!-- Login Form  -->
+  <div data-ng-hide="currentSession.user != null" data-ng-controller="LoginFormController"> 
+    <!--<div class="container" style="margin-top:10vh; data-ng-hide="currentSession.user != null" data-ng-controller="LoginFormController">-->
+    <div class="loginBg">
+        <div class="languageDiv">
+            <div class="pull-right "><span> {{ 'label.input.changelanguage' | translate }}</span>
+              <div class="btn-group" uib-dropdown>
+                <button type="button" class="btn btn-default btn-xs languageBtn" uib-dropdown-toggle ng-disabled="disabled"> {{optlang.name}} <span class="caret"></span> </button>
+                <ul class="lang-dropdown" uib-dropdown-menu>
+                  <li ng-repeat="lang in langs"> <a href ng-click="changeLang(lang, $event)">{{lang.name}}</a> </li>
+                </ul>
+              </div>
+            </div>
+            <div ng-show="resetPassword">
+              <form class="form-inline pull-right" role="form">
+                <label><strong>{{ 'label.message.password.expired' | translate }}</strong></label>
+                <div class="form-group">
+                  <input type="password" data-ng-model="passwordDetails.password"
+                                       placeholder="{{ 'label.input.password' | translate }}" class="input-sm form-control"
+                                       required
+                                       id="password">
+                </div>
+                <div class="form-group">
+                  <input type="password" data-ng-model="passwordDetails.repeatPassword"
+                                       placeholder="{{ 'label.input.repeatpassword' | translate }}"
+                                       class="input-sm form-control"
+                                       required id="repeatPassword">
+                </div>
+                <button class="btn btn-success" type="submit" data-ng-click="updatePassword()"
+                                    id="updatepassword-button">{{ 'label.button.resetPassword' | translate }} </button>
+              </form>
+            </div>
+        </div>
+        
+        <div data-ng-form="loginForm" class="container">
+          <div class="loginLogo"><img src="images/mlm.PNG" alt="Mifos X" style="margin:auto;" class=" text-center img-responsive"/></div>
+          <div class="row" ng-hide="resetPassword || isRegister">
+            <div class="col-sm-4 col-sm-offset-4">
+              <div class="alert alert-success" ng-show="registerSuccess"> Registered Successfully!</div>
+              <div class="alert alert-danger" ng-show="authenticationFailed"> {{ authenticationErrorMessage | translate }} </div>
+              <form class="form">
+                <div class="form-group inputboxBg">
+                  <!--<label for="uid">USERNAME</label>-->
+                  <i class="fa fa-user-o"></i> 
+                  <input type="text" name="username" id="uid" class="form-control" ng-model="loginCredentials.username" placeholder="{{ 'label.input.username' | translate |lowercase }}" required/>
+                </div>
+                <div class="form-group inputboxBg">
+                  <!--<label for="pwd">PASSWORD</label>-->
+                  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+				 <input type="password" name="password" id="pwd" class="form-control" ng-model="loginCredentials.password" autocomplete="new-password" placeholder="{{ 'label.input.password' | translate | lowercase }}" required/>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-block btn-primary loginBtn" type="submit" data-ng-show="!load" data-ng-click="login()" id="login-button"> {{'label.button.signin' | translate }} </button>
+                  <a class="btn btn-success col-sm-offset-5 mt10" data-ng-show="!load" data-ng-click="register()" id="register-button"> Register </a>
+                  <button class="btn btn-block btn-primary" type="submit" data-ng-show="load"> <img data-ng-src="images/ring.svg" alt=""> <b>loading...</b> </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div ng-controller="RegisterController" ng-if="isRegister">
+                <div class="toolbar col-sm-offset-5">
+                  <h4 class="ml60 text-primary text-uppercase"><b>Register</b></h4>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-sm-12 col-sm-offset-3">
+                  <form name="registerForm" class="form-horizontal" data-ng-submit="submit()">
+                    <api-validate></api-validate>
+                      <fieldset>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="file">{{'label.client.select.image' | translate}}</label>
+                      <div class="col-sm-3">
+                        <input type="file" file-model="clientImage">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="control-label col-sm-2" for="cafId">CAF Id<span class="required">*</span></label>
+                            <div class="col-sm-3">
+                              <input type="text" id="cafId" name="cafId" data-ng-model="formData.cafId" 
+                                data-ng-on-blur="cafIdChange(formData.cafId)" class="form-control" required  data-late-Validate/>
+                                <span  data-ng-show="registerForm.cafId.$invalid">
+                                  <small class="error" data-ng-show="registerForm.cafId.$error.req">
+                                      CAF Id should not be blank.
+                                  </small>
+                              </span>
+                            </div>
+                            <div class="col-sm-3 mt5 pl0" ng-show="displayName">( {{displayName}} )</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="firstname">
+                      {{'label.firstname' | translate}}<span class="required">*</span></label>
+                      <div class="col-sm-3">
+                          <input type="text" id="firstname" name="firstname" data-ng-model="formData.firstname" class="form-control" 
+                            required data-ng-minlength=3 data-late-Validate/>
+                         <span data-ng-show="registerForm.firstname.$invalid">
+                             <small class="error" data-ng-show="registerForm.firstname.$error.req">
+                                First Name should not be blank
+                             </small>
+                             <small class="error" data-ng-show="registerForm.firstname.$error.minlength && !registerForm.firstname.$error.req">First Name is required at least 3 characters</small>
+                         </span>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-sm-2" for="lastname">
+                      {{'label.lastname' | translate}}<span class="required">*</span></label>
+                      <div class="col-sm-3">
+                        <input type="text" id="lastname" name="lastname" class="form-control" data-ng-model="formData.lastname" 
+                          data-ng-pattern="/^[a-zA-Z0-9\s]+$/" required data-ng-minlength=3 data-late-Validate/>
+                          <span  data-ng-show="registerForm.lastname.$invalid">
+                            <small class="error" data-ng-show="registerForm.lastname.$error.pattern">
+                              Allow alphanumeric and spaces only!</small>
+                              <small class="error" data-ng-show="registerForm.lastname.$error.req">
+                                  Last Name should not be blank
+                              </small>
+                              <small class="error" data-ng-show="registerForm.lastname.$error.minlength && !registerForm.lastname.$error.req">Last Name is required at least 3 characters</small>
+                          </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-sm-2" for="phone">Mobile Number<span class="required">*</span></label>
+                      <div class="col-sm-3">
+                        <input type="text" id="phone" data-ng-model="formData.phone" class="form-control" data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" name="phone" maxlength="10" required  data-late-Validate/>
+                          <div data-ng-show="registerForm.phone.$dirty && registerForm.phone.$invalid">
+                              <small class="error" data-ng-show="registerForm.phone.$error.pattern">Invalid Mobile Number</small>
+                          </div>
+                          <span  data-ng-show="registerForm.phone.$invalid">
+                              <small class="error" data-ng-show="registerForm.phone.$error.req">
+                                  Mobile Number should not be blank
+                              </small>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="form-group" >
+                        <label class="control-label col-sm-2" for="email">{{'label.email' | translate}}<span class="required">*</span></label>
+                        <div class="col-sm-3">
+                          <input type="email" id="email" name="email" class="form-control" data-ng-model="formData.email" required  data-late-Validate/>
+                          <span  data-ng-show="registerForm.email.$invalid">
+                              <small class="error" data-ng-show="registerForm.email.$error.req">
+                                  Email should not be blank
+                              </small>
+                          </span>
+                        </div>
+                   </div>
+                    <br>
+                     <div class="col-md-offset-2">
+                             <a ng-click="register()" class="btn ml60">Cancel</a>
+                             <button id="submit" type="submit" data-ng-disabled="registerForm.$invalid || flag" 
+                              class="btn btn-primary" data-ng-click = "submitRegister()">{{'button.save'| translate}}</button>
+                          </div>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+    	</div>
+    </div>
+    
+    <div class="container footerLinks">
+    <div class="row">
+      <div class="col-xs-4">
+        <ul class="list-unstyled">
+          <li>
+            <h5>RESOURCES</h5>
+          </li>
+          <li><a><!-- <a target="http://help.nextgenerationbilling.com" href="http://help.nextgenerationbilling.com"> -->{{
+            'label.anchor.usermanual' | translate }}</a></li>
+          <li><a><!-- <a target="http://help.nextgenerationbilling.com" href="http://help.nextgenerationbilling.com" > --> 
+            {{ 'label.anchor.faq' | translate }}</a></li>
+        </ul>
+      </div>
+      <div class="col-xs-4">
+        <ul class="list-unstyled">
+          <li>
+            <h5>SUPPORT SERVICE</h5>
+          </li>
+          <li><a>support@ayrasoft.com</a></li>
+          <li><a><!-- <a target="https://www.nextgenerationbilling.com/support" href="https://www.nextgenerationbilling.com/support"> --> 
+            {{ 'label.anchor.ticket' | translate }}</a></li>
+        </ul>
+      </div>
+      <div class="col-xs-4">
+        <ul class="list-unstyled">
+          <li>
+            <h5>LATEST NEWS</h5>
+          </li>
+          <li><a><!-- <a target="http://www.nextgenerationbilling.com" href="http://www.nextgenerationbilling.com"> --> 
+            For latest updated</a></li>
+          <li><a><a ng-click="updateLicense()"> 
+            Update License</a></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+    
+    <!-- <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 text-center">
+                        <br>
+
+                        <p class=" text-muted"><span ng-bind-html="text"></span>
+                            <br>
+                            <span style=" display: inline-block; margin:auto;min-width:40px; border-bottom:2px solid #e0e0e0;">&nbsp;</span>
+                        </p>
+
+                    </div>
+                </div> --> 
+    <!-- <p class="text-center text-muted small">
+                    <span>{{ 'label.heading.version' | translate }} {{ version }}</span>
+                    <br/> <span>{{ 'label.heading.uptodate' | translate }}</span>
+                </p> --> 
+    
+    <footer class="loginFooter"> 
+          <p align="center"> <a href="http://www.nextgenerationbilling.com/" target="_blank">{{'label.ngbrelversion' | translate}} | {{'label.ngbreleasedate' | translate}} </a></p>
+        </footer>
+  </div>
+  
+  <!-- Navbar -->
+  <div ng-class="{fullscreen:true ,blockui:blockUI==true}" id="main" data-ng-hide="currentSession.user == null">
+    <div class="loading-widget-div" data-ng-show="blockUI"> 
+      <!-- TODO : insert loader here--> 
+      <span class="centerloader"> <img src="images/833.svg" class="img-responsive"> </span> 
+      <!--<div style="margin: 175px auto">
+            </div>--> 
+    </div>
+    <div id="mifos-reskin-ui-container">
+      <div id="mifos-reskin-header-nav" ng-include="'views/_topnavbar.html'"></div>
+      <div id="mifos-reskin-body-container" style="background-color: #ebeff1">
+        <nav id="mifos-reskin-side-nav"  ng-scrollbar>
+          <div class="left-nav">
+            <ul>
+              <!-- <li>
+                                <a class="black" href="#/help">
+                                    <i class="fa fa-keyboard-o"></i>
+                                    <span>{{'label.anchor.keyboardshortcut' | translate}}</span>
+                                </a>
+                            </li> --> 
+              
+              <!-- <li>
+                                <a class="black" has-permission="READ_OFFICE" href="#/nav/offices">
+                                    <i class="fa fa-compass "></i>
+                                    <span>{{'label.anchor.navigation' | translate}}</span>
+                                </a>
+                            </li> --> 
+              
+              <!-- <li>
+                                <a class="black" has-permission="CHECKER_SUPER_USER" href="#/tasks">
+                                    <i class="fa fa-check "></i>
+                                    <span>{{ 'label.anchor.tasks'| translate}}</span>
+                                </a>
+                            </li> -->
+              
+              <li> <a class="black" has-permission="'READ_DATATABLE','CREATE_CODE','READ_CODE','create_role','READ_role','UPDATE_PERMISSION','read_Audit',
+                   					'READ_REPORT','READ_CONFIGURATION','READ_SERVICEMAPPING','READ_PLANMAPPING','READ_PROVISIONINGSYSTEM','READ_EVENTACTIONMAP'" 
+                   						href="#/system"><i class="fa fa-laptop"></i> <span>{{ 'label.anchor.system' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'READ_OFFICE','READ_STAFF','READ_CONTRACT','READ_MEDIAASSET',
+            						'READ_EVENT','READ_DISCOUNT','READ_PROMOTIONCODE','READ_COUNTRYCURRENCY','READ_LOCATION','READ_CURRENCY','READ_SERVICE',
+            							'READ_PLAN','READ_REGION','READ_RANDAMGENERATOR','READ_CHARGECODE','READ_MESSAGE'" href="#/organization"> <i class="fa fa-building"></i> <span>{{ 'label.anchor.master' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'CREATE_PROSPECT'" href="#/createprospects"> <i class="fa fa-filter"></i> <span>{{ 'label.anchor.createprospects' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'CREATE_CLIENT'" href="#/createclient"> <i class="fa fa-user"></i> <span>{{ 'label.anchor.createcustomer' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'ACTIVATIONPROCESS_ACTIVATE'" href="#/simpleActivation"> <i class="fa fa-tasks"></i> <span>{{ 'label.anchor.simpleactivation' | translate }}</span> </a> </li>
+              <!-- <li>
+				            	<a class="black" has-permission="'READ_GLACCOUNT','READ_OFFICE','READ_SMARTSEARCH'" href="#/smartSearch">
+				            		<i class="fa fa-search"></i>
+				            		 <span>{{ 'label.anchor.smartsearch' | translate }}</span>
+				            	</a>
+				            </li> -->
+              <li> <a class="black" has-permission="'READ_PAYMENTGATEWAY'" href="#/paymentGateway"> <i class="fa fa-money"></i> <span>{{ 'label.anchor.paymentgateway' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'READ_UPLOADSTATUS'" href="#/importing"> <i class="fa fa-upload"></i> <span>{{'label.anchor.datauploads' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'READ_SCHEDULERJOB'" href="#/jobs"> <i class="fa fa-gears"></i> <span>{{'label.anchor.schedulerjobs' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'READ_JOURNALENTRY','READ_GLACCOUNT','READ_GLCLOSURE','READ_ACCOUNTINGRULE'" href="#/accounting"> <i class="fa fa-money"></i> <span>{{ 'label.anchor.accounting' | translate }}</span> </a> </li>
+              <li> <a class="black" has-permission="'ALL_FUNCTIONS'" href="#/help"> <i class="fa fa-hand-o-left"></i> <span>{{ 'label.anchor.shortcuts' | translate }}</span> </a> </li>
+              <!-- <li>
+                                <a class="black" href="#/entercollectionsheet">
+                                    <i class="fa fa-tasks "></i>
+                                    <span>{{'label.anchor.collectionsheet' | translate}}</span>
+                                </a>
+                            </li> --> 
+              
+              <!-- <li>
+                                <a class="black" href="#/individualcollectionsheet">
+                                    <i class="fa fa-tasks "></i>
+                                    <span>{{'label.anchor.individualcollectionsheet' | translate}}</span>
+                                </a>
+                            </li> --> 
+              
+              <!-- <li>
+                                <a class="black" href="#/freqposting">
+                                    <i class="fa fa-repeat "></i>
+                                    <span>{{'label.anchor.frequentpostings' | translate}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="black" href="#/journalentry">
+                                    <i class="fa fa-plus "></i>
+                                    <span>{{'label.anchor.addjournalentries' | translate}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="black" href="#/accounts_closure">
+                                    <i class="fa fa-folder "></i>
+                                    <span>{{'label.anchor.closingentries' | translate}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="black" href="#/accounting_coa">
+                                    <i class="fa fa-sitemap "></i>
+                                    <span>{{'label.heading.chartofaccounts' | translate}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="black" href="#/notifications">
+                                    <i class="fa fa-bell" ></i>
+                                    <span>{{'label.heading.notification' | translate }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="black" href="#/createclient">
+                                    <i class="fa fa-user "></i>+ <span>{{ 'label.anchor.client' |translate}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="black" href="#/creategroup">
+                                    <i class="fa fa-group "></i>+ <span>{{ 'label.anchor.group' |translate}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="black" href="#/createcenter">
+                                <i class="fa fa-map-marker "></i>+ <span>{{'label.anchor.center' | translate}}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="black" ng-click="helpf()">
+                                    <i class="fa fa-question-circle"></i>
+                                    <span>{{'label.anchor.help' | translate }}</span> &nbsp; <i class="fa fa-external-link"></i>
+                                </a>
+                            </li> -->
+              
+              <li> <a class="black" data-ng-click="logout()"> <i class="fa fa-power-off"></i> <span>{{ 'label.anchor.logout' | translate }}</span> </a> </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div id="mifos-reskin-body-view">
+        <div class="" ng-view></div>
+        <footer> 
+          <!-- <p align="center"><a
+                            href="https://mifosforge.jira.com/browse/MIFOSX/component/11710/?selectedTab=com.atlassian.jira.jira-projects-plugin:component-changelog-panel"
+                            target="_blank"> {{'label.relVersion' | translate}} {{version}} | {{'label.relDate' |
+                        translate}} {{releasedate}} </a></p> -->
+          <p align="center"> <a href="http://www.nextgenerationbilling.com/" target="_blank">{{'label.ngbrelversion' | translate}} | {{'label.ngbreleasedate' | translate}} </a> </p>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Le javascript --> 
+<script type='text/javascript' data-main="scripts/loader.js" src='bower_components/requirejs/require.js'></script> 
+<script type="text/ng-template" id="licensekey.html">
+	<div class="modal-header silver">
+        <h3 class="bolder">Update LicenseKey</h3>
+    </div>
+	<div class="padded-td"><strong>Your License valid till :<span style="color:red">{{kayinfo}}<span></strong></div>
+    	<div class="modal-body" style="height:160px;">
+	 		<div class="error" ng-show="errorStatus || errorDetails">
+	 			<label>{{'label.contract.error' | translate}}</label>
+				<label ng-show="errorStatus">{{errorStatus}}</label>
+				<label ng-hide="errorStatus" ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+	  		</div>
+       		<fieldset>
+ 				<div class="control-group">
+					<label class="control-label" for="quality">{{'label.licensekey' | translate }}</label>
+					<div class="controls">
+             			<input type="text" id="licensekey" ng-model="formData.key">
+            		</div>
+	   			</div>
+	    	</fieldset>
+    	</div>
+    	<div class="modal-footer">
+        	<button id="cancel" class="btn btn-warning" ng-click="cancelRenewal()">{{'button.cancel' | translate}}</button>
+     		<button id="submit" class="btn btn-primary" ng-click="updateKey()" ng-disabled="flagOrderRenewal">{{'label.confirm' | translate}}</button>
+  	</div>
+</script>
+</body>
+</html>

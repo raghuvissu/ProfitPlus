@@ -1,0 +1,71 @@
+<div class="content-container" ng-controller="ServicesController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a>
+        <li class="active">{{'label.services&Products' | translate}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+            	<div class="toolbar ptb15 mrl15 bb1 mb20">
+	            	<h4 class="ptrbl0">{{'label.services&Products' | translate}}</h4>
+	        	</div>
+	            <div class="row">
+         			<div class="col-md-6">
+            			<input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placehoder.searchbar' | translate}}">
+         			</div>
+         			<div class="col-md-6">
+            			<!-- <a data-ng-show="PermissionService.showMenu('CREATE_SERVICE')" href="#/createservice" class="btn btn-primary"><i class="icon-plus icon-white"></i>{{'label.button.createservice' | translate }}</a> -->
+            			<a href="#/createservice" class="btn primary_btn pull-right" has-permission='CREATE_SERVICE'><i class="fa fa-plus "></i>{{'label.createservice/product' | translate }}</a>
+	     			</div>
+	     		</div>
+            </div>
+            <table class="table">
+        		<thead>
+            		<tr class="graybg">
+                		<th>{{'label.code' | translate}}</th>
+                		<th>{{'label.description' | translate}}</th>
+		                <th>{{'label.type' | translate}}</th>
+		                <th>{{'label.category' | translate}}</th>
+		                <th>{{'label.status' | translate}}</th>
+		                <th>{{'label.isoptional' | translate}}</th>
+		                <th>{{'label.isautoprovision' | translate}}</th>
+		                <th>{{'table.heading.actions' | translate}}</th>
+            		</tr>
+        		</thead>
+        		<tbody>
+            		<tr class="pointer-main" data-ng-repeat="service in services.currentPageItems  | filter:filterText">
+		                <td class="pointer" data-ng-click="routeTo(service.id)">{{service.serviceCode}}</td>            
+		                <td class="pointer" data-ng-click="routeTo(service.id)">{{service.serviceDescription}}</td>
+		                <td class="pointer" data-ng-click="routeTo(service.id)">{{service.serviceType}}</td>
+		                <td class="pointer" data-ng-click="routeTo(service.id)">{{service.serviceCategory}}</td>
+		                <td class="pointer" data-ng-click="routeTo(service.id)">{{service.serviceStatus}}</td>
+		                <td class="pointer" data-ng-click="routeTo(service.id)">{{service.isOptional}}</td>
+		                <td class="pointer" data-ng-click="routeTo(service.id)">{{service.isAutoProvision}}</td>
+		                <td>
+		                	<a href="#/editservice/{{service.id}}" uib-popover="Edit Service" data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;
+		                 	<!-- <a data-ng-click="deleteservice(service.id)" uib-popover="Delete Service" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a> -->
+		                </td>
+            		</tr>
+        		</tbody>
+    		</table>
+        </div>
+    </div>
+    <script type="text/ng-template" id="deleteservice.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">{{'label.delete.service' | translate}}</h3>
+                    </div>
+                    <div class="modal-body" style="height:60px;">
+                       <api-validate></api-validate>
+                       <div class="form-group">
+				           <div class="col-sm-3">
+					           <label class="control-label" style="color:red;" ng-show="error.length>0">{{error | translate}}</label>
+				           </div>	
+			           </div>
+                         <h3 align="center">{{'label.confirm.msg' | translate}}</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approveDeleteService()">{{'label.confirm' | translate}}</button>
+                    </div>
+    </script>
+</div>

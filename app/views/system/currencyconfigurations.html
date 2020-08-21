@@ -1,0 +1,77 @@
+<div class="content-container" data-ng-controller="CurrencyConfigurationsController">
+	<ul class="breadcrumb">
+		<li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+		<li class="active">{{'label.currencyconfiguration' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<div class="row">
+					<div class="col-md-6">
+						<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+					</div>
+			    	<div class="col-md-6">
+						<a has-permission = CREATE_CURRENCY href="#/createcurrency" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>{{ 'link.new.create' | translate }}</a>
+					</div>
+				</div>
+			</div>
+			<table class="table">
+			    <thead>
+              		<tr class="graybg">
+              		    <th>{{'label.code' | translate }}</th>
+              		    <th>{{'label.internationalnamecode' | translate }}</th>
+              		    <th>{{'label.decimalplaces' | translate }}</th>
+              		    <th>{{'label.countrycode' | translate }}</th>
+              		    <th>{{'label.name' | translate }}</th>
+	                	<th>{{'label.countryname' | translate }}</th>
+		            	<th>{{'label.displaysymbol' | translate }}</th>
+              		</tr>
+           		</thead>
+           		<tbody>
+             		<tr class="pointer-main" data-ng-repeat="currency in currencies.currentPageItems  | filter:filterText">
+	              		<td class="pointer" data-ng-click="routeTocurrency(currency.id)">{{currency.code}}</td>
+		           		<td class="pointer" data-ng-click="routeTocurrency(currency.id)">{{currency.nameCode}}</td>
+		           		<td class="pointer" data-ng-click="routeTocurrency(currency.id)">{{currency.decimalPlaces}}</td>
+		           		<td class="pointer" data-ng-click="routeTocurrency(currency.id)">{{currency.countryCode}}</td>
+		           		<td class="pointer" data-ng-click="routeTocurrency(currency.id)">{{currency.name}}</td>
+		           		<td class="pointer" data-ng-click="routeTocurrency(currency.id)">{{currency.countryName}}</td>
+		           		<td class="pointer" data-ng-click="routeTocurrency(currency.id)">{{currency.displaySymbol}}</td>
+	           		</tr>
+    		 		</tbody>
+			</table>
+			    	<ul class="pager">
+	        			<li class="previous"><a ng-click="currencies.previous()" href="" ng-disabled="!currencies.hasPrevious()">&larr; Prev</a></li>
+	        			<li class="next" ><a ng-click="currencies.next()" href="" ng-disabled="!currencies.hasNext()">Next &rarr;</a></li>
+	    			</ul>
+			<!-- <table class="table">
+			    <thead>
+		            <tr class="graybg">
+			            <th>Currency Name</th>
+			           	<th>Currency Code</th>
+		            </tr>
+	            </thead>
+	          	<tbody>
+		            <tr data-ng-repeat="currency in selectedCurrOptions  | filter:filterText">
+			            <td>{{currency.name}}</td>
+				        <td>{{currency.code}}</td>
+		            </tr>createcurrency.html
+	   		 	</tbody>
+	    	</table> -->
+	    	<div data-ng-show="hideview">
+	            <br>
+	 	        <input  type="text" class="form-control input-xxlarge" data-ng-model="selected" placeholder="New Currency"
+	            		typeahead="item as item.displayLabel for item in allCurrOptions | filter:$viewValue | limitTo:8" />&nbsp;&nbsp;
+	            		<a data-ng-click='addCur()'><i class="fa fa-plus"></i></a>
+	
+	  	       <div data-ng-repeat="currency in selectedCurrOptions">
+			   	   <input type="text" disabled="" class="form-control input-xxlarge" placeholder={{currency.displayLabel}}} />&nbsp;&nbsp;
+			   	   <a data-ng-click='deleteCur(currency.code)'><i class="fa fa-remove"></i></a>
+	           </div>
+	     	   <div class="offset5">
+		           <button id="cancel" type="reset" data-ng-click="cancel()" class="btn">Cancel</button>
+		           <button id="submit" type="submit" data-ng-click="submit()" class="btn btn-primary">Save</button>
+	           </div>
+          </div> 
+		</div>
+	</div>
+</div>

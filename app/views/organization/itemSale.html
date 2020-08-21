@@ -1,0 +1,144 @@
+<div class="content-container" ng-controller="ItemSaleController">
+	<div data-ng-show="officeId != 0 && partnerId == 0">
+		<ul class="breadcrumb">
+			<li>
+				<a href="#/organization">{{'link.admin.organisation' | translate}}</a> 
+				<span class="divider"></span>
+			</li>
+		    <li>
+		    	<a href="#/offices">{{'label.manageoffices' | translate}}</a> 
+		    	<span class="divider"></span>
+		    </li>
+		    <li>
+		    	<a href="#/viewoffice/{{officeId}}">{{officeName}}</a> 
+		    	<span class="divider"></span>
+		    </li>
+		    <li class="active">Item Sale</li>
+		</ul>
+	</div>
+	<div data-ng-show="partnerId !=0 && officeId !=0">
+	   <ul class="breadcrumb">
+		   <li>
+			   <a href="#/organization">{{'link.admin.organisation' | translate}}</a> 
+			   <span class="divider"></span>
+		   </li>
+		   <li data-ng-show="officeId&&partnerId">
+			   <a href="#/offices" data-ng-click="partnersTab()">{{'label.managepartners' | translate}}</a> 
+			   <span class="divider"></span>
+		   </li>
+		   <li data-ng-show="officeId&&partnerId">
+			   <a href="#/viewpartner/{{partnerId}}/{{officeId}}">{{partnerName}}</a>
+			   <span class="divider"></span>
+		   </li>
+		   <li class="active">Item Sale</li>
+	   </ul>
+    </div>
+    <div data-ng-show ="officeId == 0 && partnerId ==0 ">
+	    <ul class="breadcrumb">
+	    <li>
+	    	<a href="#/inventory" data-ng-click="goBack()">{{'link.inventory' | translate}}</a> 
+	    	<span class="divider"></span>
+	    </li>
+	    <li class="active">{{'label.create.new.mrn' | translate}}</li>
+	    </ul>
+    </div>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h4>{{'label.heading.createitemsale' | translate}}</h4>
+			</div>
+			<br>
+				<form name="itemSaleForm" novalidate="" class="form-horizontal" rc-submit="submit()">
+					<api-validate></api-validate>
+					<div class="error" data-ng-show="errorStatus || errorDetails" >
+					     <label data-ng-show="errorStatus">{{errorStatus}}</label>
+					     <label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+	                </div> 				
+				
+					<fieldset>
+						<div class="form-group">
+			                <label class="control-label col-sm-2" for="purchaseDate">Purchase Date&nbsp;<span class="required" >*</span></label>
+			                <div class="col-sm-3">
+			                	<input type="text" datepicker-pop="dd MMMM yyyy" data-ng-model="purchase.date" class="form-control" is-open="opened" min="minDate" max="maxDate" 
+			                	   	   date-disabled="disabled(date, mode)" required late-Validate style="background-color:#FFFFFF;"  readonly/>
+			                </div>
+			                
+			                <label class="control-label col-sm-2">Purchased From &nbsp;<span class="required" >*</span></label>
+						    <div class="col-sm-3">
+						            <input type="text"  
+				            		placeholder="Enter Office Code"
+				            		data-ng-model="formData.purchaseFrom" 
+				            		name="serialNumber" 
+				            		class="form-control"
+									uib-typeahead=" officeDatas.externalId as groupByOffice(officeDatas.externalId, officeDatas.name) for officeDatas in getData($viewValue)" 
+									autocomplete="off" data-typeahead-min-length="0">    
+						    
+								<!-- <select data-ng-model="formData.purchaseFrom" class="form-control" data-ng-options="officeData.id as officeData.name for officeData in officeDatas"></select> -->
+						    </div>
+		                </div>
+		                
+		                <div class="form-group">
+		         			<label class="control-label col-sm-2" for="itemId">{{ 'label.item' | translate }}<span class="required" >*</span></label>
+		         			<div class="col-sm-3">
+			       				<select id="itemId" data-ng-model="formData.itemId" class="form-control" data-ng-change="itemData(formData.itemId)" 
+			       				        data-ng-options="itemData.id as getBothItem(itemData.itemCode, itemData.itemDescription) for itemData in itemDatas">
+			       						<option value="">{{'label.select.one' | translate}}</option>
+			       				</select>
+		         			</div>
+		         			
+		         			<label class="control-label col-sm-2" for="chargeCode">{{ 'label.charge' | translate }}<span class="required" >*</span></label>
+		            		<div class="col-sm-3">
+		                    	<select id="chargeCode" data-ng-model="formData.chargeCode" class="form-control" data-ng-options="chargeDatas.id as getBothCharge(chargeDatas.chargeCode, chargeDatas.chargeDescription) for chargeDatas in chargeDatas">
+		                    			<option value="">{{'label.select.one' | translate}}</option>
+		                    	</select>
+		                    </div>
+	          			</div>
+	          			
+	          			<div class="form-group">
+						    <label class="control-label col-sm-2">Order Quantity&nbsp;<span class="required" >*</span></label>
+						    <div class="col-sm-3">
+							<input type="text" id="orderQuantity" data-ng-model="formData.orderQuantity" class="form-control" name="orderQuantity" 
+								   data-ng-change="itemDataQuantity(formData.orderQuantity,formData.itemId)" 
+								   data-ng-model="formData.quantity" data-ng-pattern="{{'numeric' | CodeValidate}}"></br>
+							<span  data-ng-show="itemSaleForm.orderQuantity.$dirty && itemSaleForm.orderQuantity.$invalid">
+								   <small class="error-row">{{'error.not.numeric.validation' | translate}}</small>
+							</span>
+							</div>
+							
+							<label class="control-label col-sm-2">Unit Price&nbsp;<span class="required" >*</span></label>
+							<div class="col-sm-3">
+								<input  type="text" id="unitPrice" class="form-control" data-ng-model="formData.unitPrice" data-ng-change="itemDataQuantity(formData.orderQuantity,formData.itemId,formData.officeId)">
+						    </div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2">Total Item Price&nbsp;<span class="required" >*</span></label>
+							<div class="col-sm-3">
+								<input type="text" id="itemPrice" class="form-control" data-ng-model="formData.chargeAmount" disabled>
+						    </div>
+						    
+						    <label class="control-label col-sm-2">Purchase By &nbsp;<span class="required" >*</span></label>
+							<div class="col-sm-3">
+							<input type="text"  
+				            		placeholder="Enter Office Code"
+				            		data-ng-model="formData.purchaseBy" 
+				            		name="serialNumber" 
+				            		class="form-control"
+									uib-typeahead=" officeDatas.externalId as groupByOffice(officeDatas.externalId, officeDatas.name) for officeDatas in getData($viewValue)" 
+									autocomplete="off" data-typeahead-min-length="0">
+							
+								<!-- <select data-ng-model="formData.purchaseBy" class="form-control"
+										data-ng-options="officeData.id as officeData.name for officeData in officeDatas">
+								</select> -->
+							</div>
+						</div>
+						
+						<div class="col-md-offset-9">
+		            	 	<a data-ng-click="goBack()"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+	            			<button id="save" type="submit" data-ng-disabled="itemSaleForm.$dirty && itemSaleForm.$invalid" class="btn btn-primary">{{'label.save' | translate}}</button>
+		          	     </div>
+					</fieldset>
+			   </form>
+		</div>
+	</div>
+</div>

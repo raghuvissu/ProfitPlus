@@ -1,0 +1,246 @@
+<div class="content-container" ng-controller="AddClientDeviceController">
+    <ul class="breadcrumb">
+		<li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.add.device' | translate}}</li>
+	</ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.add.device' | translate}}</h4>
+    		</div>
+    		<br><br>
+    			<form class="form-horizontal">
+					<api-validate></api-validate>
+					<fieldset>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="officeId">{{'label.heading.office' | translate}}&nbsp;<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select data-ng-model="formData.officeId" class="form-control" 
+								data-ng-options="office.id as office.name for office in offices" ng-change="officeDetailsFun()">
+							 </select>
+						</div>
+						<label class="control-label col-sm-2">{{ 'label.saleDate' | translate }}&nbsp;<span class="required">*</span></label>
+						<div class="col-sm-3">
+						  <input type="text" data-datepicker-pop="dd MMMM yyyy" data-ng-model="date.saleDate" data-is-open="opened2" 
+						  		min="minDate" class="form-control" max="maxDate" data-date-disabled="disabled(date, mode)" 
+						  			style="background-color: #FFFFFF;" readonly />
+						</div>
+					 </div>
+					 <table class="table" style="margin-left:80px;width:78%">
+                 			<tr>
+                    			<td>
+                    				<label class="control-label" for="serialNumber">{{'label.serialNumber' | translate }}&nbsp;
+					    				<span class="required">*</span></label>
+                    				<input type="text" data-ng-model="itemDetail" name="serialNumber" class="input-small form-control"
+										uib-typeahead="itemDetail as itemDetail for itemDetail in getData($viewValue)" 
+											autocomplete="off" data-typeahead-on-select="getItemData($item, $model, $label)" data-typeahead-min-length="0">
+                    			</td>
+                    			<td>
+                    				<label class="control-label" for="itemId">{{'label.item' | translate }}&nbsp;<span class="required">*</span></label>
+							    	<select id="itemId" data-ng-model="formData.itemId" disabled class="input-small form-control"
+							    			data-ng-options="itemData.id as itemData.itemCode for itemData in itemDatas">
+									 </select>
+                    			</td>
+                   				<td>
+                   					<label class="control-label" for="discountId">{{'label.discountCode' | translate }}</label>
+                   					<select data-ng-model="formData.discountId" class="input-small form-control"
+										data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+									</select>
+                   				</td>
+                   				<td>
+                   					<label class="control-label" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+                   					<input type="text" id="totalPrice" class="input-small form-control" data-ng-model="formData.totalPrice" 
+									style="background-color: #FFFFFF;"/>
+                   				</td>
+                  			</tr>
+        				</table>
+        				<!-- pairable -->
+        				<table class="table" ng-if="isPairable" style="margin-left:80px;width:78%">
+                 			<tr>
+                    			<td>
+                    				<label class="control-label" for="pairableSerialNo">{{'label.pairedserialnumber' | translate}}<span class="required">*</span></label>
+                    				<input type="text" id="pairableSerialNo" name="pairableSerialNo" data-ng-model="pairableSerialNo" class="input-small form-control"
+		          						autocomplete="off" list ="pairableItemlist" data-ng-change="selectPairableItemDetails(pairableSerialNo)" required /> 
+		          						<datalist id="pairableItemlist">
+		             						<option  data-ng-repeat="pairableItemDetail in pairableItemDetails" value="{{pairableItemDetail}}">
+		      							</datalist>
+                    			</td>
+                    			<td>
+                    				<label class="control-label" for="pairableItemId">{{'label.paireditem' | translate }}&nbsp;<span class="required">*</span></label>
+							    	<select id="pairableItemId" data-ng-model="pairableFormData.itemId" disabled class="input-small form-control"
+						    			data-ng-options="pairableItemData.id as pairableItemData.itemCode for pairableItemData in itemDatas">
+								 	</select>
+                    			</td>
+                   				<td>
+                   					<label class="control-label" for="pairableDiscountId">{{'label.discountCode' | translate }}</label>
+                   					<select data-ng-model="pairableFormData.discountId" class="input-small form-control"
+										data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+									</select>
+                   				</td>
+                   				<td>
+                   					<label class="control-label" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+                   					<input type="text" id="totalPrice" class="form-control" 
+											data-ng-model="pairableFormData.totalPrice" style="background-color: #FFFFFF;"/>
+                   				</td>
+                  			</tr>
+        				</table>
+        				<div class="col-md-offset-9">
+								<a id="cancel" href="#/viewclient/id/{{clientId}}">
+									<button type="reset" class="btn" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+								</a>
+								<button id="submit1" class="btn btn-primary" data-ng-click="newSaleSaveBtnFun()">{{'button.save' | translate}}</button>
+							</div>
+			      	<!-- <div class="form-group">
+					    <label class="control-label col-sm-1" for="serialNumber">{{'label.serialNumber' | translate }}&nbsp;
+					    	<span class="required">*</span></label>
+						<div class="col-sm-2">
+							<input type="text"  data-ng-model="itemDetail" name="serialNumber" class="form-control"
+								uib-typeahead="itemDetail as itemDetail for itemDetail in getData($viewValue)" 
+									autocomplete="off" data-typeahead-on-select="getItemData($item, $model, $label)" data-typeahead-min-length="0">
+						</div>
+						<label class="control-label col-sm-1" for="itemId">{{'label.item' | translate }}&nbsp;<span class="required">*</span></label>
+					    <div class="col-sm-2">
+					    	<select id="itemId" data-ng-model="formData.itemId" disabled class="form-control"
+					    			data-ng-options="itemData.id as itemData.itemCode for itemData in itemDatas">
+							 </select>
+						</div>
+						<label class="control-label col-sm-1" for="discountId">{{'label.discountCode' | translate }}</label>
+							<div class="col-sm-2">
+								<select data-ng-model="formData.discountId" class="form-control"
+									data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+								</select>
+							</div>
+							<label class="control-label col-sm-1" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+							<div class="col-sm-2">
+								<input type="text" id="totalPrice" class="form-control" data-ng-model="formData.totalPrice" 
+									style="background-color: #FFFFFF;"/>
+							</div>
+					</div>	 -->
+			   		<!-- <div ng-if="isPairable">
+					  	<div class="form-group">
+		       				<label class="control-label col-sm-2" for="pairableSerialNo">{{'label.pairedserialnumber' | translate}}<span class="required">*</span></label>
+		        			<div class="col-sm-3">
+		          				<input type="text" id="pairableSerialNo" name="pairableSerialNo" data-ng-model="pairableSerialNo" class="form-control"
+		          					autocomplete="off" list ="pairableItemlist" data-ng-change="selectPairableItemDetails(pairableSerialNo)" required />  
+		        			</div>
+		        			<label class="control-label col-sm-2" for="pairableItemId">{{'label.paireditem' | translate }}&nbsp;<span class="required">*</span></label>
+						    <div class="col-sm-3">
+						    	<select id="pairableItemId" data-ng-model="pairableFormData.itemId" disabled class="form-control"
+						    			data-ng-options="pairableItemData.id as pairableItemData.itemCode for pairableItemData in itemDatas">
+								 </select>
+							</div>
+		      			</div>
+					   	<datalist id="pairableItemlist">
+		             			<option  data-ng-repeat="pairableItemDetail in pairableItemDetails" value="{{pairableItemDetail}}">
+		      			</datalist>
+			   		</div> -->
+					
+			 		  <br/>
+			 		  <!-- <div class="form-group">
+			 		  		<div class="col-sm-3">
+			 		  		</div>
+			 		 		<div class="col-sm-6">
+				  				<span has-permission="'CREATE_NEWSALE'">
+				  					<div class="col-sm-1">
+				  						<input  id="newSale" type="radio" name="saleSelectionType" class="form-control" data-ng-click="selectedNewSale()"/>
+				  					</div>
+				  					<div class="col-sm-3" style="margin-top:10px">
+				  						<label class="radioBtnlabel" for="newSale">{{'label.device.newsale' | translate}}</label>&nbsp;&nbsp;
+				  					</div>
+				  				</span>
+							</div>
+					 </div> -->
+					<!-- <div data-ng-show="newSaleType">
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="discountId">{{'label.discountCode' | translate }}</label>
+							<div class="col-sm-3">
+								<select data-ng-model="formData.discountId" class="form-control"
+									data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+								</select>
+							</div>
+							<label class="control-label col-sm-2" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="totalPrice" class="form-control" data-ng-model="formData.totalPrice" 
+									style="background-color: #FFFFFF;"/>
+							</div>
+						</div>
+						<div ng-if="isPairable">
+							<div class="form-group">
+								<label class="control-label col-sm-2" for="pairableDiscountId">{{'label.discountCode' | translate }}</label>
+								<div class="col-sm-3">
+									<select data-ng-model="pairableFormData.discountId" class="form-control"
+										data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+									</select>
+								</div>
+								<label class="control-label col-sm-2" for="totalPrice">{{'label.totalPrice' | translate }}</label>
+								<div class="col-sm-3">
+									<input type="text" id="totalPrice" class="form-control" 
+											data-ng-model="pairableFormData.totalPrice" style="background-color: #FFFFFF;"/>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="col-md-offset-9">
+								<a id="cancel" href="#/viewclient/id/{{clientId}}">
+									<button type="reset" class="btn" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+								</a>
+								<button id="submit1" class="btn btn-primary" data-ng-click="newSaleSaveBtnFun()">{{'button.save' | translate}}</button>
+							</div>
+						</div>
+					</div> -->
+						<div data-ng-show="secondSaleType" style="width:100%;">
+							<div class="form-group offset2">
+	            			   <label class="control-label col-sm-2" for="totalPrice">{{ 'label.totalPrice' | translate }}</label>
+	            				<div class="col-sm-3">
+	              				    <input type="text" id="totalPrice" class="form-control" data-ng-model="formData.totalPrice"/>
+	            				</div>
+	          				</div>
+					  		<div class="col-md-offset-9">
+								 <a id="cancel" href="#/viewclient/id/{{clientId}}">
+								 	<button type="reset" class="btn" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+								 </a>
+								  <button id="submit2" class="btn btn-primary" data-ng-click="secondSaleSaveBtnFun()">{{'button.save' | translate}}</button>
+					  		</div>
+						</div>
+						<div data-ng-show="deviceRentalType">
+							<div class="form-group">
+			     				<label class="control-label col-sm-2" for="totalPrice">{{ 'label.price' | translate }}</label>
+			   					<div class="col-sm-3">
+			     					<input type="text" id="totalPrice" class="form-control" 
+			     						data-ng-model="formData.totalPrice" style="background-color:#FFFFFF;" readonly>
+			   					</div>
+			        		</div>
+							<div class="form-group">
+	          					<label class="control-label col-sm-2" for="discountId">{{ 'label.discountCode' | translate }}</label>
+	          					<div class="col-sm-3">
+	           					 	<select data-ng-model="formData.discountId"  class="form-control"
+	           					 		data-ng-options="discountMasterData.id as discountMasterData.discountDescription for discountMasterData in discountMasterDatas">
+	           						 </select>
+	          					</div>
+        					</div>
+        					<div align="left">
+		        				<div class="form-group">
+		                           <label class="control-label col-sm-2" for="contractPeriod">{{ 'label.contract' | translate }}</label>
+		                           <div class="col-sm-3">
+		                               <select data-ng-model="formData.contractPeriod"  class="form-control"
+		                               		data-ng-options="contractPeriod.id as contractPeriod.subscriptionPeriod for contractPeriod in contractPeriods"></select>
+		                           </div>
+		                        </div>
+							</div>
+							<div>
+								<div class="col-md-offset-9">
+									<a id="cancel" href="#/viewclient/id/{{clientId}}">
+										<button type="reset" class="btn" data-ng-click="reset123()">{{'button.cancel' | translate}}</button>
+									</a>
+									<button id="submit3" type="submit" class="btn btn-primary" data-ng-click="deviceRentalSaveBtnFun()">
+										{{'button.save' | translate}}</button>
+								</div>
+							</div>
+						</div>
+				</fieldset>
+			</form>
+    	</div>
+    </div>
+</div>
+

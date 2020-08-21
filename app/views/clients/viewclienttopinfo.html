@@ -1,0 +1,78 @@
+<div data-ng-controller="ViewClientTopInfoController">
+	<div class="card mb20">
+		<div class="content ptrbl0">
+			<div class="toolbar">
+	               <div class="client-title">
+	                   <div class="col-md-2 prl0 tc avatarDiv">
+	                       <img data-ng-hide="imagePresent" src="../app/images/blank_avatar.jpg" alt="Avatar" class="avatar" width="120">
+	                       <img data-ng-show="imagePresent" src="{{image}}" alt="Avatar" width="120" class="avatar">
+	                   	<h3>{{displayName}} <i class="fa fa-circle fs15 {{client.status.code | StatusLookup}}"></i></h3>
+	                   	<small ng-if="client.subStatus.description">
+	                       	[{{subStatus.description}}]
+	                   	</small>
+	                   </div>
+	                   <div class="col-md-10">
+	                   	<ul class="acDetails">
+	                           <li><small>{{ 'label.accountno' | translate }}:</small> <span>{{accountNo}}</span></li>
+	                           <li><small>{{ 'link.accounttype' | translate }}:</small> <span>{{categoryType}}</span></li>
+	                       </ul>
+	                       <ul class="acDetails">
+	                       	<li><small>{{ 'label.office' | translate }}:</small> <span>{{officeName}}</span>   </li>
+	                       	<li><small>{{ 'label.balance' | translate }}:</small> <span>{{balanceAmount}}</span></li>
+	                       </ul>
+	                   </div>
+	               </div>
+	           </div>
+		</div>
+	</div>
+	<!-- <div class="row">
+		<div class="col-sm-4 col-md-4">
+			<div class="row clientborder">
+				<div class="clienttop">
+					Customer Info
+	                 <a href="#/editclient/{{client.id}}"><i class="fa fa-edit" ></i>{{'label.editcustomer' | translate}}</a>
+	                 <a href="#/closeclient/{{client.id}}"><i class="fa fa-remove" ></i>{{'label.closeaccount' | translate}}</a>
+	                 <a href="#/closeclient/{{clientId}}" class="tabicons"><i class="fa fa-window-close-o" ></i></a>
+	                 <a href="#/editclient/{{clientId}}" class="tabicons"><i class="fa fa-edit" ></i></a>
+				</div>
+	            <ul class="adDetails">
+					<li><span>{{ 'label.customername' | translate }}:</span> {{displayName}} </li>
+					<li><span>{{ 'label.email' | translate }}:</span> {{email}} </li>
+					<li><span>{{ 'label.phone' | translate }}:</span> {{phone}} </li>
+					<li><span>{{ 'label.createddate' | translate }}:</span> {{activationDate | DateFormat}} </li>
+					<li><span>{{ 'label.parentchild' | translate }}:</span> N/A </li>
+				</ul>		
+			</div>
+		</div>
+		<div class="col-sm-4 col-md-4">
+			<div class="row clientborder">
+				<div class="clienttop">
+					Address Info
+                    <a href="#/addclientaddress/{{clientId}}" class="tabicons"><i class="fa fa-plus-circle"></i></a>
+                    <a href="#/editclientaddress/{{clientId}}" class="tabicons"><i class="fa fa-edit"></i></a>                             			
+				</div>
+                <ul class="adDetails">
+                    <li><span>{{ 'label.address' | translate }}:</span> {{addressNo}} </li>
+                    <li><span>{{ 'label.street' | translate }}:</span> {{street}} </li>
+                    <li><span>{{ 'label.city' | translate }}:</span> {{city}} </li>
+                    <li><span>{{ 'label.state' | translate }}:</span> {{state}} </li>
+                    <li><span>{{ 'label.countrypin' | translate }}:</span> {{country}}/{{pin}} </li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-4 col-md-4">
+			<div class="clientborder row">
+				<div class="clienttop">
+					Billing Info
+				</div>
+	             <ul class="adDetails">
+	                 <li><span>{{ 'label.walletbalance' | translate }}:</span> {{walletAmount}} </li>
+	                 <li><span>{{ 'label.lastbillamount' | translate }}:</span> N/A </li>
+	                 <li><span>{{ 'label.overdue' | translate }}:</span> N/A </li>
+	                 <li><span>{{ 'label.lastpayment' | translate }}:</span> N/A </li>
+	                 <li><span>{{ 'label.lastpaymentdate' | translate }}:</span> N/A </li>
+	             </ul>
+			</div>
+		</div>
+	</div><br> -->
+</div>
