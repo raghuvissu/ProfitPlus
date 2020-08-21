@@ -1,0 +1,55 @@
+<div class="content-container" ng-controller="ViewTaxMappingController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+	        <li><a href="#/taxmapping/{{taxmapping.chargeCode}}/{{chargeCodeId}}">{{'label.managetaxmapping' | translate}}</a>
+	        <li class="active">{{taxmapping.taxCode}}&nbsp;&nbsp;</li>
+    </ul>
+
+    <div class="card">
+        <div class="content">
+        	<div class="toolbar">
+        		<div class="pull-right">
+        		    <div class="btn-group">
+	      					<a has-permission='UPDATE_TAXMAPPING' href="#/edittaxmapping/{{taxmapping.id}}" class="btn btn-primary">
+	          					<i class="fa fa-edit"></i> {{'button.edit' | translate}}
+	         				</a>
+        		    </div>
+        		</div>
+        	</div>
+        	<br/>
+        <div class="row">
+        	<div class="col-md-6">
+        	<h3>&nbsp;&nbsp;&nbsp;{{taxmapping.taxCode}}</h3>
+        	<table class="table table-bordered table-striped">
+        	<tr>
+				<td><strong>{{'label.chargecode' | translate }}</strong></td>
+				<td>{{taxmapping.chargeCode}}</td>
+			</tr>
+			<tr>
+				<td><strong>{{'label.taxCode' | translate }}</strong></td>
+				<td>{{taxmapping.taxCode}}</td>
+			</tr>
+			<tr>
+				<td><strong>{{'label.startDate' | translate }}</strong></td>
+				<td>{{taxmapping.startDate | DateFormat}}</td>
+			</tr>
+			<tr>
+				<td><strong>{{'label.type' | translate }}</strong></td>
+				<td>{{taxmapping.taxType}}</td>
+			</tr>
+			<tr>
+				<td><strong>{{'label.rate' | translate }}</strong></td>
+				<td>{{taxmapping.rate}}</td>
+			</tr>
+			<tr>
+				<td><strong>{{'label.taxRegion' | translate }}</strong></td>
+				<td>{{taxmapping.taxRegion}}</td>
+			</tr>
+        			            
+        </table>
+      </div>
+   </div>
+ </div>
+</div>
+</div>
+   

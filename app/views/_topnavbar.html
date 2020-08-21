@@ -1,0 +1,196 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" 
+            	aria-expanded="false" ng-click="isNavCollapsed = !isNavCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/home">
+                <img src="./images/mlm.PNG" alt="MLM" width="28px">
+            </a>
+            <!-- <a href id="leftnav-toggle">
+                <i class="fa fa-outdent"></i>
+            </a> -->
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" uib-collapse="!isNavCollapsed">
+            <ul class="nav navbar-nav" id="main-menu-left">
+            	<li>
+                	<a has-permission="READ_PROSPECT" data-ng-class="{ activate: isActive('leads') }" href="#/leads">
+                        		<i class="fa fa-handshake-o"></i>{{ 'link.prospects' | translate }}
+                    </a>
+                </li>
+                <li>
+                	<a has-permission="READ_INVENTORY" data-ng-class="{ activate: isActive('inventory') }" href="#/inventory">
+                        		<i class="fa fa-cubes"></i>{{ 'label.anchor.inventory' | translate }}
+                    </a>
+                </li>
+                <li>
+                	<!-- <a has-permission="'READ_CLIENT,'CREATE_CLIENT','ACTIVATIONPROCESS_ACTIVATE'"  -->
+                	<a has-permission="READ_CLIENT" 
+                		data-ng-class="{ activate: isActive('clients') }" href="#/clients">
+                        		<i class="fa fa-users"></i>{{ 'label.anchor.customers' | translate }}
+                    </a>
+                </li>
+                 <li>
+                    <a has-permission="READ_REFERAL" 
+                        data-ng-class="{ activate: isActive('referal') }" href="#/referal">
+                                <i class="fa fa-users"></i>Referals
+                    </a>
+                </li>
+                <li>
+                	<a has-permission= "READ_TICKET" data-ng-class="{ activate: isActive('assignedtickets') }" href="#/assignedtickets">
+                        		<i class="fa fa-ticket"></i>{{ 'link.tickets' | translate }}
+                    </a>
+                </li>
+                <li>
+                	<a has-permission= "READ_PARTNER" data-ng-class="{ activate: isActive('partner') }" href="#/partner">
+                    			<i class="fa fa-users"></i>{{ 'link.partner' | translate }}
+                    </a>
+                </li>
+                <!-- <li class="" uib-dropdown>
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('clients') }" href><i class="fa fa-users"></i> {{
+                        'label.anchor.clients' | translate }}<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu id="swatch-menu">
+                        <li><a href="#/clients" has-permission='READ_CLIENT'>{{ 'label.anchor.clients' | translate
+                            }}</a></li>
+                        <li><a href="#/groups" has-permission='READ_GROUP'>{{ 'label.anchor.groups' | translate
+                            }}</a></li>
+                        <li><a href="#/centers" has-permission='READ_CENTER'>{{ 'label.anchor.centers' | translate
+                            }}</a></li>
+                    </ul>
+                </li> -->
+                <!-- <li><a ng-class="{ activate: isActive('acc') }" href="#/accounting"><i class="fa fa-money"></i> {{
+                    'label.anchor.accounting' | translate }}</a></li> -->
+                <li class="" uib-dropdown id="reports-menu" has-permission="READ_REPORT">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('rep') }" href><i class="fa fa-bar-chart-o"></i> {{
+                        'label.anchor.reports' | translate }}<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu>
+                        <li><a href="#/reports/all" has-permission='READ_REPORT'>{{ 'label.anchor.all' | translate
+                               }}</a></li>
+                        <li><a href="#/reports/clients" has-permission='READ_REPORT'>{{ 'label.anchor.clients' |
+                               translate }}</a></li>
+                         <li><a href="#/reports/Orders" has-permission='READ_REPORT'>{{ 'label.anchor.orders' |
+                                translate }}</a></li>
+                        <li><a href="#/reports/tickets"  has-permission='READ_REPORT'>{{ 'link.reports.tickets' | translate }}</a>
+                        </li>
+                        <li><a href="#/reports/inventory" has-permission='READ_REPORT'>{{ 'link.reports.inventory' | translate }}</a>
+                        </li>
+                        <li><a href="#/reports/leads" has-permission='READ_REPORT'>{{ 'link.reports.leads' | translate }}</a>
+                        </li>
+                        <li><a href="#/reports/broadcaster" has-permission='READ_REPORT'>{{ 'link.reports.broadcaster' | translate }}</a>
+                        </li>
+                        <li><a href="#/reports/invoice&collections" has-permission='READ_REPORT'>{{ 'link.reports.invoice&collections' | translate }}
+                        	</a></li>
+                        </li>
+			 
+                    </ul>
+                </li>
+                <li class="" uib-dropdown id="preview-menu" has-permission="READ_ORGANIZATION">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('admin') }" href><i class="fa fa-wrench"></i> {{
+                        'label.anchor.admin' | translate }}<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu>
+                    	<li><a has-permission="READ_SYSTEM" href="#/system">{{ 'label.anchor.system' | translate }}</a></li>
+                    	<li><a has-permission="READ_ORGANIZATION" href="#/organization">{{ 'label.anchor.masters' | translate }}</a></li>
+                    	<li><a has-permission="READ_ACCOUNTING" href="#/accounting"> {{'label.anchor.accounting' | translate }}</a></li>
+                    	<li><a has-permission="READ_UPLOADSTATUS" href="#/importing">{{'label.anchor.datauploads' | translate }}</a></li>
+                    	<li><a has-permission="READ_SCHEDULERJOB" href="#/jobs">{{'label.anchor.schedulerjobs' | translate }}</a></li>
+                    	<li><a has-permission="READ_PAYMENTGATEWAY" href="#/paymentGateway">{{'label.anchor.managepaymentgateway' |translate}}
+                    		</a></li>
+                    	<li><a has-permission="READ_EVENTACTIONS" href="#/eventaction">{{'label.anchor.eventactions' |translate}}</a></li>
+                        <li><a has-permission="READ_COMMANDCENTER" href="#/commandcenter">{{'label.anchor.commandcenter' |translate}}</a></li>                    	
+                        <!-- <li><a href="#/users" has-permission='READ_USER'>{{ 'label.anchor.users' | translate }}</a></li>
+                        <li><a href="#/products">{{ 'label.anchor.products' | translate }}</a></li>
+                        <li><a href="#/templates" has-permission='READ_TEMPLATE'>{{ 'label.anchor.templates' | translate }}</a></li> -->
+                    </ul>
+                </li>
+                
+            </ul>
+            <ul class="nav navbar-nav navbar-right" id="main-menu-right">
+                <li class="" uib-dropdown id="notification-icon" ng-controller="NotificationsController">
+                    <a href class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-click="fetchItemsInNotificationTray()">
+                        <span class="fa fa-bell"></span>
+                    </a>
+                    <div class="numberCircle" ng-hide="numberOfUnreadNotifications == 0">{{ numberOfUnreadNotifications }}</div>
+                    <ul class="notification-container" uib-dropdown-menu>
+                        <ul class="notification-list" ng-repeat="notification in notifications">
+                            <li ng-click="navigateToAction(notification)">
+                                <h4>{{ notification.content }}</h4>
+                                <span>{{ notification.createdAt }}</span>
+                            </li>
+                        </ul>
+                        <li class="notification-list-link">
+                            <a href="#/notifications">Show all notifications</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="" uib-dropdown id="user-menu">
+                    <a id="user-dropdown" class="" uib-dropdown-toggle data-toggle="uib-dropdown" href>
+                        {{currentSession.user.name}}<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu>
+                       <!--  <li><a id="help" ng-click="helpf()"><i class="fa fa-question-circle"></i> {{
+                            'label.anchor.help' | translate }}</a></li> -->
+                        <li><a href="#/profile"><i class="fa fa-user"></i> {{ 'label.anchor.profile' | translate
+                            }}</a></li>
+                        <li><a href="#/usersetting"><i class="fa fa-cog"></i> {{ 'label.anchor.settings' | translate
+                            }}</a></li>
+                        <li><a id="logout" data-ng-click="logout()"><i class="fa fa-power-off"></i> {{
+                            'label.anchor.logout' | translate }}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- <form ng-submit="search()" class="navbar-form navbar-right">
+                <div class="input-group pull-left" >
+                    <input id="search" type="text" class="form-control input-sm unstyled" style="width:250px;" data-ng-model="search.query"
+                           placeholder="{{'label.searchorpress'|translate}}">
+                    <div class="input-group-btn search-panel" uib-dropdown="">
+                        <button type="button" class="btn btn-default btn-sm " uib-dropdown-toggle data-toggle="uib-dropdown">
+                            {{currentScope.name | translate}} &nbsp;<span class="caret"></span>
+                        </button>
+                        <ul class="" uib-dropdown-menu>
+                            <li  uib-dropdown ng-repeat=" searchScope in searchScopes" ng-click="changeScope(searchScope)">
+                                <a href="">{{ searchScope.name |translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form> -->
+            <!-- <div ng-controller="SearchSubmitController">
+	            <form ng-submit="searchSubmit()" class="navbar-form navbar-right">
+	                <div class="input-group pull-left" >
+	                    <input id="search" type="text" class="form-control input-sm unstyled" style="width:200px;" data-ng-model="columnValue"
+	                           placeholder="{{'label.searchorpress'|translate}}">
+	                    <div class="input-group-btn search-panel">
+		                    <select class="btn-sm" style="border-radius: 0px;background-color:#fff; border:1px solid #e0e0e0;" ng-model="columnName">
+			              		<option value="serial_no">Serial No</option>
+				              	<option value="provisioning_serialno">Chip Id</option>
+				              	<option value="phone">Mobile No</option>
+				              	<option value="email">Email Id</option>
+				               	<option value="account_no">Account No</option>
+				              	<option value="external_id">Legacy No</option>
+							</select>
+						</div>
+	                </div>
+	            </form>
+	            <script type="text/ng-template" id="searchClient.html">
+                    <div class="modal-header silver" style="color:red">
+                        <h3 class="bolder">Error</h3>
+                    </div>
+                    <div class="modal-body modal-small">
+                       <h4>No Clients with this details</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                    </div>
+				</script>
+			</div> -->
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,37 @@
+{
+  "orderActions": {
+    "suspend": "true",
+    "disconnect": "true",
+    "applypromo": "true",
+    "reconnect": "true",
+    "cangeplan": "true",
+    "topup/renewal": "true",
+    "pairing": "true",
+    "addons": "true",
+    "ndeviceswap": "true",
+    "commandcenter": "true",
+    "terminate": "true",
+    "ipchange": "true"
+  },
+  "codeDefinitionLength": "10",
+  "SubscriptionPayment": "false",
+  "clientonlinecheck": "false",
+  "IPTV": "true",
+  "isAutoRenew": "true",
+  "IsGridEnable": "true",
+  "nationalId": "false",
+  "registrationListing": {
+    "passport": "false"
+  },
+  "date_format": "dd MMM yyy",
+  "IsClientIndividual": "false",
+  "payment": "false",
+  "clientListing": {
+    "password": "false",
+    "externalId": "false",
+    "customerCategory": "false",
+    "group/parentId": "false",
+    "userName": "false"
+  },
+  "deviceAgrementType": "SALE"
+}

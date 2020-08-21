@@ -1,0 +1,58 @@
+<div class="content-container" ng-controller="DataUploadController">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.uploads' | translate}}&nbsp;&nbsp;</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+            	<div class="toolbar ptb15 mrl15 bb1 mb20">
+	            	<h4 class="ptrbl0">{{'label.uploads' | translate}}</h4>
+	        	</div>
+	            <div class="row">
+	                <div class="col-md-6">
+	                    <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+	                </div>
+	                <div class="col-md-6">
+	                    <a href="#/uploadFile" class="btn primary_btn"><i class="fa fa-plus"></i> {{ 'link.uploadfile' | translate }}</a>
+	                </div>
+	            </div>
+            </div>
+            <br/>
+            <table class="table">
+		        <thead>
+		            <tr class="graybg">
+		                <th>{{ 'label.uploadprocess' | translate }}</th>
+		                <th>{{ 'label.uploadfilepath' | translate }}</th>
+		                <th>{{ 'label.processdate' | translate }}</th>
+		                <th>{{ 'label.process.totalrecords' | translate }}</th>
+		                <th>{{ 'label.status' | translate }}</th>
+		                <th>{{'label.actions' | translate}}</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr ng-repeat="import in imports.currentPageItems | filter:filterText">
+		                <td>{{import.uploadProcess}}</td>            
+		                <td>{{import.uploadFilePath}}</td>        
+		                <td>{{import.processDate | DateFormat}}</td>         
+		                <td>{{import.processRecords}}/{{import.totalRecords}}</td>
+		                <td>{{import.processStatus}}</td>
+		              
+		              	<td>
+		              	<a ng-show="getProcessStatus(import.processStatus)" ng-click="processFile(import.id)" uib-popover="Process File" 
+		              		popover-trigger="mouseenter"><i class="fa fa-play"></i></a>
+		              	<a ng-show="getLogStatus(import.processStatus)" ng-click="logFile(import.id)" uib-popover="Download Log File" 
+		              		popover-trigger="mouseenter"><i class="fa fa-cloud-download"></i> </a>
+		             	<a ng-show="getLogStatus(import.processStatus)" ng-click="downloadFile(import.id)" uib-popover="Download Uploaded File" 
+		             		popover-trigger="mouseenter"><i class="fa fa-download"></i></a>
+		              	</td>
+		              
+		            </tr>
+		        </tbody>
+		    </table>
+		    <ul class="pager">
+       			<li class="previous"><a ng-click="imports.previous()" href="" ng-disabled="!imports.hasPrevious()">&larr; Prev</a></li>
+       			<li class="next" ><a ng-click="imports.next()" href="" ng-disabled="!imports.hasNext()">Next &rarr;</a></li>
+			</ul>
+        </div>
+    </div>
+</div>

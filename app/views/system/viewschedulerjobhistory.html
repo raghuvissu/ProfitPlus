@@ -1,0 +1,46 @@
+<div class="content-container" ng-controller="ViewSchedulerJobHistoryController">
+    <ul class="breadcrumb">
+        <li><a href="#/system">{{'label.anchor.system' | translate}}</a></li>
+        <li><a href="#/jobs">{{'label.anchor.manageschedulerjobs' | translate}}</a></li>
+        <li class="active">{{'label.anchor.schedularjobhistory' | translate}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar"></div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <input ng-autofocus="true" ng-model="filterText" type="text" class="form-control" placeholder="{{'label.input.filterbyversion' | translate}}">
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+            <hr>
+            <table class="table">
+		        <thead>
+		            <tr class="graybg">
+		                <th>{{'label.version' | translate}}</th>
+		                <th>{{'label.runstarttime' | translate}}</th>
+		                <th>{{'label.status' | translate}}</th>
+		                <th>{{'label.runtype' | translate}}</th>
+		                <th>{{'label.logfile' | translate}}</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr  ng-repeat="history in jobhistory.currentPageItems  | filter:filterText">
+		                <td>{{history.version}}</td>
+		                <td>{{history.jobRunEndTime}}</td>  
+		                <td>{{history.status}}</td>
+		                <td>{{history.triggerType}}</td>
+		                <td><a ng-show ="history.runFilePath" ng-click="logFile(history.historyId)"><i class="fa fa-cloud-download"></i> Download</a></td>
+		                
+		            </tr>
+		        </tbody>
+		    </table>
+		    <ul class="pager">
+		        <li class="previous"><a ng-click="jobhistory.previous()" href="" ng-disabled="!jobhistory.hasPrevious()">&larr; Prev</a></li>
+		        <li class="next" ><a ng-click="jobhistory.next()" href="" ng-disabled="!jobhistory.hasNext()">Next &rarr;</a></li>
+		    </ul>
+        </div>
+    </div>
+    
+</div>

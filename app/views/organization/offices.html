@@ -1,0 +1,158 @@
+<div class="content-container" ng-controller="OfficesController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li class="active">{{'label.manageorganization' | translate}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+            	<h3>{{ 'label.manageorganization' | translate }}</h3>
+            </div>
+           <!--  <uib-tabset class="scrollable" tabset-name="officeTabset" scrollable persistent-tab>
+				Office Tab 
+				<uib-tab heading="{{'tab.office' | translate}}" select="getOffices()"> -->
+					<div class="col-md-6">
+                    	<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" 
+                    		placeholder="{{'label.input.filterbyname' | translate}}">
+                	</div>
+                	<div class="col-md-1"></div>
+					<div class="col-md-2">
+	                    <a ng-show="isTreeView" ng-click="isTreeView=!isTreeView" class="btn primary_btn"><i class="fa fa-list ">
+	                    	</i>{{'label.button.listview' | translate}}</a>
+	                    <a ng-hide="isTreeView" ng-click="isTreeView=!isTreeView" class="btn primary_btn"><i class="fa fa-sitemap ">
+	                    	</i>{{'label.button.treeview' | translate}}</a>
+                	</div>
+                	<div class="col-md-1">
+                		<a href="#/createoffice" class="btn primary_btn" has-permission='CREATE_OFFICE'><i class="fa fa-plus ">
+	                    	</i>{{'label.createorganization' | translate}}</a>
+                	</div>
+                	<div data-ng-hide="isTreeView">
+						<table class="table">
+							<thead>
+								<tr class="graybg">
+									<th>{{ 'label.name' | translate }}</th>
+									<th>{{ 'label.externalid' | translate }}</th>
+									<th>{{ 'label.parentorganization' | translate }}</th>
+									<th>{{ 'label.openedon' | translate }}</th>
+									<th>{{ 'label.balance.amount' | translate }}</th> 
+									<th>{{ 'label.actions' | translate }}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="pointer-main" data-ng-repeat="office in offices  | filter:filterText">
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.name}}</td>
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.externalId}}</td>  
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.parentName}}</td>
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.openingDate | DateFormat}}</td>
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.balance}}</td>
+									<td><a has-permission='UPDATE_OFFICE' href="#/editoffice/{{office.id}}" data-uib-popover="Edit Office" 
+										data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<br><br><br>
+					<div data-ng-show="isTreeView">
+						<div
+							data-angular-treeview="true"
+							data-tree-id="treeview"
+							data-tree-model="treedata"
+							data-node-id="id"
+							data-node-label="name"
+							data-node-children="children" >
+						</div>
+					</div>
+				<!-- </uib-tab> -->
+				<!-- <uib-tab heading="{{'tab.partners' | translate}}" select="getPartners()" active="PartnersTab">
+					<div class="pull-right">
+						<a has-permission='CREATE_PARTNER' href="#/createpartner" class="btn primary_btn">
+							<i class="fa fa-plus"></i>{{'label.createpartner' | translate}}</a>
+					</div>
+					<div>
+						<input data-ng-model="filterText" type="text" class="span marginbottom0px" placeholder="{{'placeholder.searchbar' | translate}}">
+						<table class="table">
+							<thead>
+								<tr class="graybg">
+									<th>{{ 'label.name' | translate }}</th>
+									<th>{{ 'label.parentorganization' | translate }}</th>
+									<th>{{ 'label.currency' | translate }}</th>
+									<th>{{ 'label.openedon' | translate }}</th>
+								    <th>{{ 'label.balance.amount' | translate }}</th> 
+								    <th>{{ 'label.actions' | translate }}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="pointer-main" data-ng-repeat="partner in partners  | filter:filterText">
+									<td class="pointer" data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.partnerName}}</td>
+									<td class="pointer" data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.parentName}}</td>
+									<td class="pointer" data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.currency}}</td>  
+									<td class="pointer" data-ng-click="routeToPartner(partner.id,partner.officeId)">
+										{{partner.openingDate | DateFormat}}</td>
+								    <td class="pointer" data-ng-click="routeToPartner(partner.id,partner.officeId)">{{partner.balanceAmount}}</td>
+				    				<td><a has-permission='UPDATE_PARTNER' href="#/editpartner/{{partner.id}}" uib-popover="Edit Partner" 
+				    					data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>
+								</tr>
+							</tbody> 
+						</table>
+					</div>
+				</uib-tab>
+				<uib-tab heading="{{'tab.partnersDisbursements' | translate}}" select="getPartnerDisbursements()" active="PartnersDisbursementTab">
+					<div class="row-fluid" >
+						<form class="span marginbottom0px">
+							<select id="sourceDatas" data-ng-model="searchData.sourceType" chosen="sourceDatas" data-ng-autofocus="true" 
+									data-ng-options="sourceData.mCodeValue as sourceData.mCodeValue for sourceData in sourceDatas track by sourceData.id" 
+										data-placeholder="Source Type" value="{{sourceData.mCodeValue}}">  
+								 <option class="displaynone" value="">---Source Type---</option>
+							</select>
+							<select id="patnerDatas" data-ng-model="searchData.partnerType" chosen="patnerDatas" data-ng-autofocus="true" 
+									data-ng-options="patnerData.partnerName as patnerData.partnerName for patnerData in patnerDatas" 
+										data-placeholder="Partner Type" value="{{patnerData.partnerName}}">  
+								 <option class="displaynone" value="">---Partner Type---</option>
+							</select>
+						    <a data-ng-click="search()" class="btn btn-primary control" uib-popover="Search" data-popover-placement="bottom"  
+						    	data-popover-trigger="mouseenter"><i class="fa fa-search"></i></a>
+						    <a data-ng-click="clearFilters()" class="btn btn-primary control" uib-popover="Clear" data-popover-placement="bottom"  
+						    	data-popover-trigger="mouseenter"><i class="fa fa-times-circle-o"></i></a>
+							<input data-ng-model="filterText" type="text" data-ng-autofocus="true" class="span marginbottom0px" 
+								placeholder="{{'placehoder.searchbar' | translate}}">
+						</form>
+						<table class="table">
+							<thead>
+								<tr class="graybg">
+									<th>{{'label.id' | translate}}</th>
+									<th>{{'label.partnername' | translate}}</th>
+									<th>{{'label.transactiondate' | translate}}</th>
+									<th>{{'label.source' | translate}}Source</th>
+									<th>{{'label.chargeamount' | translate}}</th>
+									<th>{{'label.commissiontype' | translate}}</th>
+									<th>{{'label.commissionrate' | translate}}</th>
+									<th>{{'label.commissionamount' | translate}}</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr  data-ng-repeat="patnerDisbursementData in patnerDisbursementData.currentPageItems | filter:filterText">
+									<td>{{patnerDisbursementData.id}}</td>
+									<td>{{patnerDisbursementData.partnerName}}</td>
+									<td>{{patnerDisbursementData.transDate |DateFormat}}</td>
+									<td>{{patnerDisbursementData.source}}</td>
+									<td>{{patnerDisbursementData.netAmount}}</td>
+									<td>{{patnerDisbursementData.percentage}}</td>
+									<td>{{patnerDisbursementData.shareAmount}}</td>
+									<td>{{patnerDisbursementData.commissionAmount}}</td>
+									
+								</tr>
+							</tbody>
+						</table>
+						<ul class="pager">
+				   			<li class="previous"><a data-ng-click="patnerDisbursementData.previous()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasPrevious()">&larr; Prev</a></li>
+				   			<li class="next" ><a data-ng-click="patnerDisbursementData.next()" href="" 
+				   				data-ng-disabled="!patnerDisbursementData.hasNext()">Next &rarr;</a></li>
+						</ul>
+					</div>
+				</uib-tab> -->
+			<!-- </uib-tabset> -->
+        </div>
+    </div>
+</div>

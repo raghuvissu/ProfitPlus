@@ -1,0 +1,194 @@
+<div class="content-container" ng-controller="BroadCasterChannelMappingController">
+	<ul class="breadcrumb">
+		<li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+		<li class="active">{{'label.broadcasterchannelmapping' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<uib-tabset tabset-name="broadcasterchannelmappingTabset">
+				<uib-tab heading="{{'label.heading.broadcaster' | translate}}">
+					<div>
+           				<div class="toolbar">
+				            <div class="row">
+				                <div class="col-md-6">
+				                    <input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+				                </div>
+				                <div class="col-md-6">
+				                    <a has-permission = CREATE_BROADCASTER href="#/createbroadcaster" class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{ 'link.create.new.broadcaster' | translate }}</a>
+				                </div>
+				            </div>
+			            </div>
+                   </div>
+                   <table class="table">
+				        <thead>
+				            <tr class="graybg">
+				                <th>{{ 'table.broadcastercode' | translate }}</th>
+				                <th>{{ 'table.broadcastername' | translate }}</th>
+				                <th>{{ 'table.pin' | translate }}</th>
+				                <th>{{ 'table.contactname' | translate }}</th>
+				                 <th>{{ 'table.contactmobile' | translate }}</th>
+				                <th>{{ 'table.email' | translate }}</th>
+				                <th>{{ 'table.contactnumber' | translate }}</th>
+				                <!-- <th>{{ 'table.address' | translate }}</th> -->
+				                <th>{{ 'table.actions' | translate }}</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr class="pointer-main" data-ng-repeat="broadcaster in broadcasters.currentPageItems | filter:filterText" select="getAllbroadCaster()">
+				                <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.broadcasterCode}}</td>            
+				                <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.broadcasterName}}</td>
+				                <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.pin}}</td>
+				                <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.contactName}}</td>            
+				                <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.contactMobile}}</td>
+				                <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.email}}</td>
+				                <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.contactNumber}}</td>
+				                <!-- <td class="pointer"  data-ng-click="routeToBroadcaster(broadcaster.id)">{{broadcaster.address}}</td>  -->       
+				                
+				                <td class="pointer">
+				                 <a has-permission = UPDATE_BROADCASTER  href="#/editbroadcaster/{{broadcaster.id}}"
+				                    uib-popover="Edit Broadcaster" data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;
+					            <!--  <a has-permission = DELETE_BROADCASTER  data-ng-click="deleteBroadcaster(broadcaster.id)"
+					                uib-popover="Delete Broadcaster" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a></td> -->         
+				            </tr>
+				        </tbody>
+				    </table>
+				          <ul class="pager">
+			        			<li class="previous"><a ng-click="broadcasters.previous()" href="" 
+			        				ng-disabled="!broadcasters.hasPrevious()">&larr; Prev</a></li>
+			        			<li class="next" ><a ng-click="broadcasters.next()" href="" ng-disabled="!broadcasters.hasNext()">
+			        				Next &rarr;</a></li>
+			    			</ul>
+				    
+				    
+				</uib-tab>
+				<uib-tab heading="{{'label.heading.channel' | translate}}" select="channelDetails()">
+					<div class="toolbar">
+						<div class="row">
+							<div class="col-md-6">
+								<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">
+							</div>
+		          		    <div class="col-md-6">   				
+                   				<a has-permission = CREATE_CHANNEL href="#/createChannel" class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{ 'link.create.new.channel' | translate }}</a>
+                			</div>					
+						</div>
+					</div>
+					<table class="table">
+				        <thead>
+				            <tr class="graybg">
+				                <th>{{ 'table.channelname' | translate }}</th>
+				                <th>{{ 'table.channelcategory' | translate }}</th>
+				                <th>{{ 'table.channeltype' | translate }}</th>
+				                <th>{{ 'table.islocalchannel' | translate }}</th>
+				                <th>{{ 'table.ishdchannel' | translate }}</th>
+				                <th>{{ 'table.channelsequence' | translate }}</th>
+				                <th>{{ 'table.broadcastername' | translate }}</th>
+				                <th>{{ 'table.actions' | translate }}</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr class="pointer-main" data-ng-repeat="channel in channels.currentPageItems | filter:filterText" select="getAllchannel()">
+				                <td class="pointer"  data-ng-click="routeToChannel(channel.id)">{{channel.channelName}}</td>            
+				                <td class="pointer"  data-ng-click="routeToChannel(channel.id)">{{channel.channelCategory}}</td>        
+				                <td class="pointer"  data-ng-click="routeToChannel(channel.id)">{{channel.channelType}}</td>
+				                <td class="pointer"  data-ng-click="routeToChannel(channel.id)">{{channel.isLocalChannel}}</td>
+				                <td class="pointer"  data-ng-click="routeToChannel(channel.id)">{{channel.isHdChannel}}</td>
+				                <td class="pointer"  data-ng-click="routeToChannel(channel.id)">{{channel.channelSequence}}</td>
+				                <td class="pointer"  data-ng-click="routeToChannel(channel.id)">{{channel.broadcasterName}}</td>
+				                
+				                <td class="pointer">
+				                 <a has-permission = UPDATE_CHANNEL href="#/editchannel/{{channel.id}}"
+				                    uib-popover="Edit Channel" data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;
+					             <a has-permission = DELETE_CHANNEL data-ng-click="deleteChannel(channel.id)"
+					                uib-popover="Delete Channel" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a></td>         
+				            </tr>
+				        </tbody>
+				    </table>
+				    <ul class="pager">
+			        			<li class="previous"><a ng-click="channels.previous()" href="" 
+			        				ng-disabled="!channels.hasPrevious()">&larr; Prev</a></li>
+			        			<li class="next" ><a ng-click="channels.next()" href="" ng-disabled="!channels.hasNext()">
+			        				Next &rarr;</a></li>
+			    			</ul>
+				    			
+				</uib-tab>
+				<uib-tab heading="{{'label.heading.channelmapping' | translate}}" select="channelMappingDetails()">
+					<div class="toolbar">
+							<div class="row">
+								<div class="col-md-6">
+									<input ng-autofocus="true" ng-model="filterText" type="text" ng-keyup="onFilter()" class="form-control" placeholder="{{'label.input.filterbyname' | translate}}">								
+								</div>
+			          		    <div class="col-md-6">
+	                   				<a has-permission = CREATE_CHANNELMAPPING href="#/createChannelMapping" class="btn primary_btn pull-right"><i class="fa fa-plus"></i> {{ 'link.create.new.channelmapping' | translate }}</a>
+	                			</div>					
+							</div>
+					</div>
+					<table class="table">
+				        <thead>
+				            <tr class="graybg">
+				                <th>{{ 'table.productcode' | translate }}</th>
+				                <th>{{ 'table.channelname' | translate }}</th>
+				                <th>{{ 'table.actions' | translate }}</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr class="pointer-main" data-ng-repeat="channelmapping in channelmappings.currentPageItems | filter:filterText" select="getAllchannelMapping()">
+				                <td class="pointer"  data-ng-click="routeToChannelMapping(channelmapping.id)">{{channelmapping.productCode}}</td>            
+				                <td class="pointer"  data-ng-click="routeToChannelMapping(channelmapping.id)">{{channelmapping.channelName}}</td>
+				                
+				                 <td class="pointer">
+				                 <a has-permission = UPDATE_CHANNELMAPPING href="#/EditChannelMapping/{{channelmapping.id}}"
+				                    uib-popover="Edit ChannelMapping" data-popover-trigger="mouseenter" class="fa fa-edit"></a>&nbsp;
+					             <a has-permission = DELETE_CHANNELMAPPING data-ng-click="deleteChannelMapping(channelmapping.id)"
+					                uib-popover="Delete ChannelMapping" data-popover-trigger="mouseenter"><i class="fa fa-times"></i></a></td>       
+				            </tr>
+				        </tbody>
+				    </table>
+				         <ul class="pager">
+			        			<li class="previous"><a ng-click="channelmappings.previous()" href="" 
+			        				ng-disabled="!channelmappings.hasPrevious()">&larr; Prev</a></li>
+			        			<li class="next" ><a ng-click="channelmappings.next()" href="" ng-disabled="!channelmappings.hasNext()">
+			        				Next &rarr;</a></li>
+			    			</ul>
+				    
+			    </uib-tab>			
+			</uib-tabset>	
+		</div>
+	</div>
+	<script type="text/ng-template" id="broadcaster.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete BroadCaster</h3>
+                    </div>
+                    <div class="modal-body modal-small">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+                    </div>
+  </script>
+  <script type="text/ng-template" id="channel.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete Channel</h3>
+                    </div>
+                    <div class="modal-body style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+                    </div>
+  </script>
+  <script type="text/ng-template" id="ChannelMapping.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">Delete ChannelMapping</h3>
+                    </div>
+                    <div class="modal-body style="height:60px;">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approve()">{{'label.confirm' | translate}}</button>
+                    </div>
+   </script>
+
+</div>

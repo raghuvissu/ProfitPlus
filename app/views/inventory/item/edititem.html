@@ -1,0 +1,196 @@
+<div class="content-container" ng-controller="EditItemController">
+    <ul class="breadcrumb">
+          <li><a href="#/inventory">{{'link.admin.inventory' | translate}}</a></li>
+          <li><a href="#/viewitem/{{formData.id}}/item/{{totalItem}}">&nbsp;{{formData.itemCode}}&nbsp;</a></li>
+          <li class="active">{{'label.item.edit' | translate}}</li>
+    </ul>
+      <div class="card">
+    	<div class="content">
+		    <div class="toolbar">
+		    	<h4>{{'label.item.edit' | translate}}</h4>
+		    </div>
+    	<form name="edititemform" class="form-horizontal" ng-submit="submit()">
+          <api-validate></api-validate>
+    		<fieldset>
+    		<div class="form-group">
+    		 	<label class="control-label col-sm-2" for="itemCode">{{'label.itemcode' | translate }}&nbsp;<span 
+    		 		class="required">*</span></label>
+    		   		<div class="col-sm-3">
+						<input type="text" id="itemCode" name="itemCode" class="form-control" ng-model="formData.itemCode" data-ng-maxlength="10"/></br>
+               			<div data-ng-show = "edititemform.itemCode.$dirty && edititemform.itemCode.$invalid">
+      						<small class="error" 
+      						data-ng-show="edititemform.itemCode.$error.maxlength">{{'error.itemcode.definition.length.validation'| translate}}</small>
+      					</div>
+		      		</div>
+    				<label class="control-label col-sm-2" for="itemDescription">{{'label.itemdescription' | translate }}&nbsp;<span class="required">*</span></label>
+			            <div class="col-sm-3">
+			                <input type="text" id="itemDescription" class="form-control" ng-model="formData.itemDescription">
+			            </div>
+    			</div>   			 
+    			 <div class="form-group">
+    			      <label class="control-label col-sm-2" for="itemClass">{{'label.itemclass' | translate }}&nbsp;<span class="required">*</span></label>
+   			            <div class="col-sm-3">
+                             <select id="itemClass" ng-model="formData.itemClass" class="form-control" ng-options="itemClassData.id as itemClassData.value for itemClassData in itemClassDatas" value="{{itemClassData.value}}">
+           					 </select>
+   			            </div>
+    			       <label class="control-label col-sm-2" for="units">{{'label.units' | translate }}&nbsp;<span class="required">*</span></label>
+   			            <div class="col-sm-3">
+                               <select id="units" ng-model="formData.units" class="form-control" ng-options="unitData.value as unitData.value for unitData in unitDatas" value="{{unitData.value}}">
+             					</select>
+   			            </div>
+    			   </div>
+    			   <div class="form-group">
+		            	<label class="control-label col-sm-2" for="chargeCode">{{'label.chargecode' | translate }}&nbsp;<span class="required">*</span></label>
+   			            <div class="col-sm-3">
+                               <select ng-model="formData.chargeCode" class="form-control" ng-options="chargesData.chargeCode as chargesData.chargeDescription for chargesData in chargesDatas">
+              					</select>
+   			            </div>
+		            	<label class="control-label col-sm-2" for="reorderLevel">{{'label.reorderlevel' | translate }}&nbsp;<span class="required">*</span></label>
+   			            <div class="col-sm-3">
+                               <input type="text" id="reorderLevel" name="reorderLevel" class="form-control" data-ng-model="formData.reorderLevel" data-ng-pattern="/^[0-9]/"  /><br/>
+                            <div data-ng-show="edititemform.reorderLevel.$dirty && edititemform.reorderLevel.$invalid">
+			        			<small class="error" data-ng-show="edititemform.reorderLevel.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+			    			</div>
+   			            </div>
+    			   </div>
+    			   <div class="form-group">
+		            	<label class="control-label col-sm-2" for="warranty">{{'label.warranty' | translate }}&nbsp;<span class="required">*</span></label>
+   			            <div class="col-sm-3">
+                               <input type="text" id="warranty" name="warranty" class="form-control" class="input-medium" data-ng-model="formData.warranty" data-ng-pattern="/^[0-9]/" >
+                               <span style="font-size:15px;"><img src="../app/images/slash.jpg" width="20">Month(s)</span><br/>
+           					<span data-ng-show="edititemform.warranty.$dirty && edititemform.warranty.$invalid">
+           						<small class="error" data-ng-show="edititemform.warranty.$error.pattern">{{'error.not.numeric.validation' | translate}}</small>
+   			            	</span>
+   			            </div>
+   			            
+   			            <label class="control-label col-sm-2" for="currencyId">{{'label.currencyid' | translate }}&nbsp;<span class="required">*</span></label>
+   			            <div class="col-sm-3">
+                             <select id="currencyId" ng-model="formData.currencyId" ng-options="currencyData.id as getBothCurrency(currencyData.code,currencyData.name) for currencyData in currencyDatas" class="form-control">
+				   				</select>
+   			            </div>
+    			   </div>
+    			        <!-- <div class="control-group">
+				            <label class="control-label col-sm-2" style="margin-top:10px" for="isProvisioning">{{ 'label.isprovisioning' | translate }}</label>
+				            <div class="col-sm-3">
+				              <label class="checkbox">
+				                <input type="checkbox" id="isProvisioning"  data-ng-model="formData.isProvisioning">
+				              </label>
+				            </div>
+				         </div> -->
+				         <div class="form-group">
+					         <label class="control-label col-sm-2"></label>
+					         <div class="col-sm-3">
+					         </div>
+				         
+					         <label class="control-label col-sm-2" for="defaultPrice">{{'label.defaultprice' | translate }}&nbsp;<span class="required">*</span></label>
+				   			 <div class="col-sm-3">
+				             	<input type="text" id="defaultPrice" name="defaultPrice" class="form-control" data-ng-model="formData.unitPrice" data-ng-pattern="/^[0-9]/" >
+				   			 </div>
+				         </div>
+				         <div class="form-group">
+				            	<label class="control-label col-sm-2" style="margin-top:10px" for="isSelector">{{ 'label.isselector' | translate }}</label>
+				            	<div class="col-sm-3">
+				              		<label class="checkbox">
+				                		<input type="checkbox" id="isSelector"  data-ng-model="formData.isSelector">
+				              		</label>
+				            	</div>
+				            	<div ng-if="formData.isSelector">
+					            	<label class="control-label col-sm-2" style="margin-top:10px" for="isSelectordesc">{{ 'label.selector' | translate }}</label>
+					            	<div class="col-sm-3">
+					            		<textarea id="isSelectordesc" rows="2" ng-model="formData.selectorDescription" class="form-control" readonly>
+					            		</textarea>
+					            	</div>
+					            	<div class="col-sm-1">
+					            		<a ng-click="selectorHelpPopup()" uib-popover="Help" data-popover-trigger="mouseenter" 
+					            			class="fa fa-question-circle-o fa-2x">
+	                          			</a>
+					            	</div>
+				            	</div>
+				         </div><br>
+    			        <div ng-if="configurationData.enabled">
+							<div class="control-group">
+	            				<label class="control-label col-sm-2" for="supplierId">{{'label.supplier' | translate }}&nbsp;<span class="required">*</span></label>
+		            			<div class="col-sm-3">
+		              				<select id="supplierId" ng-model="formData.supplierId"  ng-options="supplierData.id as getBothSup(supplierData.supplierCode,supplierData.supplierDescription) for supplierData in supplierDatas" value="{{supplierData.id}}">
+		              				</select>
+		            			</div>
+	          				</div>
+						</div>
+						
+    			       <table class="table">
+		          		<tr>
+		                <td>
+		                  <h4><label class="control-label">{{'label.regionalprice' | translate}}</label></h4>
+		                </td>
+		                <!-- <td class="blockquoteresult"> -->
+		                <td>
+		                    <!-- <form> -->
+		                    <div class="col-sm-3">
+		                      <!-- <select class="form-control" data-ng-model="itemPricesFormData.regionId" 
+		                      		data-ng-options="regionData.id as regionData.regionName  for regionData in regionDatas" >
+		                      </select>&nbsp;&nbsp; -->
+		                      <input type="text" name="itemModel" data-ng-model="itemPricesFormData.regionId" class="form-control"
+			                      		placeholder="Item Model" >
+		                    </div>
+		                    <div class="col-sm-3">
+		                      <input type="text" class="form-control" name="price" 
+		                      	data-ng-model="itemPricesFormData.price" placeholder="Price" data-ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+		                    </div>
+		                    <div class="col-sm-1">
+		                      <a data-ng-click="addItemPrice()">&nbsp;<i class="fa fa-plus"></i></a>
+		                    </div>
+		                    <div class="col-sm-3">
+		                      <span data-ng-show="edititemform.price.$dirty && edititemform.price.$invalid">
+		              		  	<small class="error" data-ng-show="createitemform.price.$error.pattern">{{'error.not.decimal.validation' | translate}}</small>
+		              		  </span>
+		              		</div>
+		                    <!-- </form> -->
+		                  <table class="table fullwidth" data-ng-show="itemPrices.length>0">
+		                    <tr class="graybg">
+		                      <th>{{'table.heading.regionName' | translate}}</th>
+		                      <th>{{'label.price' | translate}}</th>
+		                    </tr>
+		                    <tr data-ng-repeat="itemPrice in itemPrices" >
+		                      <td><!-- <select class="form-control" data-ng-model="itemPrice.regionId" 
+		                      		data-ng-options="regionData.id as regionData.regionName  for regionData in regionDatas" >
+		                      </select> -->
+		                      <input type="text" name="itemModel" data-ng-model="itemPrice.regionId" class="form-control"
+			                      		placeholder="Item Model" >
+		                      </td>
+		                      <td> <input type="text" class="form-control" data-ng-model="itemPrice.price" placeholder="Price"></td>
+		                      <td><a data-ng-click="removeItemPrice($index)"><i class="fa fa-times"></i></a></td>
+		                    </tr>
+		                  </table>
+		                </td>
+		              </tr>
+          		
+          	</table>
+          	 <div class="col-md-offset-9">
+    			<a href="#/inventory"><button id="cancel" type="reset" class="btn" ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+            	<button id="submit" type="submit" data-ng-disabled="edititemform.$dirty && edititemform.$invalid" class="btn btn-primary">{{'button.save' | translate}}</button>
+        	</div> 
+    			 
+    			 
+    		</fieldset>
+    	</form>
+     </div>
+   </div>
+   <script type="text/ng-template" id="selectorHelpPopup.html">
+        		<div class="modal-header silver">
+					<h3 class="bolder">Selector Details</h3>
+                </div>
+                <div class="modal-body modal-small">
+					<form>
+  						<label class="control-label">
+    						<input type="radio" ng-model="selector" value="selectorService" ng-change="selectorFun()"> &nbsp;&nbsp; {{'label.itemtype' | translate }}
+  						</label><br/>
+  						<label class="control-label">
+    						<input type="radio" ng-model="selector" value="selectorClient" ng-change="selectorFun()"> &nbsp;&nbsp;{{'label.clientcategory' | translate }}
+  						</label><br/>
+						<label class="control-label">
+    						<input type="radio" ng-model="selector" value="selectorCity" ng-change="selectorFun()"> &nbsp;&nbsp;{{'label.city' | translate }}
+  						</label><br/>
+ 					</form>
+				</div>
+		</script> 
+</div>

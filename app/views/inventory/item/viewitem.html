@@ -1,0 +1,132 @@
+<div class="content-container" ng-controller="ViewItemController">
+    <div class="paddedbottom10">
+		<ul class="breadcrumb">
+	        <li><a href="#/inventory" ng-click="goinventory()">{{'link.admin.inventory' | translate}}</a></li>
+	        <li class="active">{{item.itemCode}}&nbsp;&nbsp;</li>
+	    </ul>
+	  </div>
+	    <div class="card">
+        	<div class="content">
+        		<div class="toolbar">
+			     <div class="pull-right">
+			      <div class="btn-group">
+			      	  <a ng-show="showType=='audit'" ng-click="showItems()" class="btn btn-primary">
+			      	  	<i class="fa fa-list"></i>{{'label.viewitem' | translate }}</a>
+			      	  <a ng-hide="showType=='audit'" data-ng-click="showAudit()" class="btn btn-primary">
+			      	  	<i class="fa fa-list"></i>{{'label.showaudit' | translate }}</a>
+			          <a has-permission='UPDATE_ITEM' href="#/edititem/{{item.id}}/{{totalItem}}" class="btn btn-primary">
+			          	<i class="fa fa-edit"></i>{{'label.edit' | translate }}
+			          	</a>
+			          <a has-permission='DELETE_ITEM' ng-show="totalItem == 0"  data-ng-click="deleteItem()" class="btn btn-primary">
+			          	<i class="fa fa-trash-o"></i>{{'label.delete' | translate }}</a>
+			      </div>
+			     </div>
+	    		</div>
+	 <script type="text/ng-template" id="approve.html">
+                    <div class="modal-header silver">
+                        <h3 class="bolder">{{'dialog.item.title.message' | translate}}</h3>
+                    </div>
+                    <div class="modal-body modal-big">
+                       <h4>Are you sure?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+                        <button class="btn btn-primary" ng-click="approve(date.actDate)">{{'label.confirm' | translate}}</button>
+                    </div>
+      </script>
+	 
+	 <div ng-hide="showType=='audit'"class="row paddedleft">
+		<h3>&nbsp;&nbsp;&nbsp;{{item.itemCode}}</h3>
+		<div class="col-md-6">
+			<table class="table table-bordered table-striped">
+				<tr>
+					<td>{{'label.itemcode' | translate }}</td>
+					<td>{{item.itemCode}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.itemdescription' | translate }}</td>
+					<td>{{item.itemDescription}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.chargecode' | translate }}</td>
+					<td>{{item.chargeCode}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.itemclass' | translate }}</td>
+					<td>{{item.itemClassName}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.units' | translate }}</td>
+					<td>{{item.units}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.unitprice' | translate }}</td>
+					<td>{{item.unitPrice}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.warranty' | translate }}</td>
+					<td>{{item.warranty}}</td>
+				</tr>
+				<tr ng-if="item.supplierId != null">
+					<td>{{'label.supplier' | translate }}</td>
+					<td>{{item.supplierCode}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.isprovisioning' | translate }}</td>
+					<td>{{item.isProvisioning}}</td>
+				</tr>
+				<tr>
+					<td>{{'label.currency' | translate }}</td>
+					<td>{{item.name}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div ng-show="showType=='audit'">
+	<h3>&nbsp;&nbsp;&nbsp;View Audit</h3>
+		<table class="table">
+			<thead>
+				<tr class="graybg">
+					<th>{{ 'table.heading.id' | translate }}</th>
+					<th>{{'label.itemmasterid' | translate }}</th>
+					<th>{{'label.regionid' | translate}}</th>
+					<th>{{'label.itemcode' | translate }}</th>
+					<th>{{'label.unitprice' | translate }}</th> 
+					<th>ChangeDate</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="audit in audit">
+				<td>{{audit.id}}</td>
+				<td>{{audit.itemMasterId}}</td>
+				<td>{{audit.regionId}}</td>
+				<td>{{audit.itemCode}}</td>
+				<td>{{audit.unitPrice}}</td> 
+				<td>{{audit.changedDate|DateFormat}}</td>
+			</tbody>
+		</table>
+	</div>
+	
+	<div ng-hide="showType=='audit'">
+	<h3>&nbsp;&nbsp;&nbsp;List of Prices</h3>
+		<table class="table">
+			<thead>
+				<tr class="graybg">
+					<th>{{ 'label.id' | translate }}</th>
+					<th>{{'label.itemmasterid' | translate }}</th>
+					<th>{{'label.regionid' | translate}}</th>
+					<th>{{'label.price' | translate}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="itemPricesData in itemPricesDatas">
+				<td>{{itemPricesData.id}}</td>
+				<td>{{itemPricesData.itemMasterId}}</td>
+				<td>{{itemPricesData.regionId}}</td>
+				<td>{{itemPricesData.price}}</td>
+			</tbody>
+		</table>
+			</div>
+		</div>
+	</div>
+ </div>	   

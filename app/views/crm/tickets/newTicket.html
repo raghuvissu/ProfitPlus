@@ -1,0 +1,108 @@
+<div class="content-container" data-ng-controller="CreateTicketController">
+    <ul class="breadcrumb">
+		 <li><a href="#/clients">{{'label.anchor.customers' | translate}}</a></li>
+		<li><a href='#/viewclient/id/{{clientId}}'>{{'label.anchor.viewcustomer' | translate}}</a></li>
+		<li class="active">{{'label.creatticket' | translate}}</li>
+	</ul>
+	<div data-ng-include="'views/clients/viewclienttopinfo.html'"></div>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.creatticket' | translate}}</h4>
+    		</div>
+    		<br>
+    			<form name="createticketform" class="form-horizontal"  ng-submit="submit()">
+					<api-validate></api-validate>
+					<fieldset>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="Date"> {{'label.ticket.date' | translate }} </label>
+						<div class="col-sm-3">
+							<!-- <input type="text" id="eventName" ng-model="formData.ticketDate"> -->
+							 <input type="text"  ng-model="dateTime" is-open="opened" min="minDate" max="maxDate" class="form-control"
+							 date-disabled="disabled(date, mode)" required late-Validate style="background-color:#FFFFFF;"  readonly/>
+						</div>
+						<label class="control-label col-sm-2" for="priority">{{'label.ticket.priority' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select name="priority" ng-model="formData.priority"
+								ng-options="priorityType.value as priorityType.value for priorityType in priorityTypes"
+								value="{{priorityType.value}}" required late-Validate></select>
+						
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="Category"> {{'label.ticket.category' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select id ="category" name="category" ng-model="formData.problemCode" class="form-control"
+								ng-options="problemsData.id as problemsData.mCodeValue for problemsData in problemsDatas"   data-ng-change="getSubCategory(formData.problemCode)"
+								value="{{problemsData.problemCode}}" required late-Validate></select>
+						</div>
+						<label class="control-label col-sm-2" for="subCategory"> {{'label.subcategory' | translate }}<span class="required">*</span></label>
+				         	<div class="col-sm-3">
+              				<select id="subCategory" ng-model="formData.subCategory"  class="form-control"
+              					ng-options="subCategory.subCategory as subCategory.subCategory for subCategory in subCategory">
+             				</select>
+            			</div>
+					</div>
+					<div class="form-group">
+					
+					<label class="control-label col-sm-2" for="chargeCode"> {{'label.assignto' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select ng-model="formData.assignedTo"
+								ng-options="usersData.id as usersData.userName for usersData in usersDatas" class="form-control"
+								value="{{usersData.id}}" required late-Validate></select>
+						</div>
+					
+            			<label class="control-label col-sm-2" for="sourceData">{{ 'label.source' | translate }}</label>
+            			<div class="col-sm-3">
+              				<select ng-model="formData.sourceOfTicket"  class="form-control"
+              					ng-options="sourcedata.mCodeValue as sourcedata.mCodeValue for sourcedata in sourceData" value="{{sourcedata.mCodeValue}}">
+             				</select>
+            			</div>
+            			
+          			</div>
+          			
+          			
+          			<!-- <div class="form-group">
+            			<label class="control-label col-sm-2" for="subCategory"> {{'label.subcategory' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select ng-model="formData.subCategory"
+								ng-options="usersData.id as usersData.userName for usersData in usersDatas" class="form-control"
+								value="{{usersData.id}}" required late-Validate></select>
+						</div>
+          			</div> -->
+          			<div class="form-group">
+          			<label class="control-label col-sm-2">Due Time</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="preferredCallingTime" min="minDate" datepicker-pop="dd MMMM yyyy" ng-model="first.date"  class="form-control"
+                            	style="width:130px;background-color:#FFFFFF;" />
+							<input id="timepicker1" type="text" class="form-control" readonly ng-model="first.time" style="width:60px;background-color:#FFFFFF;">
+                        </div>
+                        
+                        <label class="control-label col-sm-2" for="Attachments"> {{'label.ticket.file' | translate }}</label>
+						<div class="col-sm-3">
+							<input type= "file" ngf-select="onFileSelect($files)">
+						</div>
+                        
+				      	</div>
+					        
+					<center><i>Please provide as much detail as possible so we can best assist you.</i><span class="required">*</span></center>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="description">{{
+							'label.description' | translate }}<span class="required">*</span></label>
+						<div class="col-sm-9">
+							    <textarea ng-model="formData.description" name="description" style="width:92%; height:8em;" class="form-control"
+							    	required late-Validate></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						
+					</div>
+					<div class="col-md-offset-9">
+						<a id="cancel" href="#/viewclient/id/{{clientId}}"><button type="reset" class="btn" ng-click="reset123()">Cancel</button></a>
+						<button id="submit" type="submit" ng-disabled="!createticketform.$valid" class="btn btn-primary">Save</button>
+					</div>
+				</fieldset>
+			</form>
+    	</div>
+    </div>
+</div>

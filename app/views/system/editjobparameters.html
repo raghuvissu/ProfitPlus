@@ -1,0 +1,151 @@
+<div class="content-container" ng-controller="EditJobParameters">
+    <ul class="breadcrumb">
+		<li><a href="#/system">{{'link.admin.system' | translate}}</a> <span class="divider">/</span></li>
+		<li><a href="#/jobs">{{'label.manageschedulerjobs' | translate}}</a> <span class="divider">/</span></li>
+		<li class="active">{{'label.editschedulerjobparameters' | translate}}</li>
+	</ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.editschedulerjobparameters' | translate}}</h4>
+    		</div>
+    		<br>
+    			<form class="form-horizontal" data-ng-submit="submit()">
+    				<api-validate></api-validate>
+					<fieldset>
+						<div class="form-group" data-ng-show="formData.displayName !='RADIUS' && formData.displayName !='SIMULATOR' && formData.displayName !='EXPORTDATA' && formData.displayName !='RESELLERCOMMISSION'" >
+							<label class="control-label col-sm-2">{{'label.reportname' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<select data-ng-model="jobparameters.batchName" class="form-control"
+									data-ng-options="reportData.batchName as reportData.batchName for reportData in reportDatas"
+									data-value="{{office.id}}">
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group" data-ng-show="formData.displayName =='INVOICING' || formData.displayName =='PDF' || formData.displayName =='EXPORTDATA' || formData.displayName =='RESELLERCOMMISSION'">
+							<label class="control-label col-sm-2" for="startDate">{{'label.processdate' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" data-datepicker-pop="dd MMMM yyyy" class="form-control"
+									data-ng-model="date.processDate" data-is-open="opened2" min="minDate"
+									max="'2020-06-22'" data-date-disabled="disabled(date, mode)" />
+							</div>
+						</div>
+
+						<div class="form-group" data-ng-show="formData.displayName =='STATEMENT'">
+							<label class="control-label col-sm-2" for="startDate">{{'label.duedate' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" data-datepicker-pop="dd MMMM yyyy" class="form-control"
+									data-ng-model="date.dueDate" data-is-open="opened2" min="minDate"
+									max="'2020-06-22'" data-date-disabled="disabled(date, mode)" />
+							</div>
+						</div>
+			
+						<div class="form-group" data-ng-show="formData.displayName =='PDF'">
+							<label class="control-label col-sm-2" for="promotionalMessage">{{'label.promotionalmessage' | translate}}</label>
+							<div class="col-sm-3">
+								<textarea rows="2" cols="2" class="form-control" data-ng-model="formData.promotionalMessage"></textarea>
+							</div>
+						</div>
+						
+						<div class="form-group" data-ng-show="formData.displayName =='MERGE_MESSAGE'">
+							<label class="control-label col-sm-2">{{ 'label.messagetemplate' | translate }}<span class="required">*</span> </label>
+							<div class="col-sm-3">
+								 <select data-ng-model="jobparameters.messageTemplate" class="form-control"
+									data-ng-options="billingMessageData.templateDescription as billingMessageData.templateDescription for billingMessageData in billingMessageDatas"
+									data-value="{{office.id}}">
+								</select> 
+							</div>
+						</div>
+
+						<div class="form-group" data-ng-show="formData.name =='Auto Exipiry'">
+							<label class="control-label col-sm-2" for="startDate">{{'label.exipirydate' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" data-datepicker-pop="dd MMMM yyyy" class="form-control"
+									data-ng-model="date.exipiryDate" data-is-open="opened2" min="minDate"
+									max="'2020-06-22'" data-date-disabled="disabled(date, mode)" />
+							</div>
+						</div>
+						
+						<div class="form-group" data-ng-show="formData.displayName =='REPORTER'">
+							<label class="control-label col-sm-2">{{ 'label.emailid' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" data-ng-model="jobparameters.emailId">
+							</div>
+						</div>
+			
+						<div class="form-group" data-ng-show="formData.displayName =='RADIUS'">             
+			               <label class="control-label col-sm-2">{{ 'label.provsystem' | translate }}<span class="required">*</span></label>
+			                <div class="col-sm-3">
+			                  <select data-ng-model="jobparameters.provSystem"  class="form-control"
+			                  	ng-options="provisionSystemData.billruleOptions as provisionSystemData.billruleOptions for provisionSystemData in provisionSysData" 
+			                  		value="{{provisionSystemData.mCodeValue}}">
+			                </select>
+			                </div>   
+			           </div>
+			           
+			           <div class="form-group" data-ng-show="formData.displayName =='RADIUS'">              
+			               <label class="control-label col-sm-2">{{ 'label.url' | translate }}<span class="required">*</span></label>
+			                <div class="col-sm-3">
+			                <input type="text" class="form-control" data-ng-model="jobparameters.url">
+			                </div>               
+			           </div>
+			           <div class="form-group" data-ng-show="formData.displayName =='RADIUS'">              
+			                <label class="control-label col-sm-2">{{ 'label.username' | translate }}<span class="required">*</span></label>
+			                <div class="col-sm-3">
+			                <input type="text" class="form-control" data-ng-model="jobparameters.username">
+			                </div>          
+			           </div>
+			           <div class="form-group" data-ng-show="formData.displayName =='RADIUS'">              
+			                <label class="control-label col-sm-2">{{ 'label.password' | translate }}<span class="required">*</span></label>
+			                <div class="col-sm-3">
+			                <input type="text" class="form-control" data-ng-model="jobparameters.password">
+			                </div>              
+			           </div> 
+           
+						<div class="form-group" data-ng-show="formData.displayName =='SIMULATOR'">
+							<label class="control-label col-sm-2">{{ 'label.updatestatus' | translate }}</label>
+							<div class="col-sm-3">
+								<label class="checkbox"> <input type="checkbox" data-ng-model="formData.isUpdateStatus"></label>
+							</div>
+						</div>
+						
+						<div class="form-group" data-ng-show="formData.displayName =='SIMULATOR'">
+							<label class="control-label col-sm-2">{{ 'label.createticket' | translate }}</label>
+							<div class="col-sm-3">
+								<label class="checkbox"> <input type="checkbox" data-ng-model="formData.isCreateTicket"> </label>
+							</div>
+						</div>
+						
+						<div class="form-group" data-ng-hide="formData.displayName =='SIMULATOR'">
+							<label class="control-label col-sm-2" for="isDynamic">{{'label.isdynamic' | translate }}</label>
+							<div class="col-sm-3">
+								<label class="checkbox"> <input type="checkbox" data-ng-model="formData.isDynamic">
+								</label>
+							</div>
+						</div>
+						<div class="form-group" data-ng-show="formData.name =='Auto Exipiry'">
+							<label class="control-label col-sm-2" for="isDynamic">{{'label.isautorenewal' | translate }}</label>
+							<div class="col-sm-3">
+								<label class="checkbox"> <input type="checkbox" data-ng-model="formData.isAutoRenewal">
+								</label>
+							</div>
+						</div>
+						<div class="form-group" data-ng-show="formData.name =='Auto Exipiry'">
+							<label class="control-label col-sm-2">{{ 'label.addon.exipiry' | translate }}</label>
+							<div class="col-sm-3">
+								<label class="checkbox"> <input type="checkbox" data-ng-model="formData.addonExipiry"></label>
+							</div>
+						</div>
+						
+						<div class="offset3">
+							<button id="cancel" type="reset" data-ng-click="cancel()" class="btn">{{'label.cancel' | translate}}</button>
+							<button id="submit" type="submit" class="btn btn-primary">{{'label.save' | translate}}</button>
+						</div>
+			
+				</fieldset>
+			</form>
+    	</div>
+    </div>
+</div>
+

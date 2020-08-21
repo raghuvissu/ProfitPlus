@@ -1,0 +1,181 @@
+<div class="content-container" ng-controller="RichDashboard">
+	<ul class="breadcrumb">
+	    <li><a href="">{{'label.anchor.dashboard' | translate}}</a></li>
+	</ul>
+	<div class="tabbable" >
+		<div class="tab-content">
+			<div id="pane1" class="tab-pane panel panel-default" ng-class="{active: ClientDetailsTab}" style="margin: auto;width:40%;">
+				<div class="panel-heading">
+					<h3 class="panel-title">Client Details ({{cOfficeName}})</h3>
+				</div>
+				<div class="panel-body">
+                    <nvd3-pie-chart
+                        data="clientStatusData"
+                        id="clientstatuspiechart"
+                        width="400"
+                        height="400"
+                        x="xFunction()"
+                        y="yFunction()"
+                        donut="true"
+                        donutRatio=".015"
+                        color="colorFunctionPie1()"
+                        showLegend="true"
+                        showLabels="true"
+                        labelType="value">
+                     	<svg height="270"></svg>
+                    </nvd3-pie-chart>
+                    <!-- <select class="input-small-tooltip pull-right" name="office11" ng-change="getCollectionOffice()" id="office11" 
+                    	ng-model="officeId" data-ng-options="office.id as office.name for office in offices" value="{{office.id}}">
+                        <option value="">--Office--</option>
+                    </select> -->
+               	</div>
+			</div>
+			<!-- Client Trend -->
+			<div id="pane2" class="tab-pane panel panel-default" ng-class="{active: ClientTrendsTab}" style="margin: auto;width:70%;">
+				<div class="panel-heading">
+					<h3 class="panel-title">Client Trends for {{bOfficeName}} ({{chartType}})</h3>
+				</div>
+				<div class="panel-body">
+                    <nvd3-multi-bar-chart
+	                     data="BarData"
+	                     id="barchart"
+	                     width="770"
+	                     height="350"
+	                     color="colorFunction()"
+	                     showLegend="true">
+	                 	 <svg></svg>
+	            	</nvd3-multi-bar-chart>
+                    <button type="button" class="btn-silver btn-tooltip" data-ng-click="getWeeklyData()">
+                        	<i class="fa fa-table"></i>Week</button>
+                    <button type="button" class="btn-silver btn-tooltip" data-ng-click="getMonthlyData()">
+                    	<i class="fa fa-table"></i>Month</button>
+                    <button type="button" class="btn-silver btn-tooltip" data-ng-click="getDailyData()">
+                    	<i class="fa fa-table"></i>Days</button>
+                    <select class="input-small-tooltip pull-right" name="office1" ng-change="getDailyData()" id="office1" 
+                    	ng-model="officeId" data-ng-options="office.id as office.name for office in offices" value="{{office.id}}">
+                        <option value="">--Office--</option>
+                    </select>
+               	</div>
+			</div>
+			<div id="pane3" class="tab-pane panel panel-default" ng-class="{active: AountCollectedTab}" style="margin: auto;width:40%;">
+				<div class="panel-heading">
+					<h3 class="panel-title">Amount Collected for Current Month ({{cOfficeName}})</h3>
+					<h3 class="required panel-error" data-ng-show="showCollectionerror">No Data Available</h3>
+				</div>
+				<div class="panel-body">
+                    <nvd3-pie-chart
+	                     data="collectedData"
+	                     id="piechart1"
+	                     width="400"
+	                     height="400"
+	                     x="xFunction()"
+	                     y="yFunction()"
+	                     donut="true"
+                         donutRatio=".015"
+	                     color="colorFunctionPie()"
+	                     showLegend="true"
+                         showLabels="true"
+                         labelType="value">
+	                  		<svg height="270"></svg>
+                    </nvd3-pie-chart>
+                    <!-- <select class="input-small-tooltip pull-right" name="office11" ng-change="getCollectionOffice()" id="office11" ng-model="officeId" data-ng-options="office.id as office.name for office in offices" value="{{office.id}}">
+                        <option value="">--Office--</option>
+                    </select> -->
+               	</div>
+			</div>
+			<div id="pane4" class="tab-pane panel panel-default" ng-class="{active: StockItemDetailsTab}" style="margin: auto;width:40%;">
+				<div class="panel-heading">
+					<h3 class="panel-title">Stock Item Details for Current Month ({{sOfficeName}})</h3>
+					<h3 class="required panel-error" data-ng-show="showDisbursementerror">No Data Available</h3>
+				</div>
+				<div class="panel-body">
+                    <nvd3-pie-chart
+                         data="disbursedData"
+                         id="piechart2"
+                         width="400"
+                         height="400"
+                         x="xFunction()"
+                         y="yFunction()"
+                         donut="true"
+                         donutRatio=".015"
+                         color="colorFunctionPie()"
+                         showLegend="true"
+	                     showLabels="true"
+	                     labelType="value">
+                     	<svg height="270"></svg>
+                    </nvd3-pie-chart>
+                    <!-- <select class="input-small-tooltip pull-right" data-ng-options="office.id as office.name for office in offices" name="office2" data-ng-change="getStock()" value="{{office.id}}" id="office2" ng-model="officeId">
+                        <option value="">--Office--</option>
+                    </select> -->
+               	</div>
+			</div>
+			<div id="pane5" class="tab-pane panel panel-default" ng-class="{active: TicketsStatisticsTab}" style="margin: auto;width:70%;">
+				<div class="panel-heading">
+					<h3 class="panel-title">Tickets from {{bOfficeName1}} ({{chartType1}})</h3>
+				</div>
+				<div class="panel-body">
+                    <nvd3-multi-bar-chart
+                         data="BarData1"
+                         id="barchart1"
+                         width="770"
+                         height="350"
+                         color="colorFunction1()"
+                         showLegend="true">
+                     	<svg></svg>
+                    </nvd3-multi-bar-chart>
+                    <button type="button" class="btn-silver btn-tooltip" data-ng-click="getWeeklyData1()">
+                    	<i class="fa fa-table"></i>Week</button>
+                    <button type="button" class="btn-silver btn-tooltip" data-ng-click="getMonthlyData1()">
+                    	<i class="fa fa-table"></i>Month</button>
+                    <button type="button" class="btn-silver btn-tooltip" data-ng-click="getDailyData1()">
+                    	<i class="fa fa-table"></i>Days</button>
+                    <select class="input-small-tooltip pull-right" name="office1" ng-change="getDailyData1()" 
+                    	id="office1" ng-model="officeId1" data-ng-options="office1.id as office1.name for office1 in offices1" 
+                    		value="{{office1.id}}">
+                        <option value="">--Office--</option>
+                    </select>
+               	</div>
+			</div>
+			<div id="pane6" class="tab-pane panel panel-default" ng-class="{active: STBCountTab}" style="margin: auto;width:40%;">
+				<div class="panel-heading">
+					<h3 class="panel-title">STB</h3>
+					<h3 class="required panel-error" data-ng-show="showDisbursementerror">No Data Available</h3>
+				</div>
+				<div class="panel-body">
+                    <nvd3-pie-chart
+                         data="stbData"
+                         id="piechart3"
+                         width="400"
+                         height="400"
+                         x="xFunction()"
+                         y="yFunction()"
+                         donut="true"
+                         donutRatio=".015"
+                         color="colorFunctionPie2()"
+                         showLegend="true"
+	                     showLabels="true"
+	                     labelType="value">
+                     	<svg height="270"></svg>
+                    </nvd3-pie-chart>
+               	</div>
+			</div><br><br>
+			<div class="col-md-12 col-sm-12">
+				<ul class="nav nav-tabs">
+			  		<li class={{ClientDetailsTab}}><a ng-click="clientDetailsTabFun()" data-toggle="tab" style="padding: 0 35px;">
+			  			Client Details <br/>for Head Office</a></li>
+				    <li class={{ClientTrendsTab}}><a ng-click="clientTrendsTabFun()" data-toggle="tab" style="padding: 0 35px;">
+				    	Client Trends <br/>for Head Office</a></li>
+				    <li class={{AountCollectedTab}}><a ng-click="aountCollectedTabFun()" data-toggle="tab" style="padding: 0 35px;">
+				    	Amount Collected <br/>for Current Month</a></li>
+					<li class={{StockItemDetailsTab}}><a ng-click="stockItemDetailsTabFun()" data-toggle="tab" style="padding: 0 35px;">
+						Stock Item Details <br/>for Current Month</a></li>
+				 	<li class={{TicketsStatisticsTab}}><a ng-click="ticketsStatisticsTabFun()" data-toggle="tab" style="padding: 0 35px;">
+				 		Tickets Statistics <br/>for Head Office</a></li>
+				 	<li class={{STBCountTab}}><a ng-click="stbDataTabFun()" data-toggle="tab" style="padding: 0 50px;">
+				 		STB <br/> Count</a></li>
+			    </ul>
+		    </div>
+	    </div><!-- tab-content End -->
+	</div><!-- tabbable tabs-below End-->
+</div><!-- content-container End--><br><br>
+	

@@ -1,0 +1,197 @@
+<div class="content-container" ng-controller="CreateProspectsController">
+	<ul class="breadcrumb">
+		<li><a href="#/leads">{{'link.prospects' | translate}}</a></li>
+		<li class="active">{{'label.createprospect' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h3>{{'label.heading.createprospect' | translate}}</h3>
+			</div>
+			<br>
+				<form  name="createprospectsform" novalidate=""  class="form-horizontal" rc-submit="submit()">
+					<api-validate></api-validate>
+					<div class="error" data-ng-show="errorStatus || errorDetails">
+						<label data-ng-show="errorStatus">{{errorStatus}}</label> 
+						<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+					</div>
+					<fieldset>
+					<label class="control-label col-sm-2" for="prospectType">{{'label.create.type' | translate }}<span class="required">*</span> </label>
+							<div class="col-sm-3" style="margin-top: 5px;">
+								<input type="radio" data-ng-model="formData.prospectType" value="1" data-ng-change="resetCredits()">{{'label.prospect.individual' | translate}} &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+								<input type="radio" data-ng-model="formData.prospectType" value="2" data-ng-change="resetCredits()" >{{'label.prospect.corporate' | translate}}
+						    </div>
+					</fieldset>
+					<fieldset>	    
+					<h4> {{'label.prospect.personaldetails' | translate}} </h4>
+					
+						<!-- <div class="form-group">
+							
+						    <label class="control-label col-sm-2" for="homePhoneNumber"> {{'label.homephone' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="homePhoneNumber" name="homephone" data-ng-model="formData.homePhoneNumber" class="form-control"
+										data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" maxlength="15" >
+								<div data-ng-show="createprospectsform.homephone.$dirty && createprospectsform.homephone.$invalid">
+									<small class="error" data-ng-show="createprospectsform.homephone.$error.pattern"> {{'label.prospect.error.mobileno' | translate}} </small>
+								</div>
+							</div>
+					    </div>
+					     -->
+					    <div class="form-group">
+						    <label class="control-label col-sm-2" for="firstName">{{'label.firstname' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" id="firstName" data-ng-model="formData.firstName" class="form-control" data-ng-pattern="/^[a-zA-Z0-9\-\&\s]+$/" name="firstname" data-late-Validate>
+								<div data-ng-show="createprospectsform.firstname.$dirty && createprospectsform.firstname.$invalid">
+									<small class="error" data-ng-show="createprospectsform.firstname.$error.pattern"> {{'label.prospect.error.name' | translate}} </small> 
+									<small class="error" data-ng-show="createprospectsform.firstname.$error.req"> {{'label.prospect.error.required' | translate}} </small>
+								</div>
+							</div>
+							
+							<label class="control-label col-sm-2" for="middleName">{{'label.middlename' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="middleName" ng-model="formData.middleName" class="form-control">
+							</div>
+						    
+					    </div>
+					    
+					    <div class="form-group">
+						    
+						    <label class="control-label col-sm-2" for="lastName">{{'label.lastname' | translate }}<span class="required">*</span> </label>
+							<div class="col-sm-3">
+								<input type="text" id="lastName" data-ng-model="formData.lastName" class="form-control" data-ng-pattern="/^[a-zA-Z0-9\s]+$/" name="lastname" data-late-Validate>
+								<div data-ng-show="createprospectsform.lastname.$dirty && createprospectsform.lastname.$invalid">
+									<small class="error" data-ng-show="createprospectsform.lastname.$error.pattern"> {{'label.prospect.error.name' | translate}} </small> 
+									<small class="error" data-ng-show="createprospectsform.lastname.$error.req"> {{'label.prospect.error.required' | translate}} </small>
+								</div>
+							</div>
+							 		
+							<label class="control-label col-sm-2" for="email">{{'label.emailid' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="email" id="email" ng-model="formData.email" class="form-control" name="email">
+								<div data-ng-show="createprospectsform.email.$dirty && createprospectsform.email.$invalid">
+									<small class="error" data-ng-show="createprospectsform.email.$error.email"> {{'label.prospect.error.email' | translate}} </small>
+								</div>
+						    </div>
+						  </div>  
+						    
+						    
+					    <div class="form-group">
+						    
+						    <label class="control-label col-sm-2" for="mobileNumber">{{'label.mobilephone' | translate }}<span class="required">*</span> </label>
+							<div class="col-sm-3">
+								<input type="text" id="mobileNumber" data-ng-model="formData.mobileNumber" class="form-control"
+								  	   data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/"
+								   	   name="mobilenumber" maxlength="15">
+								<div data-ng-show="createprospectsform.mobilenumber.$dirty && createprospectsform.mobilenumber.$invalid">
+									<small class="error" data-ng-show="createprospectsform.mobilenumber.$error.pattern">{{'label.prospect.error.mobileno' | translate}} </small>
+								</div>
+							</div>
+							
+							<label class="control-label col-sm-2" for="workPhoneNumber">{{'label.officephone' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="workPhoneNumber" name="workphone" data-ng-model="formData.workPhoneNumber" class="form-control"
+									data-ng-pattern="/^(?!0+$)(?!1+$)(?!2+$)(?!3+$)(?!4+$)(?!5+$)(?!6+$)(?!7+$)(?!8+$)(?!9+$)\d{1,15}$/" maxlength="15">
+								<div data-ng-show="createprospectsform.workphone.$dirty && createprospectsform.workphone.$invalid">
+									<small class="error" data-ng-show="createprospectsform.workphone.$error.pattern">{{'label.prospect.error.mobileno' | translate}} </small>
+								</div>
+							</div>	
+					    </div>
+					    
+						   
+					   
+					</fieldset>
+					
+					<h4>{{'label.prospect.addressdetails' | translate}}</h4>
+					<fieldset>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="address">{{'label.address' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" id="address" data-ng-model="formData.address" class="form-control">
+							</div>
+								
+						    <div>
+								<label class="control-label col-sm-2" for="sourceOfPublicity">{{'label.source' | translate }}</label>
+								<div class="col-sm-3">
+									<select data-ng-model="formData.sourceOfPublicity" class="form-control"
+											data-ng-options="sourceOfPublicityData.mCodeValue as sourceOfPublicityData.mCodeValue for sourceOfPublicityData in sourceOfPublicityDatas"
+											data-value="{{sourceOfPublicityData.mCodeValue}}">
+									</select>
+								</div>
+								<div data-ng-show="formData.sourceOfPublicity == 'Other'">
+									<label class="control-label col-sm-2">{{ 'label.prospect.other' | translate }}</label>
+									<div class="col-sm-3">
+										<input type="text" id="sourceOther" data-ng-model="formData.sourceOther" class="form-control">
+									</div>
+								</div>
+							</div>	
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="streetArea">{{'label.street/area' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="streetArea" data-ng-model="formData.streetArea" class="form-control">
+							</div>
+									
+							<label class="control-label col-sm-2" for="preferredPlan">{{'label.plan' | translate }}</label>
+							<div class="col-sm-3">
+								<select data-ng-model="formData.preferredPlan" class="form-control"
+										data-ng-options="planData.id as planData.planDescription for planData in planDatas"
+										data-value="{{planData.id}}">
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div>
+								<label class="control-label col-sm-2" for="city"> {{'label.city/district' | translate }} <span class="required">*</span> </label>
+								<div class="col-sm-3">
+									<input type="text" id="city" name="city" data-ng-model="formData.city" list="citylist" class="form-control" data-ng-change="getStateAndCountry(formData.city)">
+								</div>
+								<datalist id="citylist">
+									<option data-ng-repeat="cityData in cityDatas" value="{{cityData}}">
+							    </datalist>
+							</div>
+							
+							<label class="control-label col-sm-2">{{ 'label.nextcalltime' | translate }}</label>
+							<div class="col-sm-3">
+								<input type="text" id="preferredCallingTime" min="minDate" data-datepicker-pop="dd MMMM yyyy" data-ng-model="first.date" required
+									   data-late-Validate style="width: 130px; background-color: #FFFFFF;" />
+								<input id="timepicker1" type="text"  data-ng-model="first.time"
+										style="width: 60px; background-color: #FFFFFF;">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="state"> {{'label.state' | translate }} </label>
+							<div class="col-sm-3">
+								<input type="text" id="state" data-ng-model="formData.state" class="form-control" readonly>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="country"> {{'label.country' | translate }} </label>
+							<div class="col-sm-3">
+								<input type="text" id="country" data-ng-model="formData.country" class="form-control" readonly>
+							</div>
+							
+							<label class="control-label col-sm-2" for="zipCode">{{'label.zipcode' | translate }}</label>
+							<div class="col-sm-3">
+						    	<input type="text" id="zipcode" data-ng-model="formData.zipCode" class="form-control">
+							</div>
+						</div>
+						
+						<div class="form-group">
+						<label class="control-label col-sm-2" for="note">{{ 'label.note' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<textarea id="note" class="form-control" data-ng-model="formData.note" style="width:200%; height:4em;"></textarea>
+		                    </div>
+						</div>
+					</fieldset>
+					<div class="col-md-offset-10">
+						<a href="#/leads"><button type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+						<button type="submit" class="btn btn-primary">{{'button.save'| translate}}</button>
+					</div>
+				</form>
+		</div>
+	</div>
+</div>

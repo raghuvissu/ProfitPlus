@@ -1,0 +1,73 @@
+ <div class="content-container" ng-controller="EditEventPriceController">
+ 	<div>
+		<ul class="breadcrumb">
+			<li><a href="#/event">{{'label.event' | translate}}</a></li>
+			<li><a href="#/viewEvent/{{formData.eventId}}">{{'label.viewevent' | translate}}</a></li>
+			<li><a href="#/viewEventPrices/{{formData.eventId}}">{{'label.viewprice' | translate}}</a></li>
+			<li><a href="#/viewEventPrice/{{formData.id}}">{{'link.admin.vieweventprice' | translate}}</a></li>
+			<li class="active">{{formData.eventName}}</li>
+		</ul>
+	</div>
+	  <div class="card">
+    	<div class="content">
+	       <div class="toolbar">
+    			<h4>{{'label.editeventprice' | translate}}</h4>
+    		</div>
+	<form name="editeventpriceform" class="form-horizontal" ng-submit="submit()">
+	<api-validate></api-validate>
+		<fieldset>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="eventId">{{'label.eventid' | translate }}</label>
+					<div class="col-sm-3">
+						<input type="text" id="eventId" class="form-control" ng-model="formData.eventId" readonly>
+					</div>
+					<label class="control-label col-sm-2" for="clientType">{{'label.clienttype' | translate }}</label>
+					<div class="col-sm-3">
+						<select ng-model="formData.clientTypeId" class="form-control"
+							ng-options="clienttype.id as clienttype.type for clienttype in ClientTypes"
+							value="{{clienttype.id}}"></select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="formatType">{{'label.formattype' | translate }}</label>
+					<div class="col-sm-3">
+						<select ng-model="formData.formatType" class="form-control"
+							ng-options="formats.formatType as formats.formatType for formats in Format"
+							value="{{formats.formatType}}"></select>
+					</div>
+					<label class="control-label col-sm-2" for="discount">{{'label.discount' | translate }}</label>
+					<div class="col-sm-3">
+						<select ng-model="formData.discountId" class="form-control"
+							ng-options="discountdata.id as discountdata.discountDescription for discountdata in Discountdatas"
+							value="{{discountdata.id}}"></select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="optType">{{'label.opttype' | translate }}</label>
+					<div class="col-sm-3">
+						<select ng-model="formData.optType" class="form-control"
+							ng-options="optType.value as optType.value for optType in OptTypes"
+							value="{{optType.value}}"></select>
+					</div>
+					<label class="control-label col-sm-2" for="price">{{'label.amount' | translate }}</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="eventValidity" name="amount" ng-model="formData.price" 
+							data-ng-pattern="/^[0-9]/"></br>
+						<span data-ng-show="editeventpriceform.amount.$dirty && editeventpriceform.amount.$invalid">
+							<small class="error" 
+								data-ng-show="editeventpriceform.amount.$error.pattern">{{'error.not.numeric.validation' | translate }}
+							</small>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-offset-3">
+					<a href="#/viewEventPrice/{{formData.id}}"><button type="reset" class="btn">Cancel</button></a>
+					<button type="submit" data-ng-disabled="editeventpriceform.$dirty && editeventpriceform.$invalid" class="btn btn-primary">Save</button>
+				</div>
+				</fieldset>
+			</form>
+   		</div>
+ 	</div>
+ </div>

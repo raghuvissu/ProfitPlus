@@ -1,0 +1,46 @@
+@font-face {
+	font-family: 'proxima Nova';
+	src: url('../fonts/proxima-nova.otf?w118d');
+ src:url('../fonts/proxima-nova.eot?#iefixw118d') format('embedded-opentype'), url('../fonts/proxima-nova.woff2?w118d') format('woff2'), url('../fonts/proxima-nova.woff?w118d') format('woff'), url('../fonts/proxima-nova.ttf?w118d') format('truetype'), font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Montserrat';
+	src: url('../fonts/Montserrat-Regular.otf?w118d');
+ src:url('../fonts/Montserrat-Regular.eot?#iefixw118d') format('embedded-opentype'), url('../fonts/Montserrat-Regular.woff2?w118d') format('woff2'), url('../fonts/Montserrat-Regular.woff?w118d') format('woff'), url('../fonts/Montserrat-Regular.ttf?w118d') format('truetype'), font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Montserrat SemiBold';
+	src: url('../fonts/Montserrat-SemiBold.otf?w118d');
+ src:url('../fonts/Montserrat-SemiBold.eot?#iefixw118d') format('embedded-opentype'), url('../fonts/Montserrat-SemiBold.woff2?w118d') format('woff2'), url('../fonts/Montserrat-SemiBold.woff?w118d') format('woff'), url('../fonts/Montserrat-SemiBold.ttf?w118d') format('truetype'), font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Montserrat Light';
+	src: url('../fonts/Montserrat-Light.otf?w118d');
+ src:url('../fonts/Montserrat-Light.eot?#iefixw118d') format('embedded-opentype'), url('../fonts/Montserrat-Light.woff2?w118d') format('woff2'), url('../fonts/Montserrat-Light.woff?w118d') format('woff'), url('../fonts/Montserrat-Light.ttf?w118d') format('truetype'), font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat ExtraBold';
+	src: url('../fonts/Montserrat-ExtraBold.otf?w118d');
+ src:url('../fonts/Montserrat-ExtraBold.eot?#iefixw118d') format('embedded-opentype'), url('../fonts/Montserrat-ExtraBold.woff2?w118d') format('woff2'), url('../fonts/Montserrat-ExtraBold.woff?w118d') format('woff'), url('../fonts/Montserrat-ExtraBold.ttf?w118d') format('truetype'), font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat Medium';
+	src: url('../fonts/Montserrat-Medium.otf?w118d');
+ src:url('../fonts/Montserrat-Medium.eot?#iefixw118d') format('embedded-opentype'), url('../fonts/Montserrat-Medium.woff2?w118d') format('woff2'), url('../fonts/Montserrat-Medium.woff?w118d') format('woff'), url('../fonts/Montserrat-Medium.ttf?w118d') format('truetype'), font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Glyphicons Halflings';
+	src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot");
+	src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
+}
+
+

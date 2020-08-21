@@ -1,0 +1,88 @@
+ <div class="content-container" ng-controller="MoveMrnController">
+    <ul class="breadcrumb">
+      <li><a href="#/inventory" ng-click="reset123()">{{'link.admin.inventory' | translate}}</a></li>
+      <li class="active">{{'label.create.move.mrn' | translate}}</li>
+    </ul>
+       <div class="card">
+    		<div class="content">
+                <div class="toolbar">
+    				<h4>{{'label.heading.mrn/itemsale' | translate}}</h4>
+    			</div>
+	      <form class="form-horizontal">
+	       	<api-validate></api-validate>
+	       	 		<fieldset>
+							<div class="form-group">
+	   							<label class="control-label col-sm-2" for="mrnId">{{'label.type' | translate }}&nbsp;<span 
+	   								class="required">*</span></label>
+								<div class="col-sm-3">
+									<select id="mrnId" ng-model="formData.type" class="form-control">
+											<option value="">{{'label.select.one' | translate}}</option>
+											<option>sale</option>
+											<option>mrn</option>
+									</select>
+								</div>
+							</div>
+							<div ng-show="formData.type=='mrn'">
+								<div class="form-group">
+		           					<label class="control-label col-sm-2" for="mrnId">{{'label.mrn.id' | translate }}&nbsp;<span 
+		           						class="required">*</span></label>
+									<div class="col-sm-3">
+										<select id="mrnId" ng-model="formData.mrnId" class="form-control"
+											ng-options="mrnId.mrnId as getBoth(mrnId.mrnId,mrnId.itemDescription) for mrnId in mrnIds"
+											value="{{mrnId.mrnId}}" ng-change="getSerialNumbers(formData.mrnId)">
+											<option value="">{{'label.select.one' | translate}}</option>
+										</select>&nbsp;&nbsp;&nbsp;<span ng-show="serialNumbers.length < 1"><i 
+											class="fa fa-exclamation-triangle"></i>Serial numbers are not associated with this Mrn Id.</span>
+									</div>
+								</div>
+							</div>
+							<div ng-show="formData.type=='sale'">
+								<div class="form-group">
+	           						<label class="control-label col-sm-2" for="itemId">{{'label.itemid' | translate }}&nbsp;<span 
+	           							class="required">*</span></label>
+									<div class="col-sm-3">
+										<select id="itemId" ng-model="formData.itemId" class="form-control"
+											ng-options="id.id as getBoth(id.id,id.itemDescription) for id in itemIds"
+											value="{{id.id}}" ng-change="getSerialNumbersForItems(formData.itemId)">
+											<option value="">{{'label.select.one' | translate}}</option>
+										</select>&nbsp;&nbsp;&nbsp;<span ng-show="serialNumbers1.length < 1"><i 
+											class="fa fa-exclamation-triangle"></i>Serial numbers are not associated with this Item Id.</span>
+									</div>
+								</div>
+							</div>
+							<div ng-show="formData.type=='mrn'">
+								<div class="form-group">
+	            					<label class="control-label col-sm-2" for="serialNumber">{{'label.serialnumber' | translate }}&nbsp;<span 
+	            						class="required">*</span></label>
+									<div class="col-sm-3">
+										<select id="serialNumber" ng-model="formData.serialNumber" class="form-control"
+											ng-options="serialNumber for serialNumber in serialNumbers"
+											value="{{serial.serialNumber}}">
+											<option value="">{{'label.select.one' | translate}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div ng-show="formData.type=='sale'">
+								<div class="form-group">
+	            					<label class="control-label col-sm-2" for="serialNumber">{{'label.serialnumber' | translate }}&nbsp;<span 
+	            						class="required">*</span></label>
+									<div class="col-sm-3">
+										<select id="serialNumber" ng-model="formData.serialNumber" class="form-control"
+											ng-options="serialNumber for serialNumber in serialNumbers1"
+											value="{{serial.serialNumber}}">
+											<option value="">{{'label.select.one' | translate}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+				          <div class="col-md-offset-9">
+				            <a href="#/inventory"><button id="cancel"  type="reset" class="btn" ng-click="reset123()">{{'button.cancel' | translate}}</button></a>
+				            <button ng-show="formData.type=='mrn'" id="submit" ng-click="mrnSubmit()" class="btn btn-primary">{{'label.save' | translate}}</button>
+				            <button ng-show="formData.type=='sale'" id="submit" ng-click="saleSubmit()" class="btn btn-primary">{{'label.save' | translate}}</button>
+				          </div>
+	        	</fieldset>
+	   </form>
+     </div>
+  </div>
+</div>

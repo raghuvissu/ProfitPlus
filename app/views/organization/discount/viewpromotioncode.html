@@ -1,0 +1,74 @@
+<div class="content-container" ng-controller="ViewPromotioncodeController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/organization">{{'label.anchor.masters' | translate}}</a> 
+			<span class="divider"></span>
+		</li>
+	    <li>
+		    <a href="#/discounts" data-ng-click="promotionTab()">{{'label.managediscounts'| translate}}</a> 
+		    <span class="divider"></span>
+	    </li>
+	    <li class="active">{{'label.viewPromotioncode' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+			 	<h4>{{promotioncode.viewpromotioncode}}</h4>
+			 	<div class="pull-right">
+					<div class="btn-group">
+						<a has-permission = UPDATE_PROMOTIONCODE href="#/editpromotioncode/{{promotiondata.id}}"
+						   class="btn btn-primary"><i class="fa fa-edit"></i>{{'button.edit' | translate}}</a>
+						<a has-permission = DELETE_PROMOTIONCODE data-ng-click="deletePromotion()" class="btn btn-primary"><i
+						   class="fa fa-trash-o"></i> {{'button.delete' | translate}}</a>
+					</div>
+				</div>
+			</div>
+			<br/>
+			    <div class="row">
+				    <div class="col-md-6">
+				    <h3>&nbsp;&nbsp;&nbsp;{{promotiondata.promotionCode}}</h3>
+					    <table class="table table-bordered table-striped">
+						    <tr>
+								<td>{{ 'label.promotionCode' | translate }}</td>
+								<td>{{promotiondata.promotionCode}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.promotionDescription' | translate }}</td>
+								<td>{{promotiondata.promotionDescription}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.durationType' | translate }}</td>
+								<td>{{promotiondata.durationType}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.duration' | translate }}</td>
+								<td>{{promotiondata.duration}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.discountType' | translate }}</td>
+								<td>{{promotiondata.discountType}}</td>
+							</tr>
+							<tr>
+								<td>{{ 'label.discountRate' | translate }}</td>
+								<td>{{promotiondata.discountRate}}</td>
+							</tr>
+					    </table>
+				    </div>
+			    </div>
+		</div>
+	</div>
+	<script type="text/ng-template" id="approve.html">
+    		<div class="modal-header silver">
+        		<h3 class="bolder">{{'dialog.promotion.code.title.message' | translate}}</h3>
+        	</div>
+
+        	<div class="modal-body" style="height:60px;">
+        		<h4>Are you sure?</h4>
+        	</div>
+
+        	<div class="modal-footer">
+        		<button class="btn btn-warning" ng-click="cancel()">{{'button.cancel' | translate}}</button>
+            	<button class="btn btn-primary" ng-click="approve(date.actDate)">{{'label.confirm' | translate}}</button>
+       		</div>
+    </script>
+</div>

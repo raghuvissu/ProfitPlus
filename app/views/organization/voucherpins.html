@@ -1,0 +1,67 @@
+<div class="content-container" ng-controller="VoucherpinController">
+  	<ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li class="active">{{'label.ManageVoucherpins' | translate}}</li>
+    </ul>
+    <div class="error" data-ng-show="errorStatus || errorDetails" style="margin:0px;">
+			<label>{{'label.error' | translate}}</label>
+			<label data-ng-show="errorStatus">{{errorStatus}}</label>
+			<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+	</div>
+      <div class="card">
+        <div class="content">
+           <div class="toolbar">
+            <div class="row">
+              <div class="col-md-6">
+         			<input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placeholder.searchbar' | translate}}">
+         	  </div>
+              <div class="col-md-6">
+              	<a has-permission='CREATE_VOUCHER' href="#/createvoucherpin" class="btn primary_btn pull-right"><i 
+              		class="fa fa-plus fa fa-white"></i>{{ 'link.create.new.voucherpin' | translate }}</a>
+              </div>
+            </div>
+           </div>
+           <table class="table">
+		       <thead>
+		           <tr class="graybg">
+		               <th>{{ 'label.batchName' | translate }}</th>
+		               <th>{{ 'label.pinCategory' | translate }}</th> 
+		               <th>{{ 'label.length' | translate }}</th>
+		               <th>{{ 'label.beginWith' | translate }}</th>
+		               <th>{{ 'label.quantity' | translate }}</th> 
+		<!--                 <th>{{ 'table.heading.serialNo' | translate }}</th> -->
+		               <th>{{ 'label.pinType' | translate }}</th>
+		               <th>{{ 'label.pinValue' | translate }}</th>
+		               <th>{{ 'label.product' | translate }}</th>
+		               <th>{{ 'label.promotiondesc' | translate }}</th>
+		               <th>{{ 'label.expiryDate' | translate }}</th> 
+		               <th>{{ 'label.actions' | translate }}</th> 
+		              
+		           </tr>
+		       </thead>
+		        <tbody>
+		            <tr class="pointer-main" data-ng-repeat="voucherpin in voucherpins | filter:filterText">
+		                       
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.batchName}}</td>
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.pinCategory}}</td>  
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.length}}</td>  
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.beginWith}}</td>        
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.quantity}}</td>       
+		<!--                 <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.serialNo}}</td>   -->
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.pinType}}</td>        
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)" data-ng-show="voucherpin.pinType == 'VALUE'">{{voucherpin.pinValue}}</td>
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)" data-ng-show="voucherpin.pinType == 'PRODUCT' || voucherpin.pinType == 'COUPON'">&nbsp;</td>
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.planCode}}</td> 
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.promotionDescription}}</td> 
+		                <td class="pointer" data-ng-click="routeTo(voucherpin.id)">{{voucherpin.expiryDate|DateFormat}}</td>
+		                <td><a data-ng-show="(voucherpin.isProcessed == 'N')&&((voucherpin.id)!=dynamicVar)" has-permission ='PROCESS_RANDAMGENERATOR' 
+		                		 data-ng-click="processFile(voucherpin.id)" uib-popover="Process File" data-popover-trigger="mouseenter"><i class="fa fa-play"></i></a>      
+		                   <a  data-ng-show="voucherpin.isProcessed == 'Y'" data-ng-click="downloadFile(voucherpin.id)" uib-popover="Download Voucher File" data-popover-trigger="mouseenter"><i class="fa fa-cloud-download"></i></a>
+		                   <img alt="Loading"  data-ng-src="./images/spinner.gif" width="30" height="30" data-ng-show="((voucherpin.id)==dynamicVar)&&(voucherpin.isProcessed == 'N')">
+		                </td>  
+		            </tr>
+		        </tbody>
+		   </table>
+        </div>
+      </div>
+</div>

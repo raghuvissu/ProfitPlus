@@ -1,0 +1,108 @@
+<div class="content-container" ng-controller="GroupsDetailsController">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+        <li class="active">{{'label.groups.details' | translate}}</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+	            <div class="row">
+         			<div class="col-md-8">
+         			<form data-ng-submit="searchDetails(filterText)" class="marginNone">
+           				<input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placehoder.searchbar' | translate}}"/>
+        			</form>
+         			<!-- <input data-ng-model="filterText" type="text" class="form-control" data-ng-autofocus="true" class="span marginbottom0px" placeholder="{{'placeholder.searchbar' | translate}}"> -->
+         			</div>
+         			<div class="col-md-4">
+         			    <a data-ng-click="addGroup()" class="btn primary_btn pull-right"><i class="fa fa-plus"></i>{{'label.group.add' | translate}}</a>
+            			<!-- <a href="#/createContract" class="btn btn-primary " has-permission='CREATE_CONTRACT'><i class="fa fa-plus"></i> {{ 'link.create.new.contract' | translate }}</a> -->
+	     			</div>
+	     		</div>
+            </div>
+            <br/>
+            <table class="table">
+        		<thead>
+            	<tr class="graybg">
+	                <th style="width:25%">{{'label.groupsdetails.groupname' | translate}}</th>
+	                <th style="width:25%">{{'label.groupsdetails.groupaddress' | translate}}</th>
+	                <th style="width:25%">{{'label.groupsdetails.countnumber' | translate}}</th>
+	                <th style="width:25%">{{'table.heading.actions' | translate}}</th>
+            	</tr>
+        		</thead>
+        		<tbody>
+            		<tr class="pointer-main" data-ng-repeat="group in groupsDetails.currentPageItems | filter:filterText">
+                <td class="pointer" data-ng-click="routeTo(group.groupName)">{{group.groupName}}</td>        
+                <td class="pointer" data-ng-click="routeTo(group.groupName)">{{group.groupAddress}}</td> 
+                <td class="pointer" data-ng-click="routeTo(group.groupName)">{{group.countNo}}</td>   
+                <td><a data-ng-click="addProvision(group.id,group.groupName,group.attribute1,group.attribute2,group.attribute3,group.attribute4)" 
+                  data-ng-show="group.isProvision == 'N'" class="btn " uib-popover="Provisioning" data-popover-trigger="mouseenter"><i class="fa fa-play"></i></a>
+                 <a data-ng-show="group.isProvision == 'Y'" data-ng-disabled="group.isProvision == 'Y'"class="btn "><i class="fa fa-play"></i></a></td>         
+            		</tr>
+        		</tbody>
+    		</table>
+    		<ul class="pager">
+        		<li class="previous"><a data-ng-click="groupsDetails.previous()" href="" data-ng-disabled="!groupsDetails.hasPrevious()">&larr; Prev</a></li>
+        		<li class="next" ><a data-ng-click="groupsDetails.next()" href="" data-ng-disabled="!groupsDetails.hasNext()">Next &rarr;</a></li>
+    		</ul>
+        </div>
+    </div>
+    <script type="text/ng-template" id="addGroupDetails.html">
+    <div class="content-container" style="width:700px;height:300px;">
+       <div class="card">
+           <div class="content">
+              <br>
+                <form name="addGroupForm" novalidate="" class="form-horizontal">
+    			    <api-validate></api-validate>
+    			    <fieldset>
+                      <div class="form-group">
+    					<h3>&nbsp;&nbsp;{{ 'label.group.add' | translate }}</h3>
+    				 </div>
+                        <div class="form-group">
+    			            <label class="control-label col-sm-3" for="groupName">{{'label.groupsdetails.groupname'|translate}}<span class="required">*</span> </label>
+    			            <div class="col-sm-3">
+    			                <input  type="text" id="groupName" class="form-control" name="groupName" ng-model="formData.groupName" />
+    			            </div>
+    			        </div>
+                        <div class="form-group">
+    			            <label class="control-label col-sm-3" for="groupAddress">{{'label.groupsdetails.groupaddress'|translate}}<span class="required">*</span> </label>
+    			            <div class="col-sm-3">
+    			                <input type="text" id="groupAddress" class="form-control" name="groupAddress" ng-model="formData.groupAddress"/>
+    			            </div>
+    			        </div>
+                        <div class="form-group">
+    			            <label class="control-label col-sm-4"><h4><strong>{{ 'label.groupsdetails.additionalinfo' | translate }}</strong></h4></label>
+    			        </div>
+       
+                        <div class="form-group">
+    			            <label class="control-label col-sm-2">{{ 'label.groupsdetails.groupcir' | translate }}<span class="required">*</span></label>
+    			            <div class="col-sm-3">
+    			                <input id="attribute1" class="form-control" type="text" ng-model="formData.attribute1" />
+    			            </div>
+    			            <label class="control-label col-sm-2">{{ 'label.groupsdetails.dir' | translate }}<span class="required">*</span></label>
+    			            <div class="col-sm-3">
+    			                <input id="attribute1" class="form-control" type="text" ng-model="formData.attribute2" />
+    			            </div>
+    			        </div>
+
+                       <div class="form-group">
+    			            <label class="control-label col-sm-2">{{ 'label.groupsdetails.membercir' | translate }}<span class="required">*</span></label>
+    			            <div class="col-sm-3">
+    			                <input id="attribute1" class="form-control" type="text" ng-model="formData.attribute3" />
+    			            </div>
+    			            <label class="control-label col-sm-2">{{ 'label.groupsdetails.dir' | translate }}<span class="required">*</span></label>
+    			            <div class="col-sm-3">
+    			                <input id="attribute1" class="form-control" type="text" ng-model="formData.attribute4" />
+    			            </div>
+    			        </div>
+                        <div class="pull-right" style="margin-right:8px;">
+          					<button id="cancel" class="btn " ng-click="cancel()">{{'button.cancel' | translate}}</button>
+     	  					<button id="submit" type="submit" ng-click="submit()" class="btn btn-primary pull-right">{{'button.save' | translate}}</button>
+        				</div>
+                    </fieldset>
+                </form>
+               
+         </div>
+      </div>
+    </div>
+    </script>
+</div>

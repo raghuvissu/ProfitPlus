@@ -1,0 +1,85 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <li><a href="#/organization">{{'label.anchor.masters' | translate}}</a></li>
+          	<!-- <li><a href="#/taxmapping/{{formData.chargeCode}}/{{chargeCodeId}}">{{'label.managetaxmapping' | translate}}</a></li> -->
+          	<!-- <li><a href="#/taxmapping/{{taxmapping.chargeCode}}/{{chargeCodeId}}">{{'label.managetaxmapping' | translate}}</a> -->
+          	<li><a href="#/chargecode">{{'label.managechargecode' | translate}}</a></li>
+          	<li><a href="#/viewtaxmapping/{{taxMapId}}">{{taxmapping.taxCode}}</a></li>
+          	<li class="active">{{'label.edittaxmapping' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{'label.edittaxmapping' | translate}}</h4>
+    		</div>
+    		<br>
+    			<form name="edittaxform" novalidate="" class="form-horizontal" ng-controller="EditTaxMappingController" rc-submit="submit()">
+    			    <api-validate></api-validate>
+    			    <fieldset>
+    			        <div class="form-group">
+    			            <label class="control-label col-sm-2" for="chargeCode">{{'label.chargecode' | translate }}<span 
+    			            	class="required">*</span></label>
+    			           	<div class="col-sm-3">
+    			                  <input type="text"  class="form-control" data-ng-model="formData.chargeCode" readonly>
+    			            </div>
+    			        </div>
+    			        <div class="form-group">
+    			            <label class="control-label col-sm-2" for="taxCode">{{'label.taxCode' | translate }}<span 
+    			            	class="required">*</span></label>
+    			            <div class="col-sm-3">
+    			                <input type="text" id="taxCode" name="edittaxform" class="form-control" data-ng-model="formData.taxCode" "data-ng-maxlength="10"/></br>
+    			            </div>
+    			            <div class="col-sm-3">
+    			                  <span data-ng-show="edittaxform.taxCode.$dirty && edittaxform.taxCode.$invalid">
+    			                  <small class="error" data-ng-show="edittaxform.taxCode.$error.maxlength">{{'error.code.definition.length.validation'| translate}}</small>
+						          	<!-- <small class="error" >{{'error.code.definition.length.validation'| translate}}</small> -->
+					              </span>
+					        </div>
+    			        </div>
+    			        <div class="form-group">
+    			            <label class="control-label col-sm-2" for="startDate">{{'label.startDate' | translate }}<span 
+    			            	class="required">*</span></label>
+    			            <div class="col-sm-3">
+    			                <input type="text" class="form-control" datepicker-pop="dd MMMM yyyy" readonly data-ng-model="start.date"  is-open="opened" min="minDate" 
+    			                	date-disabled="disabled(date, mode)" style="background-color:#FFFFFF;" required late-Validate />
+    			            </div>
+    			        </div>
+    			        <div class="form-group">
+    			            <label class="control-label col-sm-2" for="taxType">{{'label.type' | translate }}<span 
+    			            	class="required">*</span></label>
+    			            <div class="col-sm-3">
+    			                <select id="taxType" class="form-control" data-ng-model="formData.taxType"  data-ng-options="taxTypeData.mCodeValue as taxTypeData.mCodeValue for taxTypeData in taxTypeDatas">
+              						<option value="">{{'label.select.one' | translate}}</option></select>
+    			            </div>
+    			        </div>
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2" for="rate">{{'label.rate' | translate }}<span 
+    		                	class="required">*</span></label>
+    		                <div class="col-sm-3">
+	    		                <input type="text" id="rate" name="rate" class="form-control" data-ng-model="formData.rate" data-ng-pattern="/^[0-9]/"/></br>
+    		                </div>
+    		                 <div class="col-sm-3">
+								<span data-ng-show="edittaxform.rate.$dirty && edittaxform.rate.$invalid">
+								<small class="error" data-ng-show="edittaxform.rate.$error.pattern">{{'error.not.decimal.validation' | translate}}</small>            		
+            					</span>
+    		                </div>
+    		            </div>
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2" for="taxRegion">{{'label.taxRegion' | translate }}<span 
+    		                	class="required">*</span></label>
+    		                <div class="col-sm-3">
+	    		               <select id="taxRegion" class="form-control" data-ng-model="formData.taxRegion"  data-ng-options="priceRegionData.id as priceRegionData.priceregion for priceRegionData in priceRegionDatas">
+              						<option value="">{{'label.select.one' | translate}}</option></select>
+    		                </div>
+    		            </div>
+    		            
+    			        <div class="col-md-offset-3 pull-right">
+    			                <a href="#/viewtaxmapping/{{taxMapId}}/{{chargeCodeId}}"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+            					<button id="submit" type="submit" data-ng-disabled="edittaxform.$dirty && edittaxform.$invalid" class="btn btn-primary">{{'button.save'| translate}}</button>
+    			        </div>
+    			    </fieldset>
+    			</form>
+    	</div>
+    </div>
+</div>
+

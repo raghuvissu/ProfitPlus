@@ -1,0 +1,73 @@
+<div class="content-container" ng-controller="FollowProspectsController">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/leads">{{'link.prospects' | translate}}</a> 
+			<span class="divider"></span>
+		</li>
+		<li>
+			<a href="#/viewprospects/{{prospectsData.id}}">{{'link.viewprospects' | translate}}</a> 
+			<span class="divider"></span>
+		</li>
+		<li class="active">{{'label.followup' | translate}}</li>
+	</ul>
+	<div class="card">
+		<div class="content">
+			<div class="toolbar">
+				<h4>{{'label.heading.followup' | translate}}</h4>
+			</div>
+			<form class="form-horizontal" novalidate="" rc-submit="submit()">
+				<api-validate></api-validate>
+				<div class="error" data-ng-show="errorStatus || errorDetails">
+					<label data-ng-show="errorStatus">{{errorStatus}}</label> 
+					<label data-ng-hide="errorStatus" data-ng-repeat="error in errorDetails">{{error.code | translate}}</label>
+				</div>
+				<fieldset>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="callStatus">{{'label.callstatus' | translate }}</label>
+						<div class="col-sm-3">
+						    <select data-ng-model="formData.callStatus" class="form-control"
+									data-ng-options="callStatusData.statusId as callStatusData.callStatus for callStatusData in callStatusDatas"
+									data-value="{{callStatusData.statusId}}">
+							</select>
+						</div>
+				    </div>
+				    
+				   <div class="form-group">
+					   <label class="control-label col-sm-2">{{ 'label.nextcall' | translate }}</label>
+						   <div class="col-sm-3">
+							<!-- <input type="text" readonly datepicker-pop="dd MMMM yyyy" ng-model="" is-open="opened2" min="minDate" max="'2020-06-22'" date-disabled="disabled(date, mode)" style="width:130px;background-color:#FFFFFF;" /> -->
+							   <input type="text" readonly data-datepicker-pop="dd MMMM yyyy"
+									  data-ng-model="first.date" min="minDate" data-is-open="opened2"
+									  data-date-disabled="disabled(date, mode)" required data-late-Validate
+									 style="width: 130px; background-color: #FFFFFF;" />
+							  <input id="timepicker1" readonly type="text" data-ng-model="first.time"
+									style="width: 60px; background-color: #FFFFFF;">
+						 </div>
+			       </div>
+			       
+			      <div class="form-group">
+					  <label class="control-label col-sm-2" for="assignedTo">{{ 'label.assignedto' | translate }}</label>
+						  <div class="col-sm-3">
+							  <select data-ng-model="formData.assignedTo" class="form-control"
+									data-ng-options="assignedToData.assignId as assignedToData.assignedTo for assignedToData in assignedToDatas"
+									data-value="{{assignedToData.assignId}}">
+							 </select>
+						 </div>
+			     </div>
+			     
+			     <div class="form-group">
+					 <label class="control-label col-sm-2" for="notes">{{ 'label.note' | translate }}</label>
+						 <div class="col-sm-3">
+							<textarea rows="2" data-ng-model="formData.notes" style="width: 656px; height: 117px;"></textarea>
+						 </div>
+			     </div>
+			     
+			     <div class="col-md-offset-10">
+					 <a href="#/viewprospects/{{prospectsData.id}}"><button id="cancel" type="reset" class="btn">{{'button.cancel'| translate}}</button></a>
+					 <button id="submit" type="submit" class="btn btn-primary" data-ng-disabled="flag">{{'button.save'| translate}}</button>
+			     </div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
