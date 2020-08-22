@@ -1159,6 +1159,7 @@
 								<table class="table table-striped">
 									<thead>
 										<tr>
+											<th>Office Name</th>
 											<th>Client Name</th>
 							 				<th>{{'label.transactionId' | translate}}</th>
                 							<th>{{'label.transaction.date' | translate}}</th>
@@ -1172,7 +1173,10 @@
 									</thead>
 									<tbody>
 										<tr data-ng-repeat="financialtransaction in financialPayments.currentPageItems  | filter:filterText" data-ng-show="financialtransaction.transactionType =='PAYMENT' || financialtransaction.transactionType =='PAYMENT CANCELED'"> 
-               								<td>
+											<td>
+												<any>{{financialtransaction.officeName}}</any>
+											</td>   
+											<td>
                   								<any>{{financialtransaction.clientName}}</any>
               								</td>
                								<td>
