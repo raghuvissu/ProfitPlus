@@ -34,7 +34,8 @@
 									<th>{{ 'label.externalid' | translate }}</th>
 									<th>{{ 'label.parentorganization' | translate }}</th>
 									<th>{{ 'label.openedon' | translate }}</th>
-									<th>{{ 'label.balance.amount' | translate }}</th> 
+									<th>{{ 'label.balance.amount' | translate }}</th>
+									<th>Status</th> 
 									<th>{{ 'label.actions' | translate }}</th>
 								</tr>
 							</thead>
@@ -45,6 +46,7 @@
 									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.parentName}}</td>
 									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.openingDate | DateFormat}}</td>
 									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.balance}}</td>
+									<td class="pointer" data-ng-click="routeTo(office.id)">{{office.isEnabled == 'Y' ? 'Enabled' : 'Disabled'}}</td>
 									<td><a has-permission='UPDATE_OFFICE' href="#/editoffice/{{office.id}}" data-uib-popover="Edit Office" 
 										data-popover-trigger="mouseenter"><i class="fa fa-edit"></i></a></td>
 								</tr>

@@ -218,6 +218,53 @@
 
              };
 
+             scope.disableConfirmation = function () {
+                $uibModal.open({
+                    templateUrl: 'disableoffice.html',
+                    controller: OfficeDisableCtrl
+                });
+            };
+
+            var OfficeDisableCtrl = function ($scope, $uibModalInstance) {
+                $scope.disableOffice = function () {
+                    var formData = {
+                        isEnabled : 'N',
+                        officeType : 115
+                    }
+
+                    resourceFactory.officeResource.update({'officeId': routeParams.id},formData,function(data){
+                        $uibModalInstance.close();
+                        location.path('/offices');
+                    });
+                };
+                $scope.cancelDisableOffice = function () {
+                    $uibModalInstance.dismiss('cancelDisableOffice');
+                };
+            };
+
+            scope.enableConfirmation = function () {
+                $uibModal.open({
+                    templateUrl: 'enableoffice.html',
+                    controller: OfficeEnableCtrl
+                });
+            };
+
+            var OfficeEnableCtrl = function ($scope, $uibModalInstance) {
+                $scope.enableOffice = function () {
+                    var formData = {
+                        isEnabled : 'Y',
+                        officeType : 115
+                    }
+
+                    resourceFactory.officeResource.update({'officeId': routeParams.id},formData,function(data){
+                        $uibModalInstance.close();
+                        location.path('/offices');
+                    });
+                };
+                $scope.cancelEnableOffice = function () {
+                    $uibModalInstance.dismiss('cancelEnableRole');
+                };
+            };
 
 
 

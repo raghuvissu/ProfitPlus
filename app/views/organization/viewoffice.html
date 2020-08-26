@@ -23,6 +23,14 @@
                                         <a href="#/editoffice/{{office.id}}" class="btn btn-primary" has-permission='UPDATE_OFFICE'><i class="fa fa-edit "></i>{{
                                             'label.button.edit' | translate }}</a>
                                     </div>
+                                    <div class="btn-group" ng-if="office.isEnabled == 'Y'">
+                                        <a data-ng-click="disableConfirmation()" class="btn btn-primary"><i class="fa fa-trash-o "></i>{{
+                                            'label.button.disable' | translate }}</a>
+                                    </div>
+                                    <div class="btn-group" ng-if="office.isEnabled == 'N'">
+                                        <a data-ng-click="enableConfirmation()" class="btn btn-primary"><i class="fa fa-trash-o "></i>{{
+                                            'label.button.enable' | translate }}</a>
+                                    </div>
                                 </div>
                             </div>
                            
@@ -319,4 +327,27 @@
                         <button class="btn btn-primary" ng-click="approveDelete()">Yes, Delete</button>
                     </div>
       </script>
+
+    <script type="text/ng-template" id="disableoffice.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">Disable Office</h3>
+        </div>
+        <div class="modal-body ">
+            <api-validate></api-validate>
+            <br>
+            <button class="btn btn-warning" ng-click="cancelDisableOffice()">{{'label.button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="disableOffice()">{{'label.button.confirm' | translate}}</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="enableoffice.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">Enable Office</h3>
+        </div>
+        <div class="modal-body ">
+            <api-validate></api-validate>
+            <br>
+            <button class="btn btn-warning" ng-click="cancelEnableOffice()">{{'label.button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="enableOffice()">{{'label.button.confirm' | translate}}</button>
+        </div>
+    </script>
 </div>
